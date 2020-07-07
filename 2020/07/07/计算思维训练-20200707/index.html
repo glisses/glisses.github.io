@@ -6,7 +6,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-    计算思维综合训练_2020_07_06 |  glisses
+    计算思维训练-20200707 |  glisses
   </title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   
@@ -30,7 +30,7 @@
   <div id="app">
     <main class="content">
       <section class="outer">
-  <article id="post-计算思维训练-20200706" class="article article-type-post" itemscope
+  <article id="post-计算思维训练-20200707" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
   <div class="article-inner">
@@ -38,7 +38,7 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  计算思维综合训练_2020_07_06
+  计算思维训练-20200707
 </h1>
   
 
@@ -47,8 +47,8 @@
 
     
     <div class="article-meta">
-      <a href="/2020/07/06/%E8%AE%A1%E7%AE%97%E6%80%9D%E7%BB%B4%E8%AE%AD%E7%BB%83-20200706/" class="article-date">
-  <time datetime="2020-07-06T09:04:29.000Z" itemprop="datePublished">2020-07-06</time>
+      <a href="/2020/07/07/%E8%AE%A1%E7%AE%97%E6%80%9D%E7%BB%B4%E8%AE%AD%E7%BB%83-20200707/" class="article-date">
+  <time datetime="2020-07-07T08:21:27.000Z" itemprop="datePublished">2020-07-07</time>
 </a>
       
       
@@ -58,7 +58,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">1.1k字</span>
+            <span class="post-count">709字</span>
         </span>
     </span>
 
@@ -67,7 +67,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">4分钟</span>
+            <span class="post-count">2分钟</span>
         </span>
     </span>
 </div>
@@ -92,28 +92,23 @@
       
 
       
-      <p><strong>Problem J. sqy 的锡纸烫</strong><br>时间限制 1000 ms<br>内存限制 64 MB</p>
-<p><strong>题目描述</strong><br>渣男锡纸烫！</p>
-<p>前不久 sqy 老师花了大价钱，去做了一个帅气的锡纸烫。有着商业眼光的 sqy 一下子发现了大商机，于是他自己开了一家美容美发店。</p>
-<p>sqy 找了刚刚做完纹理烫的大预言家 cbj 预测了未来，发现每个顾客都只在白天来美发店，并且第一次来店里的时候都会充一次价值 xi 的卡，然后从第二天开始，每天白天都会来这里打理头发，而 sqy 仅收取成本价 1 元钱来吸引顾客，直到把卡掏空为止，这个顾客就再也不会回来。</p>
-<p>黑心商人 sqy 找大预言家要来了每个顾客的充卡时间和充值金额，他准备在某一天晚上跑路，他想知道自己最多能卷走多少钱。</p>
-<p><strong>输入数据</strong><br>第一行包括一个整数 n(1≤n≤1e5) 表示有 n 个顾客。 接下来共 n 行，每i+1行包括两个整数 xi,yi 表示第 xi 天一个顾客来充值了 yi 元 (1≤xi≤1e6,0≤yi≤231−1)。</p>
-<p><strong>输出数据</strong><br>输出一行包括一个整数 ans，表示 sqy 最多能卷走多少钱。</p>
-<p><strong>样例输入</strong><br>5<br>1 5<br>2 5<br>3 5<br>4 5<br>5 5<br><strong>样例输出</strong><br>15<br><strong>样例说明</strong><br>在第五天的时候，第一个人消费4元还剩1元，第二个人消费3元还剩2元，第三个人消费2元还剩3元，第四个人消费1元还剩4元，第五个人还没有开始消费就被卷钱跑路了。</p>
+      <p><strong>Problem F. 安全的密码mark text</strong><br>时间限制 1000 ms<br>内存限制 256 MB</p>
+<p><strong>题目描述</strong><br>众所周知，密码安全是互联网时代人们最为关心的事情之一。而 RSA 公钥加密算法是目前最有影响力和最常用的公钥加密算法，它能够抵抗到目前为止已知的绝大多数密码攻击。</p>
+<p>其实 RSA 公钥加密算法的原理并不复杂，它基于一个十分简单的数论事实：将两个大素数相乘十分容易，而想要对其乘积进行质因数分解却极其困难，因此可以将乘积公开作为加密密钥。</p>
+<p>所以 RSA 算法很重要的一个过程就是得到两个大素数相乘结果。</p>
+<p>wchhlbt 和 Lazy_sheep 想要模拟一下 RSA 算法的加密过程。现在 wchhlbt拿到了 Lazy_sheep 提供的一份素数相乘的结果，但是 Lazy_sheep 因为别的事情计算的并不认真。 所以 wchhlbt 希望你来帮他判断这些数据的正确性。</p>
+<p><strong>输入数据</strong><br>第一行为一个整数 t (1≤t≤1000)，表示数据的组数。接下来对于每组数据：<br>第一行为一个整数 n (2≤n≤2×109)。</p>
+<p><strong>输出数据</strong><br>对于每组数据，输出一行：<br>如果这个数可以分解为两个素数乘积，输出YES，否则输出NO。</p>
+<p><strong>样例输入</strong><br>4<br>6<br>8<br>35<br>121<br><strong>样例输出</strong><br>YES<br>NO<br>YES<br>YES<br><strong>样例说明</strong><br>无</p>
 <hr>
-<p><strong>算法<br>差分</strong></p>
-<p>首先介绍一下朴素的差分。<br>我们有n个数，m个操作。设0&lt;=n,m&lt;=1e5。n个数和m个操作在读入中给出。m个操作的形式为三个正整数 l r x，表示将这n个数中的第l个到第r个都分别加上x。然后有n次询问，询问第p到第q个数之间所有数字的和为多少？</p>
-<p>比如当n=5,m=3<br>原数列:<br>5 7 6 2 4<br>操作:<br>1 3 2<br>4 4 7<br>3 5 1<br>则最终数列为：<br>7 9 9 10 5</p>
-<p>对于这道题，如果我们朴素地对每个操作，都从l到r循环，给a[i]加上x的话，时间复杂度会是O(nm)&gt;1e8，造成超时(time limit exceeded)。于是差分就出现了。</p>
-<p>差分，就是在区间的开头和结尾分别打上标记的一种操作。比如在这道题中，我们称原数组为a，标记数组为b。对于每个操作，我们让b[l]+=x,<strong>b[r+1]</strong>-=x;这么做有什么用呢？我们观察b的前缀和数组。</p>
-<p><img src="https://api.fishercat.top/wka/1-1.png" alt="b数组及其前缀和数组"></p>
-<p>前缀和数组sum[i]的值就等于经过m次操作，从1到i位的数之和增大了多少。那么如何求l~r的数之和增大了多少呢？显然为<strong>sum[r+1]</strong>-sum[l]。</p>
-<p>于是，对于每个询问，我们只需要输出原数组在l、r+1的前缀和之差 加上 b数组在l、r+1的前缀和之差。</p>
+<p><strong>算法</strong></p>
+<p>一个数学题，绕过了一道弯，写得好的代码应该在二十行左右。<br>对于每一个N，我们首先要想，如果它是两个素数的乘积，它一定满足什么条件？两个素数的乘积，一定不会是其他素数的倍数。如果一个数是两个大于一百的素数的乘积，它还有可能是2的倍数吗？不可能。这说明什么？如果n是两个素数的乘积，一旦我们找到了n的一个约数x，它的另一个约数就找到了（也就是n/x），而n不会再有其他约数，也就是循环不用继续下去。</p>
+<p>那么这道题的做法也就显而易见。我们从2到(int)sqrt(n)循环，一旦找到一个n的约数x，就看n/x是不是素数。是素数，就是YES，不然就是NO。BTW，这里x是不是素数是不用判断的。原因是____.</p>
 <hr>
-<p>那么，如何将差分运用到sqy的锡纸烫这道题呢？<br>首先，要从题目给出的数据范围揣摩算法。我们看到一个有点反常的地方：(1≤xi≤1e6,0≤yi≤2^31−1)。为什么xi和yi的最大值差那么远呢？因为xi最大也不超过1e6，所以我们可以从这里入手。</p>
-<p>首先，感性认识一下可以确定，sqy获得最多钱的那一天，一定是某位客人刚办卡而没开始消费的一天，也就是某个x[i]。那我们就可以从min x[i]到max x[i]循环。在这个循环中，有三个变量参与，它们分别是：cnt(i天有多少客人消费)、now(i天sqy手中的钱)、ans（我们要输出的值）。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (i,？,？)</span><br><span class="line">	&#123;</span><br><span class="line">		cnt+=c[i];</span><br><span class="line">		now+=b[i]; now-=cnt;</span><br><span class="line">		ans=max(ans,now);	</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-<p>既然cnt是i天有多少客人消费的前缀和，那么c显然就是某天有多少人消费的标记数组。b数组同理。具体的代码实现请继续思考。奥力给！</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	scanf(<span class="string">"%d"</span>,&amp;T);</span><br><span class="line">	<span class="keyword">while</span> (T--)</span><br><span class="line">	&#123;</span><br><span class="line">		scanf(<span class="string">"%d"</span>,&amp;n);</span><br><span class="line">		bool flag=<span class="literal">false</span>;</span><br><span class="line">		ufor (i,<span class="number">2</span>,(int) sqrt(n))</span><br><span class="line">			<span class="keyword">if</span> (n%i==<span class="number">0</span>)</span><br><span class="line">				<span class="keyword">if</span> (Sushu(n/i)) flag=<span class="literal">true</span>; <span class="keyword">else</span> <span class="keyword">break</span>;</span><br><span class="line">		printf((flag)? <span class="string">"YES\n"</span>:<span class="string">"NO\n"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>思考题：在以上的for循环中，为什么要写两个if，而不是在两个判断之间用&amp;&amp;?</p>
+<hr>
 <p>友情链接：<br>章鱼哥：<a href="https://fishercat.top/" target="_blank" rel="noopener">https://fishercat.top/</a><br>姜总：<a href="https://jjhqwq.top/" target="_blank" rel="noopener">https://jjhqwq.top/</a></p>
 
       
@@ -184,7 +179,7 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2020/07/06/%E8%AE%A1%E7%AE%97%E6%80%9D%E7%BB%B4%E8%AE%AD%E7%BB%83-20200706/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2020/07/07/%E8%AE%A1%E7%AE%97%E6%80%9D%E7%BB%B4%E8%AE%AD%E7%BB%83-20200707/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -200,19 +195,10 @@
   
   <nav class="article-nav">
     
-      <a href="/2020/07/07/%E8%AE%A1%E7%AE%97%E6%80%9D%E7%BB%B4%E8%AE%AD%E7%BB%83-20200707/" class="article-nav-link">
-        <strong class="article-nav-caption">上一篇</strong>
-        <div class="article-nav-title">
-          
-            计算思维训练-20200707
-          
-        </div>
-      </a>
     
-    
-      <a href="/2020/03/12/hello-world/" class="article-nav-link">
+      <a href="/2020/07/06/%E8%AE%A1%E7%AE%97%E6%80%9D%E7%BB%B4%E8%AE%AD%E7%BB%83-20200706/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">Hello World</div>
+        <div class="article-nav-title">计算思维综合训练_2020_07_06</div>
       </a>
     
   </nav>

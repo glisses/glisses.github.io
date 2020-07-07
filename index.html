@@ -69,6 +69,90 @@
     
     
     
+    <article id="post-计算思维训练-20200707" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/07/07/%E8%AE%A1%E7%AE%97%E6%80%9D%E7%BB%B4%E8%AE%AD%E7%BB%83-20200707/"
+    >计算思维训练-20200707</a
+  >
+</h2>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/07/07/%E8%AE%A1%E7%AE%97%E6%80%9D%E7%BB%B4%E8%AE%AD%E7%BB%83-20200707/" class="article-date">
+  <time datetime="2020-07-07T08:21:27.000Z" itemprop="datePublished">2020-07-07</time>
+</a>
+      
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <p><strong>Problem F. 安全的密码mark text</strong><br>时间限制 1000 ms<br>内存限制 256 MB</p>
+<p><strong>题目描述</strong><br>众所周知，密码安全是互联网时代人们最为关心的事情之一。而 RSA 公钥加密算法是目前最有影响力和最常用的公钥加密算法，它能够抵抗到目前为止已知的绝大多数密码攻击。</p>
+<p>其实 RSA 公钥加密算法的原理并不复杂，它基于一个十分简单的数论事实：将两个大素数相乘十分容易，而想要对其乘积进行质因数分解却极其困难，因此可以将乘积公开作为加密密钥。</p>
+<p>所以 RSA 算法很重要的一个过程就是得到两个大素数相乘结果。</p>
+<p>wchhlbt 和 Lazy_sheep 想要模拟一下 RSA 算法的加密过程。现在 wchhlbt拿到了 Lazy_sheep 提供的一份素数相乘的结果，但是 Lazy_sheep 因为别的事情计算的并不认真。 所以 wchhlbt 希望你来帮他判断这些数据的正确性。</p>
+<p><strong>输入数据</strong><br>第一行为一个整数 t (1≤t≤1000)，表示数据的组数。接下来对于每组数据：<br>第一行为一个整数 n (2≤n≤2×109)。</p>
+<p><strong>输出数据</strong><br>对于每组数据，输出一行：<br>如果这个数可以分解为两个素数乘积，输出YES，否则输出NO。</p>
+<p><strong>样例输入</strong><br>4<br>6<br>8<br>35<br>121<br><strong>样例输出</strong><br>YES<br>NO<br>YES<br>YES<br><strong>样例说明</strong><br>无</p>
+<hr>
+<p><strong>算法</strong></p>
+<p>一个数学题，绕过了一道弯，写得好的代码应该在二十行左右。<br>对于每一个N，我们首先要想，如果它是两个素数的乘积，它一定满足什么条件？两个素数的乘积，一定不会是其他素数的倍数。如果一个数是两个大于一百的素数的乘积，它还有可能是2的倍数吗？不可能。这说明什么？如果n是两个素数的乘积，一旦我们找到了n的一个约数x，它的另一个约数就找到了（也就是n/x），而n不会再有其他约数，也就是循环不用继续下去。</p>
+<p>那么这道题的做法也就显而易见。我们从2到(int)sqrt(n)循环，一旦找到一个n的约数x，就看n/x是不是素数。是素数，就是YES，不然就是NO。BTW，这里x是不是素数是不用判断的。原因是____.</p>
+<hr>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	scanf(<span class="string">"%d"</span>,&amp;T);</span><br><span class="line">	<span class="keyword">while</span> (T--)</span><br><span class="line">	&#123;</span><br><span class="line">		scanf(<span class="string">"%d"</span>,&amp;n);</span><br><span class="line">		bool flag=<span class="literal">false</span>;</span><br><span class="line">		ufor (i,<span class="number">2</span>,(int) sqrt(n))</span><br><span class="line">			<span class="keyword">if</span> (n%i==<span class="number">0</span>)</span><br><span class="line">				<span class="keyword">if</span> (Sushu(n/i)) flag=<span class="literal">true</span>; <span class="keyword">else</span> <span class="keyword">break</span>;</span><br><span class="line">		printf((flag)? <span class="string">"YES\n"</span>:<span class="string">"NO\n"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>思考题：在以上的for循环中，为什么要写两个if，而不是在两个判断之间用&amp;&amp;?</p>
+<hr>
+<p>友情链接：<br>章鱼哥：<a href="https://fishercat.top/" target="_blank" rel="noopener">https://fishercat.top/</a><br>姜总：<a href="https://jjhqwq.top/" target="_blank" rel="noopener">https://jjhqwq.top/</a></p>
+
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+
+    </footer>
+
+  </div>
+
+  
+
+  
+  
+  
+
+  
+
+</article>
+    
     <article id="post-计算思维训练-20200706" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
