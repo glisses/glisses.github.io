@@ -69,6 +69,72 @@
     
     
     
+    <article id="post-计算思维训练-20200708" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/07/08/%E8%AE%A1%E7%AE%97%E6%80%9D%E7%BB%B4%E8%AE%AD%E7%BB%83-20200708/"
+    >计算思维训练-20200708</a
+  >
+</h2>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/07/08/%E8%AE%A1%E7%AE%97%E6%80%9D%E7%BB%B4%E8%AE%AD%E7%BB%83-20200708/" class="article-date">
+  <time datetime="2020-07-08T01:49:33.000Z" itemprop="datePublished">2020-07-08</time>
+</a>
+      
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+
+    </footer>
+
+  </div>
+
+  
+
+  
+  
+  
+
+  
+
+</article>
+    
     <article id="post-计算思维训练-20200707" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
@@ -108,7 +174,7 @@
       
 
       
-      <p><strong>Problem F. 安全的密码mark text</strong><br>时间限制 1000 ms<br>内存限制 256 MB</p>
+      <h2 id="Problem-F-安全的密码mark-text"><a href="#Problem-F-安全的密码mark-text" class="headerlink" title="Problem F. 安全的密码mark text"></a>Problem F. 安全的密码mark text</h2><p>时间限制 1000 ms<br>内存限制 256 MB</p>
 <p><strong>题目描述</strong><br>众所周知，密码安全是互联网时代人们最为关心的事情之一。而 RSA 公钥加密算法是目前最有影响力和最常用的公钥加密算法，它能够抵抗到目前为止已知的绝大多数密码攻击。</p>
 <p>其实 RSA 公钥加密算法的原理并不复杂，它基于一个十分简单的数论事实：将两个大素数相乘十分容易，而想要对其乘积进行质因数分解却极其困难，因此可以将乘积公开作为加密密钥。</p>
 <p>所以 RSA 算法很重要的一个过程就是得到两个大素数相乘结果。</p>
@@ -124,6 +190,36 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	scanf(<span class="string">"%d"</span>,&amp;T);</span><br><span class="line">	<span class="keyword">while</span> (T--)</span><br><span class="line">	&#123;</span><br><span class="line">		scanf(<span class="string">"%d"</span>,&amp;n);</span><br><span class="line">		bool flag=<span class="literal">false</span>;</span><br><span class="line">		ufor (i,<span class="number">2</span>,(int) sqrt(n))</span><br><span class="line">			<span class="keyword">if</span> (n%i==<span class="number">0</span>)</span><br><span class="line">				<span class="keyword">if</span> (Sushu(n/i)) flag=<span class="literal">true</span>; <span class="keyword">else</span> <span class="keyword">break</span>;</span><br><span class="line">		printf((flag)? <span class="string">"YES\n"</span>:<span class="string">"NO\n"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>思考题：在以上的for循环中，为什么要写两个if，而不是在两个判断之间用&amp;&amp;?</p>
+<hr>
+<h2 id="Problem-G-课堂作业-4-4"><a href="#Problem-G-课堂作业-4-4" class="headerlink" title="Problem G. 课堂作业-4-4"></a>Problem G. 课堂作业-4-4</h2><p>时间限制 1000 ms<br>内存限制 64 MB</p>
+<p><strong>题目描述</strong><br>小明刚买了一个机械键盘，但他在用机械键盘打字的时候发现键盘的Home键和End键坏掉了，于是他在打字的时候光标有时会突然跑到行首，有时又会突然跑到行尾，现在给你键盘的输入，求最后屏幕上的字符串。</p>
+<p><strong>输入数据</strong><br>输入数据为一行字符串，字符串只包含小写英文字母,’[‘符号以及’]’符号，’[‘代表按下了Home键，‘]’代表按下了End键，字符串长度不超过100000。</p>
+<p><strong>输出数据</strong><br>输出最后屏幕上的字符串。</p>
+<p><strong>样例输入</strong></p>
+<p>xiechengxuz[henhao]wan</p>
+<p><strong>样例输出</strong></p>
+<p>henhaoxiechengxuzwan</p>
+<p><strong>样例说明</strong><br>可能出现多个’[‘和’]’，也可能没有’[‘和’]’</p>
+<hr>
+<p><strong>解法</strong></p>
+<p>在说解法之前，先来捋一捋这题是什么意思。对于一个更典型的样例</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[dsafd]af[daf]ewa[]f[ds</span><br></pre></td></tr></table></figure>
+<p>它的输出应当是</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dsdafdsafdafewaf</span><br></pre></td></tr></table></figure>
+<p>这是怎么出来的呢？在队首，先有dsafd，然后daf插到它前面去了，接着ds又在它俩前面，所以输出的前面部分是dsdafdsafd。然后是中间部分。这里有一个结论，是中间部分必然在所有的[和]之前。输出中间部分（本样例无）之后，是队尾部分。队尾先有af，然后ewa排在它后面，f也在后面。所以最终输出为dsdafdsafdafewaf。</p>
+<p>这题通过和大佬们讨论，本菜鸡获得了三个方法。以下引用均已获得许可。</p>
+<h3 id="一、strcmp-by-JJHDL"><a href="#一、strcmp-by-JJHDL" class="headerlink" title="一、strcmp   by  JJHDL"></a>一、strcmp   by  JJHDL</h3><p>其实这道题麻烦的地方就在队首而已。然后strcmp是一个在时间复杂度上正常，而在代码编写难易程度上出色的一个函数。对于上面那个样例，我们就是把daf用strcmp插到前面，再把ds插到前面。这个比较好理解，代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">int main(<span class="keyword">void</span>)</span><br><span class="line">&#123;</span><br><span class="line">    freopen(<span class="string">"aaa.in"</span>,<span class="string">"r"</span>,stdin);</span><br><span class="line">    scanf(<span class="string">"%s"</span>,s);</span><br><span class="line">    <span class="comment">// printf("%s",s);</span></span><br><span class="line">    int len = strlen(s);</span><br><span class="line">    ans[<span class="number">0</span>] = <span class="string">'\0'</span>;</span><br><span class="line">    tmp[<span class="number">0</span>] = <span class="string">'\0'</span>;</span><br><span class="line">    int top = <span class="number">-1</span>;</span><br><span class="line">    int last = <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">for</span> (int i=<span class="number">0</span>;i&lt;len;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (s[i]==<span class="string">'['</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            tmp[top+<span class="number">1</span>]=<span class="string">'\0'</span>;</span><br><span class="line">            <span class="keyword">if</span> (last==<span class="number">-1</span>)&#123;</span><br><span class="line">                strcat(ans,tmp);</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                strcat(tmp,ans);</span><br><span class="line">                strcpy(ans,tmp);</span><br><span class="line">            &#125;</span><br><span class="line">            top=<span class="number">-1</span>;</span><br><span class="line">            last = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (s[i]==<span class="string">']'</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            tmp[top+<span class="number">1</span>]=<span class="string">'\0'</span>;</span><br><span class="line">            <span class="keyword">if</span> (last==<span class="number">-1</span>)&#123;</span><br><span class="line">                strcat(ans,tmp);</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                strcat(tmp,ans);</span><br><span class="line">                strcpy(ans,tmp);</span><br><span class="line">            &#125;</span><br><span class="line">            top = <span class="number">-1</span>;</span><br><span class="line">            last = <span class="number">-1</span>;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        tmp[++top] = s[i];</span><br><span class="line">    &#125;</span><br><span class="line">            tmp[top+<span class="number">1</span>]=<span class="string">'\0'</span>;</span><br><span class="line">            <span class="keyword">if</span> (last==<span class="number">-1</span>)&#123;</span><br><span class="line">                strcat(ans,tmp);</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                strcat(tmp,ans);</span><br><span class="line">                strcpy(ans,tmp);</span><br><span class="line">            &#125;</span><br><span class="line">    printf(<span class="string">"%s\n"</span>,ans);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>该做法与链表类似。</p>
+<hr>
+<h3 id="二、倒序存-by-GlisCJ"><a href="#二、倒序存-by-GlisCJ" class="headerlink" title="二、倒序存   by  GlisCJ"></a>二、倒序存   by  GlisCJ</h3><p>我对于队首的处理方法是这样的：<br>首先，在样例中，在队首的那几个字符串是  dsafd daf ds 是比较容易得到的。然后我们如何能更直接地存储它们呢？我想到一个方法，就是把每个分开的队首字符串都倒着存，这样会得到dfasd fad sd 。再把这个字符串倒序输出，就是 dsdafdsafd ，也就是我们想要的答案。<br>这个也比较好理解，代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	scanf(<span class="string">"%s"</span>,s); n=strlen(s);</span><br><span class="line">	int i=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span> (i&lt;n)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">while</span> (s[i]==<span class="string">'['</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			int x=<span class="number">0</span>;</span><br><span class="line">			<span class="keyword">while</span> (s[i]==<span class="string">'['</span>) i++;</span><br><span class="line">			<span class="keyword">while</span> (i&lt;n &amp;&amp; s[i]!=<span class="string">']'</span> &amp;&amp; s[i]!=<span class="string">'['</span>) a[x++]=s[i++];</span><br><span class="line">			dfor (j,x<span class="number">-1</span>,<span class="number">0</span>) st[cur++]=a[j];</span><br><span class="line">		&#125;</span><br><span class="line">		i++;</span><br><span class="line">	&#125;</span><br><span class="line">	dfor (i,cur<span class="number">-1</span>,<span class="number">0</span>) printf(<span class="string">"%c"</span>,st[i]);</span><br><span class="line">	i=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span> (i&lt;n)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">while</span> (s[i]==<span class="string">'['</span> || s[i]==<span class="string">']'</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">while</span> (s[i]==<span class="string">'['</span>)</span><br><span class="line">			<span class="keyword">while</span> (i&lt;n &amp;&amp; s[i]!=<span class="string">']'</span>) i++;			</span><br><span class="line">			<span class="keyword">while</span> (s[i]==<span class="string">']'</span> &amp;&amp; i&lt;n) i++;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (i&gt;=n) <span class="keyword">break</span>;</span><br><span class="line">		putchar(s[i++]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然鹅我实在是太菜惹，把它当成了传统字符串处理题。楼下简直是模板。</p>
+<hr>
+<h3 id="三、deque-by-ZXDL"><a href="#三、deque-by-ZXDL" class="headerlink" title="三、deque   by ZXDL"></a>三、deque   by ZXDL</h3><p>队首，其实是相当于把一个个字符串不断放在第一位。队尾，其实是相当于把一个个字符串不断放在最后一位。那这就和stl中的deque的push_front()、push_back()操作完全吻合。这道题就像是这种数据结构的模板题，所以代码会非常清晰简明。<br>这个也比较好理解，代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">int main() &#123;</span><br><span class="line">    char buf[<span class="number">102400</span>];</span><br><span class="line">    std::deque&lt;std::string&gt; input;</span><br><span class="line">    scanf(<span class="string">"%[^][\n]"</span>, buf);</span><br><span class="line">    input.push_back(std::string(buf));</span><br><span class="line">    char c;</span><br><span class="line">    <span class="keyword">while</span> (c = getchar(), c != EOF) &#123;</span><br><span class="line">        buf[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span> (c == <span class="string">'['</span>) &#123;</span><br><span class="line">            scanf(<span class="string">"%[^][\n]"</span>, buf);</span><br><span class="line">            input.push_front(std::string(buf));</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (c == <span class="string">']'</span>) &#123;</span><br><span class="line">            scanf(<span class="string">"%[^][\n]"</span>, buf);</span><br><span class="line">            input.push_back(std::string(buf));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (auto &amp; i : input) &#123;</span><br><span class="line">        std::cout &lt;&lt; i;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果还是找不到错误原因的话，可以看看是不是在很多个[[[]]]]]][][][][][[[[]]]]相连的时候出错了。</p>
 <hr>
 <p>友情链接：<br>章鱼哥：<a href="https://fishercat.top/" target="_blank" rel="noopener">https://fishercat.top/</a><br>姜总：<a href="https://jjhqwq.top/" target="_blank" rel="noopener">https://jjhqwq.top/</a></p>
 
