@@ -69,6 +69,89 @@
     
     
     
+    <article id="post-计算思维训练-期末考" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/07/10/%E8%AE%A1%E7%AE%97%E6%80%9D%E7%BB%B4%E8%AE%AD%E7%BB%83-%E6%9C%9F%E6%9C%AB%E8%80%83/"
+    >计算思维训练-期末考</a
+  >
+</h2>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/07/10/%E8%AE%A1%E7%AE%97%E6%80%9D%E7%BB%B4%E8%AE%AD%E7%BB%83-%E6%9C%9F%E6%9C%AB%E8%80%83/" class="article-date">
+  <time datetime="2020-07-10T09:22:16.000Z" itemprop="datePublished">2020-07-10</time>
+</a>
+      
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <h6 id="前言：暑假吼吼吼放完假就可以开学了吼吼吼"><a href="#前言：暑假吼吼吼放完假就可以开学了吼吼吼" class="headerlink" title="前言：暑假吼吼吼放完假就可以开学了吼吼吼"></a>前言：暑假吼吼吼放完假就可以开学了吼吼吼</h6><h2 id="Problem-D-分米粒"><a href="#Problem-D-分米粒" class="headerlink" title="Problem D. 分米粒"></a>Problem D. 分米粒</h2><p>时间限制 ？？ ms<br>内存限制 ？？ MB</p>
+<p><strong>题目描述</strong><br>//因为过时间看不到了所以不可描述<br>大概意思是有n堆按顺序的米，你可以拿隔板把它们隔开，两隔板之间的若干堆米为一份。已知你有m块隔板。求经过你睿智的隔板设置后，每份米的最大值，最小是多少。</p>
+<p><strong>输入数据</strong><br>//不可描述</p>
+<p><strong>输出数据</strong><br>//不可描述</p>
+<p><strong>样例输入</strong><br>//不记得样例了，再来一个</p>
+<p>5 2<br>7 2 1 9 3<br>12<br>5 3<br>3 9 1 2 7<br>10</p>
+<p><strong>样例输出</strong><br>12<br>10</p>
+<p><strong>样例说明</strong><br>无</p>
+<hr>
+<p><strong>算法</strong></p>
+<p>二分查找模板题。<br>不过有些同学考试的时候比较紧张，可能没有看出来。因为这道题没有排序嘛，会觉得噫这题不用排序那是不是就不能用二分查找了？其实不然。<br>我们看看这道题满足什么条件？米堆的顺序不可调整！也就是有一个数组a[i]，它的顺序是不变的。如果二分查找的题目做多了，就很发现它其实是很常见的一种应用二分查找的题型。</p>
+<p>二分查找是在，前面的如果能满足，后面的一定能满足，的条件下才能使用。再来看这道题，如果 每份米的最大值 最小不超过10，那 每份米的最大值 最小是不是肯定不超过比10大的数？是的，那么它就可以使用二分查找。</p>
+<p>接下来说说怎么用，也就是二分查找的Check()函数怎么写。<br>我们在放隔板的时候，因为米堆的顺序固定，所以一旦某一堆的和+a[i]超过了k，我们就得在a[i]之前放一个隔板。也就是说，我们可以在循环1-n时，每次累加当前米堆的和，当它要超过k时，隔板数+1。如果某时刻隔板数&gt;m，你就知道，米堆最大值最小是k这个条件，是无法满足的，return false。</p>
+<hr>
+<p>下面是具体的代码实现。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">bool Check(int x)</span><br><span class="line">&#123;</span><br><span class="line">	int sum=<span class="number">0</span>,cnt=<span class="number">0</span>;</span><br><span class="line">	ufor (i,<span class="number">1</span>,n)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (sum+a[i]&gt;x) sum=a[i],cnt++; <span class="keyword">else</span> sum+=a[i];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> cnt+<span class="number">1</span>&lt;=m;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span> (scanf(<span class="string">"%d%d"</span>,&amp;n,&amp;m)!=EOF)</span><br><span class="line">	&#123;</span><br><span class="line">		int summ=<span class="number">0</span>,maxx=<span class="number">0</span>;</span><br><span class="line">		ufor (i,<span class="number">1</span>,n)</span><br><span class="line">		&#123;</span><br><span class="line">			scanf(<span class="string">"%d"</span>,&amp;a[i]);</span><br><span class="line">			summ+=a[i];</span><br><span class="line">			maxx=max(maxx,a[i]);</span><br><span class="line">		&#125;</span><br><span class="line">		int l=maxx,r=summ;</span><br><span class="line">		<span class="keyword">while</span> (l&lt;r)</span><br><span class="line">		&#123;</span><br><span class="line">			int mid=(l+r)/<span class="number">2</span>;</span><br><span class="line">			<span class="keyword">if</span> (Check(mid)) r=mid; <span class="keyword">else</span> l=mid+<span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//printf("%d\n",r);</span></span><br><span class="line">		<span class="comment">//while (!Check(r)) r--;</span></span><br><span class="line">		cout&lt;&lt;l&lt;&lt;endl;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+
+    </footer>
+
+  </div>
+
+  
+
+  
+  
+  
+
+  
+
+</article>
+    
     <article id="post-计算思维训练-20200708" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
