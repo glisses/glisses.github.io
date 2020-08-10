@@ -58,7 +58,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">850字</span>
+            <span class="post-count">875字</span>
         </span>
     </span>
 
@@ -95,10 +95,10 @@
 
       
       <h2 id="softmax"><a href="#softmax" class="headerlink" title="softmax"></a>softmax</h2><p>softmax是一种函数，假设数组中有n个元素，j表示第i个元素，那么这个元素的softmax值为 Si = e^i/Σj e^j</p>
-<p><img src="https://img-blog.csdn.net/20180902220822202?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2JpdGNhcm1hbmxlZQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="softmax计算实例"></p>
+<p><img src="https://img-blog.csdn.net/20180902220822202?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2JpdGNhcm1hbmxlZQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="计算softmax实例"></p>
 <p>参考文献：<br>1.<a href="https://blog.csdn.net/bitcarmanlee/article/details/82320853" target="_blank" rel="noopener">https://blog.csdn.net/bitcarmanlee/article/details/82320853</a></p>
-<h2 id="cross-entropy"><a href="#cross-entropy" class="headerlink" title="cross-entropy"></a>cross-entropy</h2><a id="more"></a>
-<p>在二分类问题中，你可以根据神经网络节点的输出，通过一个激活函数如Sigmoid，将其转换为属于某一类的概率，为了给出具体的分类结果，你可以取0.5作为阈值，凡是大于0.5的样本被认为是正类，小于0.5则认为是负类。</p>
+<h2 id="cross-entropy-交叉熵"><a href="#cross-entropy-交叉熵" class="headerlink" title="cross-entropy / 交叉熵"></a>cross-entropy / 交叉熵</h2><p>在二分类问题中，你可以根据神经网络节点的输出，通过一个激活函数如Sigmoid，将其转换为属于某一类的概率，为了给出具体的分类结果，你可以取0.5作为阈值，凡是大于0.5的样本被认为是正类，小于0.5则认为是负类。</p>
+<a id="more"></a>
 <p>　然而这样的做法并不容易推广到多分类问题。多分类问题神经网络最常用的方法是根据类别个数n，设置n个输出节点，这样每个样本神经网络都会给出一个n维数组作为输出结果，然后我们运用激活函数如softmax，将输出转换为一种概率分布，其中的每一个概率代表了该样本属于某类的概率。</p>
 <p>　比如一个手写数字识别这种简单的10分类问题，对于数字1的识别，神经网络模型的输出结果应该越接近[0,1,0,0,0,0,0,0,0,0]越好，其中[0,1,0,0,0,0,0,0,0,0]是最理想的结果了</p>
 <p>　但是如何衡量一个神经网络输出向量和理想的向量的接近程度呢？交叉熵（cross entropy）就是这个评价方法之一，他刻画了两个概率分布之间的距离，是多分类问题中常用的一种损失函数。</p>
@@ -112,8 +112,10 @@
 <p>运行结果：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[[<span class="number">0.95033026</span> <span class="number">0.04731416</span> <span class="number">0.00235563</span>]</span><br><span class="line"> [<span class="number">0.04622407</span> <span class="number">0.11369288</span> <span class="number">0.84008306</span>]]</span><br><span class="line">[<span class="number">3.9509459</span> <span class="number">1.6642545</span>]</span><br></pre></td></tr></table></figure>
 
-<p> 参考文献：<br> 1.<a href="https://blog.csdn.net/yhily2008/article/details/80262321" target="_blank" rel="noopener">https://blog.csdn.net/yhily2008/article/details/80262321</a></p>
-<h2 id="non-local"><a href="#non-local" class="headerlink" title="non-local"></a>non-local</h2><h2 id="dense-net"><a href="#dense-net" class="headerlink" title="dense-net"></a>dense-net</h2><h2 id="两种-attention"><a href="#两种-attention" class="headerlink" title="两种 attention"></a>两种 attention</h2><h2 id="FBblocks"><a href="#FBblocks" class="headerlink" title="FBblocks"></a>FBblocks</h2>
+<p> 参考文献：<br> 1.<a href="https://blog.csdn.net/yhily2008/article/details/80262321" target="_blank" rel="noopener">https://blog.csdn.net/yhily2008/article/details/80262321</a><br> 2.<a href="https://www.cnblogs.com/always-fight/p/10370412.html" target="_blank" rel="noopener">https://www.cnblogs.com/always-fight/p/10370412.html</a></p>
+<h2 id="non-local"><a href="#non-local" class="headerlink" title="non-local"></a>non-local</h2><h2 id="dense-net"><a href="#dense-net" class="headerlink" title="dense-net"></a>dense-net</h2><p>dense net</p>
+<p>参考文献：<br>1.<a href="https://zhuanlan.zhihu.com/p/37189203" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/37189203</a></p>
+<h2 id="两种-attention"><a href="#两种-attention" class="headerlink" title="两种 attention"></a>两种 attention</h2><h2 id="FBblocks"><a href="#FBblocks" class="headerlink" title="FBblocks"></a>FBblocks</h2>
       
       <!-- reward -->
       
