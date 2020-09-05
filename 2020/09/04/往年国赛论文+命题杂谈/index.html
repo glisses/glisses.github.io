@@ -6,7 +6,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-    matlab杂谈 |  glisses
+    往年国赛论文+命题杂谈 |  glisses
   </title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   
@@ -30,7 +30,7 @@
   <div id="app">
     <main class="content">
       <section class="outer">
-  <article id="post-matlab速成知识点" class="article article-type-post" itemscope
+  <article id="post-往年国赛论文+命题杂谈" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
   <div class="article-inner">
@@ -38,7 +38,7 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  matlab杂谈
+  往年国赛论文+命题杂谈
 </h1>
   
 
@@ -47,8 +47,8 @@
 
     
     <div class="article-meta">
-      <a href="/2020/09/03/matlab%E9%80%9F%E6%88%90%E7%9F%A5%E8%AF%86%E7%82%B9/" class="article-date">
-  <time datetime="2020-09-03T02:59:35.000Z" itemprop="datePublished">2020-09-03</time>
+      <a href="/2020/09/04/%E5%BE%80%E5%B9%B4%E5%9B%BD%E8%B5%9B%E8%AE%BA%E6%96%87+%E5%91%BD%E9%A2%98%E6%9D%82%E8%B0%88/" class="article-date">
+  <time datetime="2020-09-04T07:58:16.000Z" itemprop="datePublished">2020-09-04</time>
 </a>
       
       
@@ -58,7 +58,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">940字</span>
+            <span class="post-count">338字</span>
         </span>
     </span>
 
@@ -67,7 +67,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">3分钟</span>
+            <span class="post-count">1分钟</span>
         </span>
     </span>
 </div>
@@ -78,6 +78,8 @@
 
     
     
+    <div class="tocbot"></div>
+
 
 
 
@@ -92,52 +94,13 @@
       
 
       
-      <ol>
-<li><p>matlab 自带inf</p>
-</li>
-<li><p>.*和./<br> matlab中./与/有什么区别<br> 点运算是处理元素之间的运算<br> 直接/在矩阵计算中只能处理符合矩阵运算法则的运算<br> 矩阵计算和作图都是点运算<br> 在对数值计算时，“./”和“/”其实是没有区别的。<br> 例：对于矩阵A=[a b c d]，1./A=[1/a 1/b 1/c 1/d]，而1/A表示的是A的逆</p>
-</li>
-<li><p>@可以作为函数句柄，即自定义函数类似物。也可以用作给函数传参。<br> <a href="https://blog.csdn.net/weixin_38009585/article/details/81016997" target="_blank" rel="noopener">https://blog.csdn.net/weixin_38009585/article/details/81016997</a></p>
-</li>
-</ol>
+      <h2 id="2019命题"><a href="#2019命题" class="headerlink" title="2019命题"></a>2019命题</h2><h2 id="2019-A190"><a href="#2019-A190" class="headerlink" title="2019-A190"></a>2019-A190</h2><p>和下面那篇对比起来，论文没有那么出彩但代码部分做的很好。<br><a href="http://dxs.moe.gov.cn/zx/a/qkt_sxjm_lw_2019qgdxssxjmjslwzs/191029/1529313.shtml" target="_blank" rel="noopener">http://dxs.moe.gov.cn/zx/a/qkt_sxjm_lw_2019qgdxssxjmjslwzs/191029/1529313.shtml</a></p>
+<h2 id="2019-B047"><a href="#2019-B047" class="headerlink" title="2019-B047"></a>2019-B047</h2><p>在19年b组中，罕见地把空气阻力也考虑了。论文中的图看起来就很教科书，对于几乎每个变量都会先说明它们受哪些变量影响。但是它的代码比较难读懂，感觉和论文的水平不一致。。。<br><a href="http://www.univs.cn/zx/a/qkt_sxjm_lw/191029/1507842.shtml" target="_blank" rel="noopener">http://www.univs.cn/zx/a/qkt_sxjm_lw/191029/1507842.shtml</a></p>
 <a id="more"></a>
 
-<ol start="4">
-<li><p>’表示矩阵转置</p>
-</li>
-<li><p>：的使用：<br> <a href="https://blog.csdn.net/rosefun96/article/details/78441751" target="_blank" rel="noopener">https://blog.csdn.net/rosefun96/article/details/78441751</a></p>
-</li>
-<li><p>在matlab中，波浪号 ~（也就是键盘上数字键1 旁边的那个）主要有两个用法：</p>
-</li>
-</ol>
-<p>第一是代表与或非中的非，如在以下代码中：</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ~flag</span><br><span class="line">     ……</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-<p>只有在flag为0或false时，才会执行省略号对应的部分<br>另外，matlab中不等号的写法是：~=</p>
-<p>第二是代表忽略输出参数，如unique函数有三个输出参数，而我们只需要第二个参数，那可以这样：</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[~,rank,~]=unique(array,<span class="string">'rows'</span>);</span><br></pre></td></tr></table></figure>
-
-<p>代表我们忽略了第一和第三个参数，而如果我们不加波浪号的话</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rank=unique(array,<span class="string">'rows'</span>);</span><br></pre></td></tr></table></figure>
-
-<p>这表示接收第一个参数，就不是我们想要的啦</p>
-<p><a href="https://blog.csdn.net/songyunli1111/article/details/78501250" target="_blank" rel="noopener">https://blog.csdn.net/songyunli1111/article/details/78501250</a></p>
-<ol start="7">
-<li><p>repmat全称是Replicate Matrix ，意思是复制和平铺矩阵，是MATLAB里面的一个函数。语法有B = repmat(A,m,n)，将矩阵 A 复制 m×n 块，即把 A 作为 B 的元素，B 由 m×n 个 A 平铺而成。B 的维数是 [size(A,1)<em>m, size(A,2)</em>n] 。</p>
-</li>
-<li><p>diag，构造对角矩阵</p>
-</li>
-</ol>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; A = <span class="built_in">diag</span>([<span class="number">100</span> <span class="number">200</span> <span class="number">300</span>])</span><br><span class="line"></span><br><span class="line">A =</span><br><span class="line"></span><br><span class="line">   <span class="number">100</span>     <span class="number">0</span>     <span class="number">0</span></span><br><span class="line">     <span class="number">0</span>   <span class="number">200</span>     <span class="number">0</span></span><br><span class="line">     <span class="number">0</span>     <span class="number">0</span>   <span class="number">300</span></span><br></pre></td></tr></table></figure>
-
-<ol start="9">
-<li><p>TSP问题：<strong>旅行商问题</strong>是数学领域中著名问题之一。假设有一个旅行商人要拜访n个城市，他必须选择所要走的路径，路径的限制是每个城市只能拜访一次，而且最后要回到原来出发的城市。路径的选择目标是要求得的路径路程为所有路径之中的最小值。</p>
-</li>
-<li><p>遗传算法：（Genetic Algorithm，GA）最早是由美国的 John holland于20世纪70年代提出,该算法是根据大自然中生物体进化规律而设计提出的。是模拟达尔文生物进化论的自然选择和遗传学机理的生物进化过程的计算模型，是一种通过模拟自然进化过程搜索最优解的方法。该算法通过数学的方式,利用计算机仿真运算,将问题的求解过程转换成类似生物进化中的染色体基因的交叉、变异等过程。在<strong>求解较为复杂的组合优化问题</strong>时,相对一些常规的优化算法,通常能够较快地获得较好的优化结果。遗传算法已被人们广泛地应用于组合优化、机器学习、信号处理、自适应控制和人工生命等领域。</p>
-</li>
-<li><p>蚁群算法是一种用来寻找优化路径的概率型算法。它由Marco Dorigo于1992年在他的博士论文中提出，其灵感来源于蚂蚁在寻找食物过程中发现路径的行为。 [1]<br>这种算法具有分布计算、信息正反馈和<strong>启发式搜索</strong>的特征，本质上是进化算法中的一种启发式全局优化算法。<br>蚁群算法可能出现，较早发现局部最优解，然后陷进去，而没找到全局最优解，的弊端。<br>蚁群算法改良版有：最大最小蚁群、排序蚁群、基于遗传算法的蚁群</p>
-</li>
-</ol>
+<h2 id="2018命题"><a href="#2018命题" class="headerlink" title="2018命题"></a>2018命题</h2><p>B题在读题上设置了不少障碍，很多队伍因为题目没读懂就去做A了。这题看着朴素，实际上评奖的论文也大多是采用了朴素的贪心啊动态规划之类。而套用智能算法（如遗传）的好像挂了不少，因为这题如果要套，有很多细节要处理。<br>以及有说，选了这道仿真题之后，找bug调bug的时间大大增加。如果我们要选这种题，一定要预留足够的时间嘤嘤嘤。</p>
+<h2 id="2018-B203"><a href="#2018-B203" class="headerlink" title="2018-B203"></a>2018-B203</h2><p>感觉很一般？？？论文写的像程序设计基础训练的pdf，流程图也比较朴素。<br><a href="http://dxs.moe.gov.cn/zx/a/qkt_sxjm_lw_2018qgdxssxjmjslwzs/181101/1529329.shtml" target="_blank" rel="noopener">http://dxs.moe.gov.cn/zx/a/qkt_sxjm_lw_2018qgdxssxjmjslwzs/181101/1529329.shtml</a></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>看到的大部分论文，参考文献只有两三篇。多参考一些也许会更好。</p>
 
       
       <!-- reward -->
@@ -207,7 +170,7 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2020/09/03/matlab%E9%80%9F%E6%88%90%E7%9F%A5%E8%AF%86%E7%82%B9/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2020/09/04/%E5%BE%80%E5%B9%B4%E5%9B%BD%E8%B5%9B%E8%AE%BA%E6%96%87+%E5%91%BD%E9%A2%98%E6%9D%82%E8%B0%88/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -223,19 +186,10 @@
   
   <nav class="article-nav">
     
-      <a href="/2020/09/04/%E5%BE%80%E5%B9%B4%E5%9B%BD%E8%B5%9B%E8%AE%BA%E6%96%87%E6%B1%87%E6%80%BB/" class="article-nav-link">
-        <strong class="article-nav-caption">上一篇</strong>
-        <div class="article-nav-title">
-          
-            往年国赛论文+命题杂谈
-          
-        </div>
-      </a>
     
-    
-      <a href="/2020/08/09/%E8%BF%91%E6%9C%9F%E5%AD%A6%E7%9A%84%E4%B8%80%E4%BA%9BAI%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93-20200809/" class="article-nav-link">
+      <a href="/2020/09/03/matlab%E6%9D%82%E8%B0%88/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">近期学的一些AI相关知识总结-20200809</div>
+        <div class="article-nav-title">matlab杂谈</div>
       </a>
     
   </nav>
