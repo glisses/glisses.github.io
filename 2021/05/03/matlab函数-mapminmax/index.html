@@ -6,7 +6,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-    网站搭建相关问题及参考博客 |  glisses
+    matlab函数-mapminmax |  glisses
   </title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   
@@ -30,7 +30,7 @@
   <div id="app">
     <main class="content">
       <section class="outer">
-  <article id="post-网站搭建时遇到的问题及参考的博客" class="article article-type-post" itemscope
+  <article id="post-matlab函数-mapminmax" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
   <div class="article-inner">
@@ -38,7 +38,7 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  网站搭建相关问题及参考博客
+  matlab函数-mapminmax
 </h1>
   
 
@@ -47,8 +47,8 @@
 
     
     <div class="article-meta">
-      <a href="/2021/03/11/%E7%BD%91%E7%AB%99%E6%90%AD%E5%BB%BA%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E5%8F%8A%E5%8F%82%E8%80%83%E7%9A%84%E5%8D%9A%E5%AE%A2/" class="article-date">
-  <time datetime="2021-03-10T19:46:35.000Z" itemprop="datePublished">2021-03-11</time>
+      <a href="/2021/05/03/matlab%E5%87%BD%E6%95%B0-mapminmax/" class="article-date">
+  <time datetime="2021-05-02T17:13:46.000Z" itemprop="datePublished">2021-05-03</time>
 </a>
       
       
@@ -58,7 +58,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">388字</span>
+            <span class="post-count">519字</span>
         </span>
     </span>
 
@@ -67,7 +67,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">1分钟</span>
+            <span class="post-count">2分钟</span>
         </span>
     </span>
 </div>
@@ -78,6 +78,8 @@
 
     
     
+    <div class="tocbot"></div>
+
 
 
 
@@ -92,28 +94,53 @@
       
 
       
-      <ol>
-<li><p>sudo: cd: command not found<br>【参考博客】<a href="https://www.cnblogs.com/phpper/p/7638039.html" target="_blank" rel="noopener">https://www.cnblogs.com/phpper/p/7638039.html</a></p>
-</li>
-<li><p>宝塔面板忘记账号密码<br>【参考博客】<a href="https://www.bt.cn/bbs/thread-1172-1-1.html" target="_blank" rel="noopener">https://www.bt.cn/bbs/thread-1172-1-1.html</a></p>
-</li>
-<li><p>用ip访问宝塔面板，遇到安全入口校验问题，错误信息为</p>
-<a id="more"></a>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">请使用正确的入口登录面板</span><br><span class="line"></span><br><span class="line">错误原因：当前宝塔新安装的已经开启了安全入口登录，新装机器都会随机一个<span class="number">8</span>位字符的安全入口名称，亦可以在面板设置处修改，如您没记录或不记得了，可以使用以下方式解决</span><br><span class="line"></span><br><span class="line">解决方法：在SSH终端输入以下一种命令来解决</span><br><span class="line"></span><br><span class="line"><span class="number">1.</span>查看面板入口：/etc/init.d/bt <span class="keyword">default</span></span><br><span class="line"></span><br><span class="line"><span class="number">2.</span>关闭安全入口：rm -f /www/server/panel/data/admin_path.pl</span><br></pre></td></tr></table></figure>
-<p>==注意：【关闭安全入口】将使您的面板登录地址被直接暴露在互联网上，非常危险，请谨慎操作 #F44336==</p>
-</li>
-</ol>
-<p>【参考博客】<a href="https://www.php.cn/topic/bt/431131.html" target="_blank" rel="noopener">https://www.php.cn/topic/bt/431131.html</a></p>
-<ol start="4">
-<li>ssh连接，无法访问宝塔面板，错误信息类似为<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line">外网面板地址: http:<span class="comment">//121.196.***.176:8888/c4c*****</span></span><br><span class="line">内网面板地址: http:<span class="comment">//172.17.**.6:8888/c4c*****</span></span><br><span class="line">*以下仅为初始默认账户密码，若无法登录请执行bt命令重置账户/密码登录</span><br><span class="line">username: qbtr****</span><br><span class="line">password: ebc*****</span><br><span class="line">If you cannot access the panel,</span><br><span class="line">release the following panel port [<span class="number">8888</span>] <span class="keyword">in</span> the security group</span><br><span class="line">若无法访问面板，请检查防火墙/安全组是否有放行面板[<span class="number">8888</span>]端口</span><br></pre></td></tr></table></figure>
+      <h1 id="mapminmax——matlab自带的数据标准化方法"><a href="#mapminmax——matlab自带的数据标准化方法" class="headerlink" title="mapminmax——matlab自带的数据标准化方法"></a>mapminmax——matlab自带的数据标准化方法</h1><p>本文涉及mapminmax函数的四种用法，如下：</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[Y,PS] = mapminmax(X,Ymin,Ymax)</span><br><span class="line">[Y,PS] = mapminmax(X,FP)</span><br><span class="line">Y = mapminmax(‘apply’,X,PS)</span><br><span class="line">X = mapminmax(‘reverse’,Y,PS)</span><br></pre></td></tr></table></figure>
 
-</li>
-</ol>
-<p>【参考博客】</p>
-<ul>
-<li><a href="https://blog.csdn.net/wjkwan/article/details/111709579" target="_blank" rel="noopener">https://blog.csdn.net/wjkwan/article/details/111709579</a></li>
-<li><a href="https://www.bt.cn/bbs/thread-2897-1-1.html" target="_blank" rel="noopener">https://www.bt.cn/bbs/thread-2897-1-1.html</a></li>
-</ul>
+<h4 id="Y-PS-mapminmax-X-Ymin-Ymax"><a href="#Y-PS-mapminmax-X-Ymin-Ymax" class="headerlink" title="[Y,PS] = mapminmax(X,Ymin,Ymax)"></a>[Y,PS] = mapminmax(X,Ymin,Ymax)</h4><p>运行如下代码（默认Ymin=-1， Ymax=1）：</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x1 = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">4</span>]</span><br><span class="line">[y,ps]=mapminmax(x1)</span><br><span class="line">y</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/glisses/ImageWarehouse/main/img/matlab%E5%87%BD%E6%95%B0-mapminmax-1.png" alt="运行结果"></p>
+<p>这里的ps， 是记录【从x到y的映射规则】的结构体。<br>上图的运行结果中，可以看到：<br>x为一行，x的最大值是4，最小值是1，x的最大值与最小值之差（xrange）是3；<br>y为一行，最大1，最小-1，y的最大值与最小值之差是2，</p>
+<p>从x到y的映射规则是：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (xmax != xmin) y = (ymax-ymin)*(x-xmin)/(xmax-xmin) + ymin;</span><br><span class="line">	<span class="keyword">else</span> y = ymin;</span><br></pre></td></tr></table></figure>
+<p>这样就避免了标准化时除0出错。</p>
+<h4 id="Y-PS-mapminmax-X-FP"><a href="#Y-PS-mapminmax-X-FP" class="headerlink" title="[Y,PS] = mapminmax(X,FP)"></a>[Y,PS] = mapminmax(X,FP)</h4><p>这种形式，是让Y=X的FP映射，PS=FP。<br>运行以下代码：</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">x1 = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">4</span>]</span><br><span class="line">[y,ps]=mapminmax(x1)</span><br><span class="line">ps.ymin = <span class="number">0</span></span><br><span class="line">[y,pq]=mapminmax(x1,ps)</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">x1 =</span><br><span class="line"></span><br><span class="line">     <span class="number">1</span>     <span class="number">2</span>     <span class="number">4</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">y =</span><br><span class="line"></span><br><span class="line">   <span class="number">-1.0000</span>   <span class="number">-0.3333</span>    <span class="number">1.0000</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ps = </span><br><span class="line"></span><br><span class="line">  包含以下字段的 struct:</span><br><span class="line"></span><br><span class="line">         name: <span class="string">'mapminmax'</span></span><br><span class="line">        xrows: <span class="number">1</span></span><br><span class="line">         xmax: <span class="number">4</span></span><br><span class="line">         xmin: <span class="number">1</span></span><br><span class="line">       xrange: <span class="number">3</span></span><br><span class="line">        yrows: <span class="number">1</span></span><br><span class="line">         ymax: <span class="number">1</span></span><br><span class="line">         ymin: <span class="number">-1</span></span><br><span class="line">       yrange: <span class="number">2</span></span><br><span class="line">         gain: <span class="number">0.6667</span></span><br><span class="line">      xoffset: <span class="number">1</span></span><br><span class="line">    no_change: <span class="number">0</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ps = </span><br><span class="line"></span><br><span class="line">  包含以下字段的 struct:</span><br><span class="line"></span><br><span class="line">         name: <span class="string">'mapminmax'</span></span><br><span class="line">        xrows: <span class="number">1</span></span><br><span class="line">         xmax: <span class="number">4</span></span><br><span class="line">         xmin: <span class="number">1</span></span><br><span class="line">       xrange: <span class="number">3</span></span><br><span class="line">        yrows: <span class="number">1</span></span><br><span class="line">         ymax: <span class="number">1</span></span><br><span class="line">         ymin: <span class="number">0</span></span><br><span class="line">       yrange: <span class="number">2</span></span><br><span class="line">         gain: <span class="number">0.6667</span></span><br><span class="line">      xoffset: <span class="number">1</span></span><br><span class="line">    no_change: <span class="number">0</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">y =</span><br><span class="line"></span><br><span class="line">         <span class="number">0</span>    <span class="number">0.3333</span>    <span class="number">1.0000</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">pq = </span><br><span class="line"></span><br><span class="line">  包含以下字段的 struct:</span><br><span class="line"></span><br><span class="line">         name: <span class="string">'mapminmax'</span></span><br><span class="line">        xrows: <span class="number">1</span></span><br><span class="line">         xmax: <span class="number">4</span></span><br><span class="line">         xmin: <span class="number">1</span></span><br><span class="line">       xrange: <span class="number">3</span></span><br><span class="line">        yrows: <span class="number">1</span></span><br><span class="line">         ymax: <span class="number">1</span></span><br><span class="line">         ymin: <span class="number">0</span></span><br><span class="line">       yrange: <span class="number">1</span></span><br><span class="line">         gain: <span class="number">0.3333</span></span><br><span class="line">      xoffset: <span class="number">1</span></span><br><span class="line">    no_change: <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<p>可以看到，在改变ps.ymin后，ps这个结构体改变了。pq则被赋予了ps的值。</p>
+<h4 id="Y-mapminmax-‘apply’-X-PS"><a href="#Y-mapminmax-‘apply’-X-PS" class="headerlink" title="Y = mapminmax(‘apply’,X,PS)"></a>Y = mapminmax(‘apply’,X,PS)</h4><p>看到这个apply，应该可以猜到，这是<strong>应用</strong>PS映射规则，让Y为X在PS映射规则下的输出。</p>
+<h4 id="X-mapminmax-‘reverse’-Y-PS"><a href="#X-mapminmax-‘reverse’-Y-PS" class="headerlink" title="X = mapminmax(‘reverse’,Y,PS)"></a>X = mapminmax(‘reverse’,Y,PS)</h4><p>看到这个reverse，可以猜到这是对Y作<strong>反映射</strong>，得到原来的X。<br>运行以下代码：</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x = [<span class="number">5</span>,<span class="number">8</span>,<span class="number">42</span>]</span><br><span class="line">[y,ps] = mapminmax(x)</span><br><span class="line">x = mapminmax(<span class="string">'reverse'</span>,y,ps)</span><br></pre></td></tr></table></figure>
+
+<p>可以得到输出：</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x =</span><br><span class="line"></span><br><span class="line">     <span class="number">5</span>     <span class="number">8</span>    <span class="number">42</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><blockquote>
+<p> 如何在GitHub提交图片，做一个自己的图片仓库<br> <a href="https://www.imooc.com/article/284213" target="_blank" rel="noopener">https://www.imooc.com/article/284213</a><br> matlab中mapminmax函数的总结<br> <a href="https://xingqingsafe.github.io/2019/04/12/matlab-zhong-mapminmax-han-shu-de-zong-jie/" target="_blank" rel="noopener">https://xingqingsafe.github.io/2019/04/12/matlab-zhong-mapminmax-han-shu-de-zong-jie/</a></p>
+</blockquote>
 
       
       <!-- reward -->
@@ -183,13 +210,15 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2021/03/11/%E7%BD%91%E7%AB%99%E6%90%AD%E5%BB%BA%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E5%8F%8A%E5%8F%82%E8%80%83%E7%9A%84%E5%8D%9A%E5%AE%A2/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2021/05/03/matlab%E5%87%BD%E6%95%B0-mapminmax/" alt="微信分享二维码">
     </div>
 </div>
 
 <div id="share-mask"></div>
       
       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/matlab/" rel="tag">matlab</a></li></ul>
+
 
     </footer>
 
@@ -199,19 +228,10 @@
   
   <nav class="article-nav">
     
-      <a href="/2021/05/03/matlab%E5%87%BD%E6%95%B0-mapminmax/" class="article-nav-link">
-        <strong class="article-nav-caption">上一篇</strong>
-        <div class="article-nav-title">
-          
-            matlab函数-mapminmax
-          
-        </div>
-      </a>
     
-    
-      <a href="/2020/09/04/%E5%BE%80%E5%B9%B4%E5%9B%BD%E8%B5%9B%E8%AE%BA%E6%96%87+%E5%91%BD%E9%A2%98%E6%9D%82%E8%B0%88/" class="article-nav-link">
+      <a href="/2021/03/11/%E7%BD%91%E7%AB%99%E6%90%AD%E5%BB%BA%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E5%8F%8A%E5%8F%82%E8%80%83%E7%9A%84%E5%8D%9A%E5%AE%A2/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">往年国赛论文+命题杂谈</div>
+        <div class="article-nav-title">网站搭建相关问题及参考博客</div>
       </a>
     
   </nav>
