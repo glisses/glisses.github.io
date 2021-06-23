@@ -58,7 +58,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">173字</span>
+            <span class="post-count">1.6k字</span>
         </span>
     </span>
 
@@ -67,7 +67,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">1分钟</span>
+            <span class="post-count">6分钟</span>
         </span>
     </span>
 </div>
@@ -94,13 +94,72 @@
       
 
       
-      <h1 id="第1章-绪论"><a href="#第1章-绪论" class="headerlink" title="第1章 绪论"></a>第1章 绪论</h1><ol>
-<li><p>常用的数据结构包括<strong><strong>_、</strong></strong>、_____。（线性结构、树型结构、图状结构）</p>
-</li>
-<li><p><strong>数据项</strong>是数据结构中讨论的最小单位。<br>数据元素可以是数据项的集合，例如描述一个高尔夫俱乐部会员信息的数据元素可以是：</p>
-<p>表格中的每一项就是数据项，不能再分解了。（注：日期的年月日一般不再进行分解）</p>
-</li>
+      <h1 id="第1章-绪论"><a href="#第1章-绪论" class="headerlink" title="第1章 绪论"></a>第1章 绪论</h1><h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><ul>
+<li>常用的数据结构包括__ 、<strong>_ 、_</strong> 、___ 。（<strong>线性结构、树型结构、图状结构</strong>）</li>
+<li><strong>数据项</strong>是数据结构中讨论的<strong>最小单位</strong>。数据元素可以是数据项的集合。</li>
+<li><strong>数据元素</strong>是数据结构中讨论的<strong>基本单位</strong>。</li>
+<li>数据结构是相互之间存在某种<strong>逻辑关系</strong>的数据元素的集合。</li>
+<li>数据是<strong>计算机操作的对象</strong>的总称。</li>
+<li>存储结构是<em>逻辑结构在存储器（内存）中的映像</em>。</li>
+<li>数据关系的映像方法：<ol>
+<li><strong>顺序映像</strong>，以相对的存储位置表示后继关系；</li>
+<li><strong>链式映像</strong>，以附加信息（指针）表示后继关系。</li>
 </ol>
+</li>
+<li>常用的逻辑结构包括<strong><em>、</em></strong> 、<strong>_ 、_</strong> 。<br>（<strong>集合结构、线性结构、树型结构、图状结构</strong>）<ul>
+<li>算法的设计取决于选定的<strong>_ ，算法的实现依赖于采用的__</strong> 。（<strong>逻辑结构、存储结构</strong>）</li>
+<li>数据类型是一个<strong>值</strong>的集合和定义在此集合的一组<strong>操作</strong>的总称。</li>
+<li></li>
+</ul>
+</li>
+</ul>
+<h3 id="抽象数据类型"><a href="#抽象数据类型" class="headerlink" title="抽象数据类型"></a>抽象数据类型</h3><ul>
+<li>Abstract Data Type （简称ADT）的描述方法：<br>ADT 抽象数据类型名 {<pre><code>    数据对象：〈数据对象的定义〉
+    数据关系：〈数据关系的定义〉
+    基本操作：〈基本操作的定义〉
+} ADT 抽象数据类型名</code></pre></li>
+<li>抽象数据类型（ADT）的两个重要特征：<ol>
+<li><strong>数据抽象</strong><br>用ADT描述程序处理的实体时，强调的是其本质的特征、其所能完成的功能以及它和外部用户的接口（即外界使用它的方法）。</li>
+<li><strong>数据封装</strong><br>将实体的外部特性和其内部实现细节分离，并且对外部用户隐藏其内部实现细节。</li>
+</ol>
+</li>
+<li>抽象数据类型是指一个数学模型以及定义在此数学模型上的一组操作，包括<strong><em>__ 、</em></strong> 和_____ 三部份。（<strong>数据对象、数据关系、基本操作</strong>）</li>
+</ul>
+<h3 id="类C语言"><a href="#类C语言" class="headerlink" title="类C语言"></a>类C语言</h3><ul>
+<li>类C语言是介于伪码和C语言之间，用来描述<strong>抽象数据类型和算法</strong>的工具。<h6 id="（1）预定义常量和类型"><a href="#（1）预定义常量和类型" class="headerlink" title="（1）预定义常量和类型"></a>（1）预定义常量和类型</h6>#define   TRUE    1<br>#define   FALSE   0<br>#define   OK        1<br>#define   ERROR  0<br>#define   INFEASIBLE（不可行的）    -1<br>#define   OVERFLOW（溢出）   -2<br>//Status是函数的类型，其值是函数结果状态代码<br>typedef   int    Status</li>
+</ul>
+<h6 id="（2）数据结构的表示"><a href="#（2）数据结构的表示" class="headerlink" title="（2）数据结构的表示"></a>（2）数据结构的表示</h6><p>用类型定义（typedef）描述，数据元素类型约定为ElemType，用户在使用时可以自行定义。</p>
+<h6 id="（3）算法的描述形式"><a href="#（3）算法的描述形式" class="headerlink" title="（3）算法的描述形式"></a>（3）算法的描述形式</h6><p>函数类型 函数名（函数参数表）{<br>//算法说明<br>语句序列<br>}//函数名<br>当函数返回值为函数结果状态码时，函数定义为Status类型。<br>在形参表中，以&amp;打头的参数即为引用参数。</p>
+<h6 id="（4）赋值语句"><a href="#（4）赋值语句" class="headerlink" title="（4）赋值语句"></a>（4）赋值语句</h6><p>简单赋值  变量名 = 表达式；<br>串联赋值  变量名1 = 变量名2 = ┅ = 变量名k = 表达式；<br>成组赋值  （变量名1，┅，变量名k） = （表达式1，┅，表达式k）；<br>                结构名1 = 结构名2；<br>                结构名1 = （值1，┅，值k）；<br>                变量名 [ ] =表达式；<br>                变量名1 [ 起始下标 ┅ 终止下标]  =变量名2 [ 起始下标 ┅ 终止下标] ；<br>交换赋值  变量名1 ←→ 变量名2<br>条件赋值  变量名 = 条件表达式 ？ 表达式 T：表达式 F</p>
+<h6 id="（5）选择语句"><a href="#（5）选择语句" class="headerlink" title="（5）选择语句"></a>（5）选择语句</h6><p>条件语句1  if（表达式） 语句；<br>条件语句2  if（表达式） 语句；<br>             else  语句；<br>开关语句1  switch {<br>                     case 值1：语句序列1；break;<br>                      ┅<br>                     case 值n：语句序列n；break;<br>                     default : 语句序列n+1;<br>                  }<br>开关语句2  switch {<br>                     case <strong>条件</strong>1：语句序列1；break;<br>                      ┅<br>                     case <strong>条件</strong>n：语句序列n；break;<br>                     default : 语句序列n+1;<br>                  }</p>
+<h6 id="（6）循环语句"><a href="#（6）循环语句" class="headerlink" title="（6）循环语句"></a>（6）循环语句</h6><p>for语句  for（赋初值表达式序列；条件；修改表达式序列）语句；<br>while语句  while（条件）语句；<br>do-while语句  do {<br>                              语句序列；<br>                             } while（条件）；</p>
+<h6 id="（7）结束语句"><a href="#（7）结束语句" class="headerlink" title="（7）结束语句"></a>（7）结束语句</h6><p>函数结束语句    return 表达式；<br>                         return；<br>case结束语句    break ;<br>异常结束语句    exit(异常代码）；</p>
+<h6 id="（8）输入和输出语句"><a href="#（8）输入和输出语句" class="headerlink" title="（8）输入和输出语句"></a>（8）输入和输出语句</h6><p>输入语句   scanf（变量1， ┅ ，变量n）；<br>输出语句   printf（表达式1， ┅ ，表达式n）；</p>
+<h6 id="（9）注释"><a href="#（9）注释" class="headerlink" title="（9）注释"></a>（9）注释</h6><p>单行注释   // 文字序列；</p>
+<h6 id="（10）逻辑运算"><a href="#（10）逻辑运算" class="headerlink" title="（10）逻辑运算"></a>（10）逻辑运算</h6><p>与运算 &amp;&amp;：  对于A&amp;&amp;B，当A的值为0时，不再对B求值；<br>或运算∥ ：     对于A∥B，当A的值为非0时，不再对B求值；</p>
+<h6 id="11）基本函数"><a href="#11）基本函数" class="headerlink" title="11）基本函数"></a>11）基本函数</h6><p>求最大值          max（表达式1， ┅ ，表达式n ）；<br>求最小值          min（表达式1， ┅ ，表达式n ）；<br>求绝对值          abs（表达式）；<br>求不足整数值   floor（表达式）；<br>求进位整数值   ceil（表达式）；<br>判定文件结束   eof（文件变量）或 eof；<br>判定行结束      eoln（文件变量）或 eoln；</p>
+<h6 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h6><ul>
+<li>类C语言中的Status表示函数的<strong>_  ，其值是函数结果的_</strong> 。  (<strong>类型、状态代码</strong>)</li>
+</ul>
+<h3 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h3><ul>
+<li>算法必须满足五个重要特性：<strong>有穷性，确定性，可行性，有输入，有输出</strong>。<br>有穷性：不会死循环； 确定性：在每种情况下，都有唯一的执行路径； 可行性：操作都是基本的； 有输入：输入被嵌入算法中也算有输入； 有输出：略。</li>
+<li>设计算法时要考虑：<strong>正确性、可读性、健壮性、高效率和低存储量的要求</strong>。</li>
+</ul>
+<h4 id="算法的时间复杂度"><a href="#算法的时间复杂度" class="headerlink" title="算法的时间复杂度"></a>算法的时间复杂度</h4><p>举例：<br>x=n;y=0;<br>While (x&gt;=(y+1)*(y+1))<br>   y=y+1;<br>基本操作: 加法操作；时间复杂度为O(n1/2)</p>
+<ul>
+<li>求时间复杂度，是求<strong>最坏情况</strong>下的。</li>
+<li>算法时间取决于<strong>控制结构</strong>和<strong>原操作</strong>的综合效果。</li>
+</ul>
+<h4 id="算法的空间复杂度"><a href="#算法的空间复杂度" class="headerlink" title="算法的空间复杂度"></a>算法的空间复杂度</h4><h6 id="算法的存储分析"><a href="#算法的存储分析" class="headerlink" title="算法的存储分析"></a>算法的存储分析</h6><ul>
+<li>若输入数据所占空间只取决于问题本身，和算法无关，则只需要分析除   输入和程序之外的辅助变量所占额外空间。</li>
+<li>所需额外空间相对于输入数据量来说是常数，则称此算法为<strong>原地工作</strong>。</li>
+<li>若所需存储量依赖于特定的输入，则<strong>通常按最坏情况</strong>考虑。<h6 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h6>Void bubble_sort (int a[ ],int n){<pre><code>for (i=n-1,change=TRUE; i&gt;=1 &amp;&amp; change; --i){
+change=FALSE;
+  for (j=0; j&lt;i; ++j)
+    if (a[j]&gt;a[j+1]) {a[j] ←→a[j+1]; change=TRUE;}</code></pre>   }<br>}</li>
+<li>算法的<strong>空间复杂度</strong>为O（n），即输入的a[]；</li>
+<li>算法的<strong>辅助存储空间</strong>为O（1），即i,j,change。不考虑常数。</li>
+</ul>
 <h1 id="第2章-线性表"><a href="#第2章-线性表" class="headerlink" title="第2章 线性表"></a>第2章 线性表</h1><h1 id="第3章-栈和队列"><a href="#第3章-栈和队列" class="headerlink" title="第3章 栈和队列"></a>第3章 栈和队列</h1><h1 id="第4章-串"><a href="#第4章-串" class="headerlink" title="第4章 串"></a>第4章 串</h1><h1 id="第5章-数组和广义表"><a href="#第5章-数组和广义表" class="headerlink" title="第5章 数组和广义表"></a>第5章 数组和广义表</h1><h1 id="第6章-树和二叉树"><a href="#第6章-树和二叉树" class="headerlink" title="第6章 树和二叉树"></a>第6章 树和二叉树</h1><h1 id="第7章-图"><a href="#第7章-图" class="headerlink" title="第7章 图"></a>第7章 图</h1><h1 id="第8章-动态存储管理"><a href="#第8章-动态存储管理" class="headerlink" title="第8章 动态存储管理"></a>第8章 动态存储管理</h1><h1 id="第9章-查找"><a href="#第9章-查找" class="headerlink" title="第9章 查找"></a>第9章 查找</h1><h1 id="第10章-内部排序"><a href="#第10章-内部排序" class="headerlink" title="第10章 内部排序"></a>第10章 内部排序</h1>
       
       <!-- reward -->
