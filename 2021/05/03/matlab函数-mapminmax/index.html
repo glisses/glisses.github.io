@@ -96,7 +96,7 @@
       
       <h1 id="mapminmax——matlab自带的数据标准化方法"><a href="#mapminmax——matlab自带的数据标准化方法" class="headerlink" title="mapminmax——matlab自带的数据标准化方法"></a>mapminmax——matlab自带的数据标准化方法</h1><p>本文涉及mapminmax函数的四种用法，如下：</p>
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[Y,PS] = mapminmax(X,Ymin,Ymax)</span><br><span class="line">[Y,PS] = mapminmax(X,FP)</span><br><span class="line">Y = mapminmax(‘apply’,X,PS)</span><br><span class="line">X = mapminmax(‘reverse’,Y,PS)</span><br></pre></td></tr></table></figure>
-
+<a id="more"></a>
 <h4 id="Y-PS-mapminmax-X-Ymin-Ymax"><a href="#Y-PS-mapminmax-X-Ymin-Ymax" class="headerlink" title="[Y,PS] = mapminmax(X,Ymin,Ymax)"></a>[Y,PS] = mapminmax(X,Ymin,Ymax)</h4><p>运行如下代码（默认Ymin=-1， Ymax=1）：</p>
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x1 = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">4</span>]</span><br><span class="line">[y,ps]=mapminmax(x1)</span><br><span class="line">y</span><br></pre></td></tr></table></figure>
 

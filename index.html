@@ -128,53 +128,10 @@
 </li>
 </ul>
 <h3 id="抽象数据类型"><a href="#抽象数据类型" class="headerlink" title="抽象数据类型"></a>抽象数据类型</h3><ul>
-<li>Abstract Data Type （简称ADT）的描述方法：<br>ADT 抽象数据类型名 {<pre><code>    数据对象：〈数据对象的定义〉
-    数据关系：〈数据关系的定义〉
-    基本操作：〈基本操作的定义〉
-} ADT 抽象数据类型名</code></pre></li>
-<li>抽象数据类型（ADT）的两个重要特征：<ol>
-<li><strong>数据抽象</strong><br>用ADT描述程序处理的实体时，强调的是其本质的特征、其所能完成的功能以及它和外部用户的接口（即外界使用它的方法）。</li>
-<li><strong>数据封装</strong><br>将实体的外部特性和其内部实现细节分离，并且对外部用户隐藏其内部实现细节。</li>
-</ol>
-</li>
-<li>抽象数据类型是指一个数学模型以及定义在此数学模型上的一组操作，包括<strong><em>__ 、</em></strong> 和_____ 三部份。（<strong>数据对象、数据关系、基本操作</strong>）</li>
-</ul>
-<h3 id="类C语言"><a href="#类C语言" class="headerlink" title="类C语言"></a>类C语言</h3><ul>
-<li>类C语言是介于伪码和C语言之间，用来描述<strong>抽象数据类型和算法</strong>的工具。<h6 id="（1）预定义常量和类型"><a href="#（1）预定义常量和类型" class="headerlink" title="（1）预定义常量和类型"></a>（1）预定义常量和类型</h6>#define   TRUE    1<br>#define   FALSE   0<br>#define   OK        1<br>#define   ERROR  0<br>#define   INFEASIBLE（不可行的）    -1<br>#define   OVERFLOW（溢出）   -2<br>//Status是函数的类型，其值是函数结果状态代码<br>typedef   int    Status</li>
-</ul>
-<h6 id="（2）数据结构的表示"><a href="#（2）数据结构的表示" class="headerlink" title="（2）数据结构的表示"></a>（2）数据结构的表示</h6><p>用类型定义（typedef）描述，数据元素类型约定为ElemType，用户在使用时可以自行定义。</p>
-<h6 id="（3）算法的描述形式"><a href="#（3）算法的描述形式" class="headerlink" title="（3）算法的描述形式"></a>（3）算法的描述形式</h6><p>函数类型 函数名（函数参数表）{<br>//算法说明<br>语句序列<br>}//函数名<br>当函数返回值为函数结果状态码时，函数定义为Status类型。<br>在形参表中，以&amp;打头的参数即为引用参数。</p>
-<h6 id="（4）赋值语句"><a href="#（4）赋值语句" class="headerlink" title="（4）赋值语句"></a>（4）赋值语句</h6><p>简单赋值  变量名 = 表达式；<br>串联赋值  变量名1 = 变量名2 = ┅ = 变量名k = 表达式；<br>成组赋值  （变量名1，┅，变量名k） = （表达式1，┅，表达式k）；<br>                结构名1 = 结构名2；<br>                结构名1 = （值1，┅，值k）；<br>                变量名 [ ] =表达式；<br>                变量名1 [ 起始下标 ┅ 终止下标]  =变量名2 [ 起始下标 ┅ 终止下标] ；<br>交换赋值  变量名1 ←→ 变量名2<br>条件赋值  变量名 = 条件表达式 ？ 表达式 T：表达式 F</p>
-<h6 id="（5）选择语句"><a href="#（5）选择语句" class="headerlink" title="（5）选择语句"></a>（5）选择语句</h6><p>条件语句1  if（表达式） 语句；<br>条件语句2  if（表达式） 语句；<br>             else  语句；<br>开关语句1  switch {<br>                     case 值1：语句序列1；break;<br>                      ┅<br>                     case 值n：语句序列n；break;<br>                     default : 语句序列n+1;<br>                  }<br>开关语句2  switch {<br>                     case <strong>条件</strong>1：语句序列1；break;<br>                      ┅<br>                     case <strong>条件</strong>n：语句序列n；break;<br>                     default : 语句序列n+1;<br>                  }</p>
-<h6 id="（6）循环语句"><a href="#（6）循环语句" class="headerlink" title="（6）循环语句"></a>（6）循环语句</h6><p>for语句  for（赋初值表达式序列；条件；修改表达式序列）语句；<br>while语句  while（条件）语句；<br>do-while语句  do {<br>                              语句序列；<br>                             } while（条件）；</p>
-<h6 id="（7）结束语句"><a href="#（7）结束语句" class="headerlink" title="（7）结束语句"></a>（7）结束语句</h6><p>函数结束语句    return 表达式；<br>                         return；<br>case结束语句    break ;<br>异常结束语句    exit(异常代码）；</p>
-<h6 id="（8）输入和输出语句"><a href="#（8）输入和输出语句" class="headerlink" title="（8）输入和输出语句"></a>（8）输入和输出语句</h6><p>输入语句   scanf（变量1， ┅ ，变量n）；<br>输出语句   printf（表达式1， ┅ ，表达式n）；</p>
-<h6 id="（9）注释"><a href="#（9）注释" class="headerlink" title="（9）注释"></a>（9）注释</h6><p>单行注释   // 文字序列；</p>
-<h6 id="（10）逻辑运算"><a href="#（10）逻辑运算" class="headerlink" title="（10）逻辑运算"></a>（10）逻辑运算</h6><p>与运算 &amp;&amp;：  对于A&amp;&amp;B，当A的值为0时，不再对B求值；<br>或运算∥ ：     对于A∥B，当A的值为非0时，不再对B求值；</p>
-<h6 id="11）基本函数"><a href="#11）基本函数" class="headerlink" title="11）基本函数"></a>11）基本函数</h6><p>求最大值          max（表达式1， ┅ ，表达式n ）；<br>求最小值          min（表达式1， ┅ ，表达式n ）；<br>求绝对值          abs（表达式）；<br>求不足整数值   floor（表达式）；<br>求进位整数值   ceil（表达式）；<br>判定文件结束   eof（文件变量）或 eof；<br>判定行结束      eoln（文件变量）或 eoln；</p>
-<h6 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h6><ul>
-<li>类C语言中的Status表示函数的<strong>_  ，其值是函数结果的_</strong> 。  (<strong>类型、状态代码</strong>)</li>
-</ul>
-<h3 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h3><ul>
-<li>算法必须满足五个重要特性：<strong>有穷性，确定性，可行性，有输入，有输出</strong>。<br>有穷性：不会死循环； 确定性：在每种情况下，都有唯一的执行路径； 可行性：操作都是基本的； 有输入：输入被嵌入算法中也算有输入； 有输出：略。</li>
-<li>设计算法时要考虑：<strong>正确性、可读性、健壮性、高效率和低存储量的要求</strong>。</li>
-</ul>
-<h4 id="算法的时间复杂度"><a href="#算法的时间复杂度" class="headerlink" title="算法的时间复杂度"></a>算法的时间复杂度</h4><p>举例：<br>x=n;y=0;<br>While (x&gt;=(y+1)*(y+1))<br>   y=y+1;<br>基本操作: 加法操作；时间复杂度为O(n1/2)</p>
-<ul>
-<li>求时间复杂度，是求<strong>最坏情况</strong>下的。</li>
-<li>算法时间取决于<strong>控制结构</strong>和<strong>原操作</strong>的综合效果。</li>
-</ul>
-<h4 id="算法的空间复杂度"><a href="#算法的空间复杂度" class="headerlink" title="算法的空间复杂度"></a>算法的空间复杂度</h4><h6 id="算法的存储分析"><a href="#算法的存储分析" class="headerlink" title="算法的存储分析"></a>算法的存储分析</h6><ul>
-<li>若输入数据所占空间只取决于问题本身，和算法无关，则只需要分析除   输入和程序之外的辅助变量所占额外空间。</li>
-<li>所需额外空间相对于输入数据量来说是常数，则称此算法为<strong>原地工作</strong>。</li>
-<li>若所需存储量依赖于特定的输入，则<strong>通常按最坏情况</strong>考虑。<h6 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h6>Void bubble_sort (int a[ ],int n){<pre><code>for (i=n-1,change=TRUE; i&gt;=1 &amp;&amp; change; --i){
-change=FALSE;
-  for (j=0; j&lt;i; ++j)
-    if (a[j]&gt;a[j+1]) {a[j] ←→a[j+1]; change=TRUE;}</code></pre>   }<br>}</li>
-<li>算法的<strong>空间复杂度</strong>为O（n），即输入的a[]；</li>
-<li>算法的<strong>辅助存储空间</strong>为O（1），即i,j,change。不考虑常数。</li>
-</ul>
-<h1 id="第2章-线性表"><a href="#第2章-线性表" class="headerlink" title="第2章 线性表"></a>第2章 线性表</h1><h1 id="第3章-栈和队列"><a href="#第3章-栈和队列" class="headerlink" title="第3章 栈和队列"></a>第3章 栈和队列</h1><h1 id="第4章-串"><a href="#第4章-串" class="headerlink" title="第4章 串"></a>第4章 串</h1><h1 id="第5章-数组和广义表"><a href="#第5章-数组和广义表" class="headerlink" title="第5章 数组和广义表"></a>第5章 数组和广义表</h1><h1 id="第6章-树和二叉树"><a href="#第6章-树和二叉树" class="headerlink" title="第6章 树和二叉树"></a>第6章 树和二叉树</h1><h1 id="第7章-图"><a href="#第7章-图" class="headerlink" title="第7章 图"></a>第7章 图</h1><h1 id="第8章-动态存储管理"><a href="#第8章-动态存储管理" class="headerlink" title="第8章 动态存储管理"></a>第8章 动态存储管理</h1><h1 id="第9章-查找"><a href="#第9章-查找" class="headerlink" title="第9章 查找"></a>第9章 查找</h1><h1 id="第10章-内部排序"><a href="#第10章-内部排序" class="headerlink" title="第10章 内部排序"></a>第10章 内部排序</h1>
+<li>Abstract Data Type （简称ADT）的描述方法：
+      
+      <a class="article-more-link" href="/2021/06/22/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/">阅读更多...</a>
+      
       
       <!-- reward -->
       
@@ -244,52 +201,9 @@ change=FALSE;
       
       <h1 id="mapminmax——matlab自带的数据标准化方法"><a href="#mapminmax——matlab自带的数据标准化方法" class="headerlink" title="mapminmax——matlab自带的数据标准化方法"></a>mapminmax——matlab自带的数据标准化方法</h1><p>本文涉及mapminmax函数的四种用法，如下：</p>
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[Y,PS] = mapminmax(X,Ymin,Ymax)</span><br><span class="line">[Y,PS] = mapminmax(X,FP)</span><br><span class="line">Y = mapminmax(‘apply’,X,PS)</span><br><span class="line">X = mapminmax(‘reverse’,Y,PS)</span><br></pre></td></tr></table></figure>
-
-<h4 id="Y-PS-mapminmax-X-Ymin-Ymax"><a href="#Y-PS-mapminmax-X-Ymin-Ymax" class="headerlink" title="[Y,PS] = mapminmax(X,Ymin,Ymax)"></a>[Y,PS] = mapminmax(X,Ymin,Ymax)</h4><p>运行如下代码（默认Ymin=-1， Ymax=1）：</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x1 = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">4</span>]</span><br><span class="line">[y,ps]=mapminmax(x1)</span><br><span class="line">y</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/glisses/ImageWarehouse/main/img/matlab%E5%87%BD%E6%95%B0-mapminmax-1.png" alt="运行结果"></p>
-<p>这里的ps， 是记录【从x到y的映射规则】的结构体。<br>上图的运行结果中，可以看到：<br>x为一行，x的最大值是4，最小值是1，x的最大值与最小值之差（xrange）是3；<br>y为一行，最大1，最小-1，y的最大值与最小值之差是2，</p>
-<p>从x到y的映射规则是：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (xmax != xmin) y = (ymax-ymin)*(x-xmin)/(xmax-xmin) + ymin;</span><br><span class="line">	<span class="keyword">else</span> y = ymin;</span><br></pre></td></tr></table></figure>
-<p>这样就避免了标准化时除0出错。</p>
-<h4 id="Y-PS-mapminmax-X-FP"><a href="#Y-PS-mapminmax-X-FP" class="headerlink" title="[Y,PS] = mapminmax(X,FP)"></a>[Y,PS] = mapminmax(X,FP)</h4><p>这种形式，是让Y=X的FP映射，PS=FP。<br>运行以下代码：</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">x1 = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">4</span>]</span><br><span class="line">[y,ps]=mapminmax(x1)</span><br><span class="line">ps.ymin = <span class="number">0</span></span><br><span class="line">[y,pq]=mapminmax(x1,ps)</span><br></pre></td></tr></table></figure>
-
-<p>运行结果：</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">x1 =</span><br><span class="line"></span><br><span class="line">     <span class="number">1</span>     <span class="number">2</span>     <span class="number">4</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">y =</span><br><span class="line"></span><br><span class="line">   <span class="number">-1.0000</span>   <span class="number">-0.3333</span>    <span class="number">1.0000</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ps = </span><br><span class="line"></span><br><span class="line">  包含以下字段的 struct:</span><br><span class="line"></span><br><span class="line">         name: <span class="string">'mapminmax'</span></span><br><span class="line">        xrows: <span class="number">1</span></span><br><span class="line">         xmax: <span class="number">4</span></span><br><span class="line">         xmin: <span class="number">1</span></span><br><span class="line">       xrange: <span class="number">3</span></span><br><span class="line">        yrows: <span class="number">1</span></span><br><span class="line">         ymax: <span class="number">1</span></span><br><span class="line">         ymin: <span class="number">-1</span></span><br><span class="line">       yrange: <span class="number">2</span></span><br><span class="line">         gain: <span class="number">0.6667</span></span><br><span class="line">      xoffset: <span class="number">1</span></span><br><span class="line">    no_change: <span class="number">0</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ps = </span><br><span class="line"></span><br><span class="line">  包含以下字段的 struct:</span><br><span class="line"></span><br><span class="line">         name: <span class="string">'mapminmax'</span></span><br><span class="line">        xrows: <span class="number">1</span></span><br><span class="line">         xmax: <span class="number">4</span></span><br><span class="line">         xmin: <span class="number">1</span></span><br><span class="line">       xrange: <span class="number">3</span></span><br><span class="line">        yrows: <span class="number">1</span></span><br><span class="line">         ymax: <span class="number">1</span></span><br><span class="line">         ymin: <span class="number">0</span></span><br><span class="line">       yrange: <span class="number">2</span></span><br><span class="line">         gain: <span class="number">0.6667</span></span><br><span class="line">      xoffset: <span class="number">1</span></span><br><span class="line">    no_change: <span class="number">0</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">y =</span><br><span class="line"></span><br><span class="line">         <span class="number">0</span>    <span class="number">0.3333</span>    <span class="number">1.0000</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">pq = </span><br><span class="line"></span><br><span class="line">  包含以下字段的 struct:</span><br><span class="line"></span><br><span class="line">         name: <span class="string">'mapminmax'</span></span><br><span class="line">        xrows: <span class="number">1</span></span><br><span class="line">         xmax: <span class="number">4</span></span><br><span class="line">         xmin: <span class="number">1</span></span><br><span class="line">       xrange: <span class="number">3</span></span><br><span class="line">        yrows: <span class="number">1</span></span><br><span class="line">         ymax: <span class="number">1</span></span><br><span class="line">         ymin: <span class="number">0</span></span><br><span class="line">       yrange: <span class="number">1</span></span><br><span class="line">         gain: <span class="number">0.3333</span></span><br><span class="line">      xoffset: <span class="number">1</span></span><br><span class="line">    no_change: <span class="number">0</span></span><br></pre></td></tr></table></figure>
-<p>可以看到，在改变ps.ymin后，ps这个结构体改变了。pq则被赋予了ps的值。</p>
-<h4 id="Y-mapminmax-‘apply’-X-PS"><a href="#Y-mapminmax-‘apply’-X-PS" class="headerlink" title="Y = mapminmax(‘apply’,X,PS)"></a>Y = mapminmax(‘apply’,X,PS)</h4><p>看到这个apply，应该可以猜到，这是<strong>应用</strong>PS映射规则，让Y为X在PS映射规则下的输出。</p>
-<h4 id="X-mapminmax-‘reverse’-Y-PS"><a href="#X-mapminmax-‘reverse’-Y-PS" class="headerlink" title="X = mapminmax(‘reverse’,Y,PS)"></a>X = mapminmax(‘reverse’,Y,PS)</h4><p>看到这个reverse，可以猜到这是对Y作<strong>反映射</strong>，得到原来的X。<br>运行以下代码：</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x = [<span class="number">5</span>,<span class="number">8</span>,<span class="number">42</span>]</span><br><span class="line">[y,ps] = mapminmax(x)</span><br><span class="line">x = mapminmax(<span class="string">'reverse'</span>,y,ps)</span><br></pre></td></tr></table></figure>
-
-<p>可以得到输出：</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x =</span><br><span class="line"></span><br><span class="line">     <span class="number">5</span>     <span class="number">8</span>    <span class="number">42</span></span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><blockquote>
-<p> 如何在GitHub提交图片，做一个自己的图片仓库<br> <a href="https://www.imooc.com/article/284213" target="_blank" rel="noopener">https://www.imooc.com/article/284213</a><br> matlab中mapminmax函数的总结<br> <a href="https://xingqingsafe.github.io/2019/04/12/matlab-zhong-mapminmax-han-shu-de-zong-jie/" target="_blank" rel="noopener">https://xingqingsafe.github.io/2019/04/12/matlab-zhong-mapminmax-han-shu-de-zong-jie/</a></p>
-</blockquote>
-
+      
+      <a class="article-more-link" href="/2021/05/03/matlab%E5%87%BD%E6%95%B0-mapminmax/">阅读更多...</a>
+      
       
       <!-- reward -->
       
