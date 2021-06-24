@@ -58,7 +58,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">7.5k字</span>
+            <span class="post-count">7.9k字</span>
         </span>
     </span>
 
@@ -67,7 +67,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">32分钟</span>
+            <span class="post-count">34分钟</span>
         </span>
     </span>
 </div>
@@ -308,7 +308,19 @@ C．BA+222            D．BA+225</code></pre>【解析】以列为主，则  首
 <h3 id="广义表怎么画"><a href="#广义表怎么画" class="headerlink" title="广义表怎么画"></a>广义表怎么画</h3><p><img src="https://raw.githubusercontent.com/glisses/ImageWarehouse/main/img/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0-8.png" alt="广义表基本结构图"></p>
 <p>由刚刚划分表头、表位的思想，结合上图中原子、非空表的画法，我们可以知道广义表的画法是怎样的。具体看下图的典型例题。</p>
 <p><img src="https://raw.githubusercontent.com/glisses/ImageWarehouse/main/img/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0-9.png" alt="广义表画法例题"></p>
-<h1 id="第6章-树和二叉树"><a href="#第6章-树和二叉树" class="headerlink" title="第6章 树和二叉树"></a>第6章 树和二叉树</h1><h1 id="第7章-图"><a href="#第7章-图" class="headerlink" title="第7章 图"></a>第7章 图</h1><h1 id="第8章-动态存储管理"><a href="#第8章-动态存储管理" class="headerlink" title="第8章 动态存储管理"></a>第8章 动态存储管理</h1><h1 id="第9章-查找"><a href="#第9章-查找" class="headerlink" title="第9章 查找"></a>第9章 查找</h1><h1 id="第10章-内部排序"><a href="#第10章-内部排序" class="headerlink" title="第10章 内部排序"></a>第10章 内部排序</h1>
+<h4 id="广义表的递归操作"><a href="#广义表的递归操作" class="headerlink" title="广义表的递归操作"></a>广义表的递归操作</h4><p>思想就是，把广义表分为表头表尾，分别操作，这样就可以递归了。</p>
+<h1 id="第6章-树和二叉树"><a href="#第6章-树和二叉树" class="headerlink" title="第6章 树和二叉树"></a>第6章 树和二叉树</h1><h3 id="树"><a href="#树" class="headerlink" title="树"></a>树</h3><h4 id="树的基本术语"><a href="#树的基本术语" class="headerlink" title="树的基本术语"></a>树的基本术语</h4><p>结点:数据元素+<strong>若干指向子树的分支</strong>。<br>结点的度:<strong>分支的个数</strong>。所以叶子节点的度是0。<br>树的度:<strong>树中所有结点的度的最大值</strong>。<br>叶子结点:度为零的结点。<br><strong>分支结点</strong>:度大于零的结点。<br>结点的层次:<br>假设根结点的层次为1，第l 层的结点的子树根结点的层次为l+1。<br>树的深度： 树中叶子结点所在的最大层次。<br>孩子结点和双亲结点对应；兄弟结点互为兄弟；祖先结点和子孙结点对应。<br>一个点的祖先结点，是从它到根节点的路径上经过的除本身外所有点。<br>内部结点：不是叶子也不是根的结点。</p>
+<p>有向树：<br>(１) 有确定的根；<br>(２) 树根和子树根之间为有向关系。<br>有序树： 子树之间存在确定的次序关系。<br>无序树： 子树之间不存在确定的次序关系。</p>
+<p>森林： 是m（m≥0）棵<strong>互不相交</strong>的树的集合。<br>任何一棵非空树是一个二元组:<br>Tree = （root，F）<br>其中：root 被称为根结点，F 被称为子树森林。</p>
+<p>n0表示度为0的点的个数，ni表示度为i的点的个数，n表示点的个数。</p>
+<h4 id="树的两个操作"><a href="#树的两个操作" class="headerlink" title="树的两个操作"></a>树的两个操作</h4><p>LeftChild(T, cur_e) // 求当前结点的最左孩子<br>RightSibling(T, cur_e)  // 求当前结点的右兄弟</p>
+<p>sibling    英[ˈsɪblɪŋ] 美[ˈsɪblɪŋ]<br>n.    兄; 弟; 姐; 妹;</p>
+<h4 id="恶心例题"><a href="#恶心例题" class="headerlink" title="恶心例题"></a>恶心例题</h4><ul>
+<li>树一定有唯一的根结点。（×，可以是空树）</li>
+<li>从J结点到结点H的路径包括：<strong>结点</strong>J、G、D、H和<strong>分支</strong>JG、GD、DH。（要在意分支分支分支）</li>
+<li>树中每个结点有唯一的双亲结点。(×，根结点除外)</li>
+</ul>
+<h1 id="第7章-图"><a href="#第7章-图" class="headerlink" title="第7章 图"></a>第7章 图</h1><h1 id="第8章-动态存储管理"><a href="#第8章-动态存储管理" class="headerlink" title="第8章 动态存储管理"></a>第8章 动态存储管理</h1><h1 id="第9章-查找"><a href="#第9章-查找" class="headerlink" title="第9章 查找"></a>第9章 查找</h1><h1 id="第10章-内部排序"><a href="#第10章-内部排序" class="headerlink" title="第10章 内部排序"></a>第10章 内部排序</h1>
       
       <!-- reward -->
       
