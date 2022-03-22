@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    计算机综合训练 |  glisses
+  </title>
+  <meta name="generator" content="hexo-theme-yilia-plus">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+  
+  
+
+  
+
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    <main class="content">
+      <section class="outer">
+  <article id="post-计算机综合训练" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  计算机综合训练
+</h1>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2021/07/19/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%BC%E5%90%88%E8%AE%AD%E7%BB%83/" class="article-date">
+  <time datetime="2021-07-19T06:47:50.000Z" itemprop="datePublished">2021-07-19</time>
+</a>
+      
+      
+      
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">5.6k字</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">22分钟</span>
+        </span>
+    </span>
+</div>
+
+      
+    </div>
+    
+
+    
+    
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <p>前言：计算机综合训练是博主在2021.7.19至2021.7.25的大二升大三暑假的小学期课程。这篇博客记录了小学期里我学到的知识。</p>
+<p>这门课有两个任务：①读remill源码    ②写个可以玩的数独软件。</p>
+<p>​             </p>
+<h2 id="cmd命令"><a href="#cmd命令" class="headerlink" title="cmd命令"></a>cmd命令</h2><ul>
+<li><p>将某文件夹及其子文件夹内的所有文件的文件名输出到指定文件</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">dir</span> /s/b &gt; 所有文件.cpp</span><br></pre></td></tr></table></figure>
+
+<p>输出示例：</p>
+<p><img src="https://raw.githubusercontent.com/glisses/ImageWarehouse/main/img/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%BC%E5%90%88%E8%AE%AD%E7%BB%83-1.png" alt="所有文件.txt"></p>
+</li>
+<li><p>将某文件夹及其子文件夹内的指定类型文件(如cpp文件)的文件名输出到指定文件</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">dir</span> /s/b *.cpp &gt; 所有文件.cpp</span><br></pre></td></tr></table></figure>
+
+<p>​               </p>
+</li>
+</ul>
+<h2 id="cmake语法"><a href="#cmake语法" class="headerlink" title="cmake语法"></a>cmake语法</h2><p>​               </p>
+<h3 id="set"><a href="#set" class="headerlink" title="set"></a>set</h3><p>​        set有三个功能：设置普通变量、设置缓存入口、设置环境变量</p>
+<a id="more"></a>
+
+<p>​        详细可查看官方文档：<a href="https://cmake.org/cmake/help/latest/command/set.html" target="_blank" rel="noopener">https://cmake.org/cmake/help/latest/command/set.html</a></p>
+<h4 id="设置普通变量"><a href="#设置普通变量" class="headerlink" title="设置普通变量"></a>设置普通变量</h4><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span>(&lt;variable&gt; &lt;value&gt;... [PARENT_SCOPE])</span><br></pre></td></tr></table></figure>
+
+<p>​        <code>&lt;variable&gt;</code>在当前函数或目录范围内设置给定。</p>
+<p>​        如果<code>PARENT_SCOPE</code>给出该选项，则变量将设置在当前范围之上的范围内。每个新目录或函数都会创建一个新作用域。此命令会将变量的值设置到父目录或调用函数中（以适用于手头的情况为准）。变量值的先前状态在当前作用域中保持不变（例如，如果之前未定义，则仍为未定义；如果有值，则仍为该值）。</p>
+<p>​               </p>
+<h4 id="设置缓存入口"><a href="#设置缓存入口" class="headerlink" title="设置缓存入口"></a>设置缓存入口</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set(&lt;variable&gt; &lt;value&gt;... CACHE &lt;type&gt; &lt;docstring&gt; [FORCE])</span><br></pre></td></tr></table></figure>
+
+<p>​        设置给定的缓存<code>&lt;variable&gt;</code>（缓存条目）。由于缓存条目旨在提供用户可设置的值，因此默认情况下不会覆盖现有的缓存条目。使用该<code>FORCE</code>选项覆盖现有条目。</p>
+<p>​               </p>
+<p><code>&lt;type&gt;</code>必须被指定为之一：</p>
+<ul>
+<li><p><code>BOOL</code></p>
+<p>布尔<code>ON/OFF</code>值。 <a href="https://cmake.org/cmake/help/latest/manual/cmake-gui.1.html#manual:cmake-gui(1)" target="_blank" rel="noopener"><code>cmake-gui(1)</code></a> 提供一个复选框。</p>
+</li>
+<li><p><code>FILEPATH</code></p>
+<p>磁盘上文件的路径。 <a href="https://cmake.org/cmake/help/latest/manual/cmake-gui.1.html#manual:cmake-gui(1)" target="_blank" rel="noopener"><code>cmake-gui(1)</code></a> 提供一个文件对话框。</p>
+</li>
+<li><p><code>PATH</code></p>
+<p>磁盘上目录的路径。 <a href="https://cmake.org/cmake/help/latest/manual/cmake-gui.1.html#manual:cmake-gui(1)" target="_blank" rel="noopener"><code>cmake-gui(1)</code></a> 提供一个文件对话框。</p>
+</li>
+<li><p><code>STRING</code></p>
+<p>一行文字。 <a href="https://cmake.org/cmake/help/latest/manual/cmake-gui.1.html#manual:cmake-gui(1)" target="_blank" rel="noopener"><code>cmake-gui(1)</code></a> 提供文本字段或下拉选择，如果 <a href="https://cmake.org/cmake/help/latest/prop_cache/STRINGS.html#prop_cache:STRINGS" target="_blank" rel="noopener"><code>STRINGS</code></a> 缓存条目属性已设置。</p>
+</li>
+<li><p><code>INTERNAL</code></p>
+<p>一行文字。 <a href="https://cmake.org/cmake/help/latest/manual/cmake-gui.1.html#manual:cmake-gui(1)" target="_blank" rel="noopener"><code>cmake-gui(1)</code></a>不显示内部条目。它们可用于跨运行持久存储变量。使用这种类型意味着<code>FORCE</code>.</p>
+<p>​             </p>
+</li>
+</ul>
+<p>​        将<code>&lt;docstring&gt;</code>必须被指定为提供的选项，以快速摘要呈现一行文本<a href="https://cmake.org/cmake/help/latest/manual/cmake-gui.1.html#manual:cmake-gui(1)" target="_blank" rel="noopener"><code>cmake-gui(1)</code></a> 用户。</p>
+<p>​        如果在调用之前缓存条目不存在或<code>FORCE</code> 给出了选项，则缓存条目将设置为给定值。</p>
+<p>​        缓存条目可能在调用之前存在，但如果它是在调用之前创建的，则没有设置类型 <a href="https://cmake.org/cmake/help/latest/manual/cmake.1.html#manual:cmake(1)" target="_blank" rel="noopener"><code>cmake(1)</code></a>命令行由用户通过<code>-D&lt;var&gt;=&lt;value&gt;</code>选项而不指定类型。在这种情况下，该<code>set</code>命令将添加类型。此外，如果命令行中提供的<code>&lt;type&gt;</code>is<code>PATH</code>或<code>FILEPATH</code> and<code>&lt;value&gt;</code>是相对路径，则该<code>set</code>命令会将路径视为相对于当前工作目录并将其转换为绝对路径。</p>
+<p>​               </p>
+<h4 id="设置环境变量"><a href="#设置环境变量" class="headerlink" title="设置环境变量"></a>设置环境变量</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set(ENV&#123;&lt;variable&gt;&#125; [&lt;value&gt;])</span><br></pre></td></tr></table></figure>
+
+<p>​        设置一个 <a href="https://cmake.org/cmake/help/latest/manual/cmake-env-variables.7.html#manual:cmake-env-variables(7)" target="_blank" rel="noopener"><code>Environment Variable</code></a> 到给定的值。的后续调用<code>$ENV{&lt;variable&gt;}</code>将返回此新值。</p>
+<p>​        此命令仅影响当前 CMake 进程，而不影响调用 CMake 的进程，也不会影响整个系统环境，也不会影响后续构建或测试过程的环境。</p>
+<p>​        如果之后没有给出参数<code>ENV{&lt;variable&gt;}</code>或者 if<code>&lt;value&gt;</code>是空字符串，则此命令将清除环境变量的任何现有值。</p>
+<p>​        后面<code>&lt;value&gt;</code>的参数被忽略。如果发现额外的参数，则会发出警告。</p>
+<p>​               </p>
+<h4 id="用法举例"><a href="#用法举例" class="headerlink" title="用法举例"></a>用法举例</h4><ul>
+<li>set(libs “${CMAKE_SOURCE_DIR}/src/main/jnilibs”)</li>
+</ul>
+<p>​        这个命令完成了这么一件事情：<br>定义了一个变量libs，并且变量的值为${CMAKE_SOURCE_DIR}/src/main/jnilibs，其中CMAKE_SOURCE_DIR 是一个cmake内置变量，指定了CMakeLists.txt所在的目录。详细介绍可参考：<a href="http://www.cnblogs.com/xianghang123/p/3556425.html。" target="_blank" rel="noopener">http://www.cnblogs.com/xianghang123/p/3556425.html。</a></p>
+<ul>
+<li><p>set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/src/main/jnilibs/${ANDROID_ABI})<br>这个命令用于给CMAKE_LIBRARY_OUTPUT_DIRECTORY宏赋值，该宏指定了cmake编译输出的东西应该放在什么地方。</p>
+<p>这个例子中的地方是${PROJECT_SOURCE_DIR}/src/main/jnilibs/${ANDROID_ABI}</p>
+<p>其中PROJECT_SOURCE_DIR 是<strong>cmake内置宏</strong>，指向构建工程的全路径。详细介绍可参考<a href="https://www.cnblogs.com/alphagl/p/6280061.html" target="_blank" rel="noopener">https://www.cnblogs.com/alphagl/p/6280061.html</a><br>————————————————<br>参考链接：<a href="https://blog.csdn.net/guanguanboy/article/details/84838920" target="_blank" rel="noopener">https://blog.csdn.net/guanguanboy/article/details/84838920</a></p>
+<p>​             </p>
+</li>
+</ul>
+<h3 id="list"><a href="#list" class="headerlink" title="list"></a>list</h3><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">list(LENGTH &lt;list&gt;&lt;output variable&gt;)</span><br><span class="line">list(GET &lt;list&gt; &lt;elementindex&gt; [&lt;element index&gt; ...]&lt;output variable&gt;)</span><br><span class="line">list(<span class="built_in">APPEND</span> &lt;list&gt;&lt;element&gt; [&lt;element&gt; ...])</span><br><span class="line">list(<span class="built_in">FIND</span> &lt;list&gt; &lt;value&gt;&lt;output variable&gt;)</span><br><span class="line">list(INSERT &lt;list&gt;&lt;element_index&gt; &lt;element&gt; [&lt;element&gt; ...])</span><br><span class="line">list(REMOVE_ITEM &lt;list&gt; &lt;value&gt;[&lt;value&gt; ...])</span><br><span class="line">list(REMOVE_AT &lt;list&gt;&lt;index&gt; [&lt;index&gt; ...])</span><br><span class="line">list(REMOVE_DUPLICATES &lt;list&gt;)</span><br><span class="line">list(REVERSE &lt;list&gt;)</span><br><span class="line">list(SORT &lt;list&gt;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>LENGTH　　　　  　　　　 返回list的长度</p>
+</li>
+<li><p>GET　　　　　　   　　　    返回list中index的element到value中</p>
+</li>
+<li><p>APPEND　　　　   　　　    添加新element到list中</p>
+</li>
+<li><p>FIND　　　　　　  　　　　返回list中element的index，没有找到返回-1</p>
+</li>
+<li><p>INSERT 　　　　　　　　　 将新element插入到list中index的位置</p>
+</li>
+<li><p>REMOVE_ITEM　　　　　　从list中删除某个element</p>
+</li>
+<li><p>REMOVE_AT　　　　　　　从list中删除指定index的element</p>
+</li>
+<li><p>REMOVE_DUPLICATES         从list中删除重复的element</p>
+</li>
+<li><p>REVERSE 　　　　　　　　 将list的内容反转</p>
+</li>
+<li><p>SORT 　　　　　　　　　   将list按字母顺序排序</p>
+</li>
+</ul>
+<p>————————————————</p>
+<p>参考链接：<a href="https://blog.csdn.net/yjjy0921/article/details/50378567" target="_blank" rel="noopener">https://blog.csdn.net/yjjy0921/article/details/50378567</a></p>
+<p>​               </p>
+<h3 id="find-package"><a href="#find-package" class="headerlink" title="find_package"></a>find_package</h3><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">find_package</span>(&lt;package&gt; [version] [EXACT] [QUIET] [MODULE]</span><br><span class="line">             [REQUIRED] [[COMPONENTS] [components...]]</span><br><span class="line">             [OPTIONAL_COMPONENTS components...]</span><br><span class="line">             [NO_POLICY_SCOPE])</span><br></pre></td></tr></table></figure>
+
+<p>​        从外部项目中查找和加载设置。 <code>&lt;package&gt;_FOUND</code> 将设置为指示是否找到了包。当找到包时，包特定的信息通过包本身记录的变量和<a href="https://cmake.org/cmake/help/v3.0/manual/cmake-buildsystem.7.html#imported-targets" target="_blank" rel="noopener">导入目标</a>提供。<code>QUIET</code>如果找不到包，该 选项将禁用消息。该 <code>MODULE</code>选项禁用下面记录的第二个签名。<code>REQUIRED</code>如果找不到包，该 选项将停止处理并显示错误消息。详见官方文档  <a href="https://cmake.org/cmake/help/v3.0/command/find_package.htm" target="_blank" rel="noopener">https://cmake.org/cmake/help/v3.0/command/find_package.htm</a></p>
+<p>​        但这个搜索包的过程是如何实现的呢？官方文档没有说明。</p>
+<p>​        根据<a href="https://github.com/BrightXiaoHan/CMakeTutorial/tree/master/FindPackage" target="_blank" rel="noopener">https://github.com/BrightXiaoHan/CMakeTutorial/tree/master/FindPackage</a> 的指导，我梳理出下面的流程图。</p>
+<p><img src="https://raw.githubusercontent.com/glisses/ImageWarehouse/main/img/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%BC%E5%90%88%E8%AE%AD%E7%BB%83-3.png" alt="find_package流程图.txt"></p>
+<p>​              </p>
+<h4 id="通过Cmake内置模块引入依赖包"><a href="#通过Cmake内置模块引入依赖包" class="headerlink" title="通过Cmake内置模块引入依赖包"></a>通过Cmake内置模块引入依赖包</h4><p>​        CMake官方为我们预定义了许多寻找依赖包的Module，他们存储在<code>path_to_your_cmake/share/cmake-&lt;version&gt;/Modules</code>目录下。每个以Find.cmake命名的文件都可以帮我们找到一个包。我们也可以在<a href="https://cmake.org/cmake/help/latest/manual/cmake-modules.7.html" target="_blank" rel="noopener">官方文档</a>中查看到哪些库官方已经为我们定义好了，我们可以直接使用find_package函数进行引用。</p>
+<p>​        我们以curl库为例，假设我们项目需要引入这个库，从网站中请求网页到本地，我们看到官方已经定义好了FindCURL.cmake。所以我们在CMakeLists.txt中可以直接用find_pakcage进行引用。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">find_package</span>(CURL)</span><br><span class="line"><span class="keyword">add_executable</span>(curltest curltest.cc)</span><br><span class="line"><span class="keyword">if</span>(CURL_FOUND)</span><br><span class="line">    <span class="keyword">target_include_directories</span>(clib PRIVATE <span class="variable">$&#123;CURL_INCLUDE_DIR&#125;</span>)</span><br><span class="line">    <span class="keyword">target_link_libraries</span>(curltest <span class="variable">$&#123;CURL_LIBRARY&#125;</span>)</span><br><span class="line"><span class="keyword">else</span>(CURL_FOUND)</span><br><span class="line">    <span class="keyword">message</span>(FATAL_ERROR ”CURL library <span class="keyword">not</span> found”)</span><br><span class="line"><span class="keyword">endif</span>(CURL_FOUND)</span><br></pre></td></tr></table></figure>
+
+<p>​        对于系统预定义的 <code>Find&lt;LibaryName&gt;.cmake</code> 模块，使用方法一般如上例所示。</p>
+<p>​        每一个模块都会定义以下几个变量</p>
+<ul>
+<li><p><code>&lt;LibaryName&gt;_FOUND</code></p>
+</li>
+<li><p><code>&lt;LibaryName&gt;_INCLUDE_DIR or &lt;LibaryName&gt;_INCLUDES</code></p>
+</li>
+<li><p><code>&lt;LibaryName&gt;_LIBRARY or &lt;LibaryName&gt;_LIBRARIES</code></p>
+<p>​    你可以通过<code>&lt;LibaryName&gt;_FOUND</code> 来判断模块是否被找到，如果没有找到，按照工程的需要关闭 某些特性、给出提醒或者中止编译，上面的例子就是报出致命错误并终止构建。 如果<code>&lt;LibaryName&gt;_FOUND</code> 为真，则将<code>&lt;LibaryName&gt;_INCLUDE_DIR</code> 加入 INCLUDE_DIRECTORIES，</p>
+</li>
+</ul>
+<p>​                 </p>
+<h4 id="通过find-package引入非官方的库（该方式只对支持cmake编译安装的库有效）"><a href="#通过find-package引入非官方的库（该方式只对支持cmake编译安装的库有效）" class="headerlink" title="通过find_package引入非官方的库（该方式只对支持cmake编译安装的库有效）"></a>通过find_package引入非官方的库（该方式只对支持cmake编译安装的库有效）</h4><p>​        假设此时我们需要引入glog库来进行日志的记录，我们在Module目录下并没有找到 FindGlog.cmake。所以我们需要自行安装glog库，再进行引用。</p>
+<p>​        安装</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># clone该项目</span></span><br><span class="line">git clone https://github.com/google/glog.git </span><br><span class="line"><span class="comment"># 切换到需要的版本 </span></span><br><span class="line">cd glog</span><br><span class="line">git checkout v0.<span class="number">40</span>  </span><br><span class="line"></span><br><span class="line"><span class="comment"># 根据官网的指南进行安装</span></span><br><span class="line">cmake -H. -Bbuild -G <span class="string">"Unix Makefiles"</span></span><br><span class="line">cmake --build build</span><br><span class="line">cmake --build build --<span class="keyword">target</span> <span class="keyword">install</span></span><br></pre></td></tr></table></figure>
+
+<p>​        此时我们便可以通过与引入curl库一样的方式引入glog库了</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">find_package</span>(glog)</span><br><span class="line"><span class="keyword">add_executable</span>(glogtest glogtest.cc)</span><br><span class="line"><span class="keyword">if</span>(GLOG_FOUND)</span><br><span class="line">    <span class="comment"># 由于glog在连接时将头文件直接链接到了库里面，所以这里不用显示调用target_include_directories</span></span><br><span class="line">    <span class="keyword">target_link_libraries</span>(glogtest glog::glog)</span><br><span class="line"><span class="keyword">else</span>(GLOG_FOUND)</span><br><span class="line">    <span class="keyword">message</span>(FATAL_ERROR ”glog library <span class="keyword">not</span> found”)</span><br><span class="line"><span class="keyword">endif</span>(GLOG_FOUND)</span><br></pre></td></tr></table></figure>
+
+<p>​          </p>
+<h4 id="Module模式与Config模式"><a href="#Module模式与Config模式" class="headerlink" title="Module模式与Config模式"></a>Module模式与Config模式</h4><p>​        通过上文我们了解了通过Cmake引入依赖库的基本用法。知其然也要知其所以然，find_package对我们来说是一个黑盒子，那么它是具体通过什么方式来查找到我们依赖的库文件的路径的呢。到这里我们就不得不聊到find_package的两种模式，一种是Module模式，也就是我们引入curl库的方式。另一种叫做Config模式，也就是引入glog库的模式。下面我们来详细介绍着两种方式的运行机制。</p>
+<p>​        在Module模式中，cmake需要找到一个叫做<code>Find&lt;LibraryName&gt;.cmake</code>的文件。这个文件负责找到库所在的路径，为我们的项目引入头文件路径和库文件路径。cmake搜索这个文件的路径有两个，一个是上文提到的cmake安装目录下的<code>share/cmake-&lt;version&gt;/Modules</code>目录，另一个使我们指定的<code>CMAKE_MODULE_PATH</code>的所在目录。</p>
+<p>​        如果Module模式搜索失败，没有找到对应的<code>Find&lt;LibraryName&gt;.cmake</code>文件，则转入Config模式进行搜索。它主要通过<code>&lt;LibraryName&gt;Config.cmake</code> or <code>&lt;lower-case-package-name&gt;-config.cmake</code>这两个文件来引入我们需要的库。以我们刚刚安装的glog库为例，在我们安装之后，它在<code>/usr/local/lib/cmake/glog/</code>目录下生成了<code>glog-config.cmake</code>文件，而<code>/usr/local/lib/cmake/&lt;LibraryName&gt;/</code>正是find_package函数的搜索路径之一。（find_package的搜索路径是一系列的集合，而且在linux，windows，mac上都会有所区别，需要的可以参考官方文档<a href="https://cmake.org/cmake/help/latest/command/find_package.html" target="_blank" rel="noopener">find_package</a>）</p>
+<p>​        由以上的例子可以看到，对于原生支持Cmake编译和安装的库通常会安装Config模式的配置文件到对应目录，这个配置文件直接配置了头文件库文件的路径以及各种cmake变量供find_package使用。而对于非由cmake编译的项目，我们通常会编写一个<code>Find&lt;LibraryName&gt;.cmake</code>，通过脚本来获取头文件、库文件等信息。通常，原生支持cmake的项目库安装时会拷贝一份XXXConfig.cmake到系统目录中，因此在没有显式指定搜索路径时也可以顺利找到。</p>
+<p>————————————————</p>
+<p>参考链接：<a href="https://github.com/BrightXiaoHan/CMakeTutorial/tree/master/FindPackage" target="_blank" rel="noopener">https://github.com/BrightXiaoHan/CMakeTutorial/tree/master/FindPackage</a></p>
+<p>​               </p>
+<h3 id="add-executable-amp-add-library"><a href="#add-executable-amp-add-library" class="headerlink" title="add_executable &amp; add_library"></a>add_executable &amp; add_library</h3><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">add_exectuable() 告诉工程生成一个可执行文件。</span><br><span class="line"><span class="keyword">add_library</span>() 则告诉生成一个库文件。</span><br></pre></td></tr></table></figure>
+
+<p>​               </p>
+<h3 id="include-directories"><a href="#include-directories" class="headerlink" title="include_directories"></a>include_directories</h3><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">include_directiories(/usr/<span class="keyword">include</span>/curl)</span><br></pre></td></tr></table></figure>
+
+<p>​        指定头文件目录在/usr/include/curl</p>
+<p>​               </p>
+<h3 id="target-link-libraries"><a href="#target-link-libraries" class="headerlink" title="target_link_libraries"></a>target_link_libraries</h3><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">target_link_libraries</span>(myprogram path/curl.so)</span><br></pre></td></tr></table></figure>
+
+<p>​        指定库文件目录在myprogram path/curl.so</p>
+<p>​               </p>
+<h3 id="include-directories与target-include-directories的区别"><a href="#include-directories与target-include-directories的区别" class="headerlink" title="include_directories与target_include_directories的区别"></a>include_directories与target_include_directories的区别</h3><p>​        include_directories(x/y)影响目录范围。CMakeList中的所有目标，以及在其调用点之后添加的所有子目录中的目标，都会把路径x/y添加到它们的包含路径中。</p>
+<p>​        target_include_directories(t x/y)有目标范围–它将x/y加入到目标t的包含路径中。</p>
+<p>————————————————</p>
+<p>参考链接：<a href="https://stackoverflow.com/questions/31969547/what-is-the-difference-between-include-directories-and-target-include-directories" target="_blank" rel="noopener">https://stackoverflow.com/questions/31969547/what-is-the-difference-between-include-directories-and-target-include-directories</a></p>
+<p>​               </p>
+<p>​               </p>
+<h3 id="几种include"><a href="#几种include" class="headerlink" title="几种include"></a>几种include</h3><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># CMake的几种include</span></span><br><span class="line"><span class="keyword">include_directories</span>（）</span><br><span class="line"><span class="keyword">target_include_directories</span>（）</span><br><span class="line"><span class="keyword">add_executable</span>( xx.cpp     xx.h)</span><br></pre></td></tr></table></figure>
+
+
+<p>​        这三种方式都可以对当前项目添加引用路径。</p>
+<p>​               </p>
+<h4 id="include-directories（）"><a href="#include-directories（）" class="headerlink" title="include_directories（）"></a>include_directories（）</h4><p>​        include_directories（）的影响范围最大，可以为CMakelists.txt后的所有项目添加头文件目录。</p>
+<p>​        一般写在最外层CMakelists.txt中影响全局。</p>
+<p>​               </p>
+<h4 id="target-include-directories（）"><a href="#target-include-directories（）" class="headerlink" title="target_include_directories（）"></a>target_include_directories（）</h4><p>​        target_include_directories（）的影响范围可以自定义。如加关键子PRIVATE或这PUBLIC。</p>
+<p>​        一般引用库路径使用这个命令，作为外部依赖项引入进来，target是自己项目生成的lib。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">project</span>(myLib)</span><br><span class="line"><span class="keyword">target_include_directories</span>（myLib PRIVATE <span class="variable">$&#123;OpenCV_Include_dir&#125;</span>）</span><br></pre></td></tr></table></figure>
+
+
+<p>​        就表示将${OpenCV_Include_dir}头文件库路径只添加到了myLib项目</p>
+<p>​               </p>
+<h4 id="add-executable（）"><a href="#add-executable（）" class="headerlink" title="add_executable（）"></a>add_executable（）</h4><p>​        add_executable( )中添加的引用路径一般是当前目录下的源文件对应的头文件。是生成项目时引入的头文件。</p>
+<p>​        这种方式一般用于自己写的或某项目需要的头文件，这种方式需要加添加文件名字，而非头文件目录。</p>
+<p>​        如：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">project</span>(addFunc)</span><br><span class="line"><span class="keyword">add_executable</span>（addFunc addFunc.h  addFunc.cpp）</span><br></pre></td></tr></table></figure>
+
+<p>————————————————<br>参考链接：<a href="https://blog.csdn.net/fb_help/article/details/81382746" target="_blank" rel="noopener">https://blog.csdn.net/fb_help/article/details/81382746</a></p>
+<p>​               </p>
+<h3 id="target-compile-definitions"><a href="#target-compile-definitions" class="headerlink" title="target_compile_definitions"></a>target_compile_definitions</h3><p>​        为目标增加编译定义（可以理解为，这是个什么文件）。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">target_compile_definitions</span>(&lt;<span class="keyword">target</span>&gt;</span><br><span class="line">                           &lt;INTERFACE|PUBLIC|PRIVATE&gt; [items1...]</span><br><span class="line">                           [&lt;INTERFACE|PUBLIC|PRIVATE&gt; [items2...] ...]</span><br><span class="line">                          )</span><br></pre></td></tr></table></figure>
+
+<p>​        例子：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">target_compile_definitions</span>(thirdparty_llvm INTERFACE</span><br><span class="line">  <span class="variable">$&#123;LLVM_DEFINITIONS&#125;</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>​        说明thirdparty_llvm是LLVM文件，用LLVM编译。</p>
+<p>​               </p>
+<h3 id="foreach"><a href="#foreach" class="headerlink" title="foreach"></a>foreach</h3><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">foreach</span>(LLVM_LIB IN LISTS LLVM_AVAILABLE_LIBS)</span><br><span class="line">  <span class="keyword">get_target_property</span>(LLVM_LIB_TYPE <span class="variable">$&#123;LLVM_LIB&#125;</span> TYPE)</span><br><span class="line">// lib类型是静态库，就把它加到LLVM_LIBRARIES里面</span><br><span class="line">  <span class="keyword">if</span>(LLVM_LIB_TYPE <span class="keyword">STREQUAL</span> <span class="string">"STATIC_LIBRARY"</span>)</span><br><span class="line">    <span class="keyword">list</span>(APPEND LLVM_LIBRARIES <span class="string">"$&#123;LLVM_LIB&#125;"</span>)</span><br><span class="line">  <span class="keyword">endif</span>()</span><br><span class="line"><span class="keyword">endforeach</span>()</span><br></pre></td></tr></table></figure>
+
+<p>​        以foreach()开头，以endforeach()结尾的循环。</p>
+<p>​               </p>
+<h3 id="math"><a href="#math" class="headerlink" title="math"></a>math</h3><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">math</span>(EXPR REMILL_LLVM_VERSION_NUMBER <span class="string">"$&#123;LLVM_MAJOR_VERSION&#125; * 100 + $&#123;LLVM_MINOR_VERSION&#125;"</span>)</span><br></pre></td></tr></table></figure>
+
+<p>​        计算 ${LLVM_MAJOR_VERSION} * 100 + ${LLVM_MINOR_VERSION}，并将结果返回到EXPR REMILL_LLVM_VERSION_NUMBER</p>
+<p>​               </p>
+<h3 id="CMAKE-HOST-SYSTEM-PROCESSOR"><a href="#CMAKE-HOST-SYSTEM-PROCESSOR" class="headerlink" title="CMAKE_HOST_SYSTEM_PROCESSOR"></a>CMAKE_HOST_SYSTEM_PROCESSOR</h3><p>​        CMAKE正在运行的CPU的名字</p>
+<p>​               </p>
+<h3 id="CMAKE-ENABLE-EXPORTS"><a href="#CMAKE-ENABLE-EXPORTS" class="headerlink" title="CMAKE_ENABLE_EXPORTS"></a>CMAKE_ENABLE_EXPORTS</h3><p>​    指定可执行文件是否为可加载模块导出的option</p>
+<p>​               </p>
+<h3 id="message"><a href="#message" class="headerlink" title="message"></a>message</h3><p>​        message :为用户显示一条消息</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">message</span>( [STATUS|WARNING|AUTHOR_WARNING|FATAL_ERROR|SEND_ERROR]</span><br><span class="line">  <span class="string">"message to display"</span> ...)</span><br></pre></td></tr></table></figure>
+
+<p>​        可以用下述可选的关键字指定消息的类型：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(无) = 重要消息；</span><br><span class="line"> STATUS = 非重要消息；</span><br><span class="line"> WARNING = CMake 警告, 会继续执行；</span><br><span class="line"> AUTHOR_WARNING = CMake 警告 (dev), 会继续执行；</span><br><span class="line"> SEND_ERROR = CMake 错误, 继续执行，但是会跳过生成的步骤；</span><br><span class="line"> FATAL_ERROR = CMake 错误, 终止所有处理过程；</span><br></pre></td></tr></table></figure>
+
+<p>​               </p>
+<h3 id="编译选项"><a href="#编译选项" class="headerlink" title="编译选项"></a>编译选项</h3><p>​        在remill源码里看到了这一段，描述了VS编译器的编译选项。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">target_compile_options</span>(remill_settings INTERFACE</span><br><span class="line">  <span class="string">"$&lt;$&lt;CONFIG:Debug&gt;:/MDd&gt;$&lt;$&lt;CONFIG:Release&gt;:/MD&gt;"</span></span><br><span class="line">  /nologo /W3 /EHsc /wd4141 /wd4146 /wd4180 /wd4244</span><br><span class="line">  /wd4258 /wd4267 /wd4291 /wd4345 /wd4351 /wd4355 /wd4456</span><br><span class="line">  /wd4457 /wd4458 /wd4459 /wd4503 /wd4624 /wd4722 /wd4800</span><br><span class="line">  /wd4100 /wd4127 /wd4512 /wd4505 /wd4610 /wd4510 /wd4702</span><br><span class="line">  /wd4245 /wd4706 /wd4310 /wd4701 /wd4703 /wd4389 /wd4611</span><br><span class="line">  /wd4805 /wd4204 /wd4577 /wd4091 /wd4592 /wd4324</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>​        那么这么多的编译选项，是什么意思呢？</p>
+<p>​        /nologo表示编译时不在输出窗口显示这些设置</p>
+<p>​                 </p>
+<h4 id="EH（异常处理模型）"><a href="#EH（异常处理模型）" class="headerlink" title="EH（异常处理模型）"></a>EH（异常处理模型）</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;EH&#123;s|a&#125;[c][-]</span><br></pre></td></tr></table></figure>
+
+<p>此选项指定编译器使用的异常处理模型。</p>
+<ul>
+<li>使用 /EHs 指定同步异常处理模型（没有结构化异常处理异常的 C++ 异常处理）。如果使用 /EHs，不要依靠编译器捕捉异步异常。</li>
+<li>使用 /EHa 指定异步异常处理模型（带结构化异常处理异常的 C++ 异常处理）。</li>
+</ul>
+<p>/EHc 选项要求指定 /EHs、/EHa 或 /GX。它通知编译器假定 <strong>extern</strong> C 函数从不引发异常。</p>
+<p>上面的源码里有 /EHsc编译选项。不依靠编译器捕捉异步异常，且通知编译器假定 <strong>extern</strong> C 函数从不引发异常。而remill源码中也出现了很多 <a href="#jump">extern C</a>，这是合理的。</p>
+<p>————————————————</p>
+<p>参考链接：</p>
+<p><a href="https://blog.csdn.net/zhou_ml/article/details/1470452" target="_blank" rel="noopener">https://blog.csdn.net/zhou_ml/article/details/1470452</a></p>
+<p><a href="https://blog.csdn.net/dongfengkuayue/article/details/47044179" target="_blank" rel="noopener">https://blog.csdn.net/dongfengkuayue/article/details/47044179</a></p>
+<p>​            </p>
+<h3 id="private、public、interface的区别"><a href="#private、public、interface的区别" class="headerlink" title="private、public、interface的区别"></a>private、public、interface的区别</h3><p><code>The PUBLIC, PRIVATE and INTERFACE keywords can be used to specify both the link dependencies and the link interface in one command. Libraries and targets following PUBLIC are linked to, and are made part of the link interface. Libraries and targets following PRIVATE are linked to, but are not made part of the link interface. Libraries following INTERFACE are appended to the link interface and are not used for linking &lt;target&gt;.</code></p>
+<p>PUBLIC, PRIVATE和INTERFACE关键字可以用来在一条命令中指定链接依赖关系和链接界面。在PUBLIC后面的库和目标被链接到，并成为链接界面的一部分。在PRIVATE后面的库和目标被链接到，但不成为链接界面的一部分。在INTERFACE后面的库被附加到链接界面上，并且不用于链接<target>。</p>
+<p>​               </p>
+<h3 id="option"><a href="#option" class="headerlink" title="option"></a>option</h3><h4 id="option是什么"><a href="#option是什么" class="headerlink" title="option是什么"></a>option是什么</h4><p>​        option提供用户可选择的选项。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">option</span>(&lt;option_variable&gt; <span class="string">"help string describing option"</span></span><br><span class="line">       [initial value])</span><br></pre></td></tr></table></figure>
+
+<p>​        用户可将option选择为 ON 或 OFF。如果未提供初始值，则使用 OFF。</p>
+<p>​        remill源码举例：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">option</span>(REMILL_BARRIER_AS_NOP <span class="string">"Remove compiler barriers (inline assembly) in semantics"</span> <span class="keyword">OFF</span>)</span><br><span class="line"><span class="keyword">option</span>(REMILL_BUILD_SPARC32_RUNTIME <span class="string">"Build the Runtime for SPARC32. Turn this off if you have include errors with &lt;bits/c++config.h&gt;, or read the README for a fix"</span> <span class="keyword">ON</span>)</span><br></pre></td></tr></table></figure>
+
+<p>​        每个option的描述性文字，大大方便了理解代码。</p>
+<p>​               </p>
+<h4 id="option的使用场景"><a href="#option的使用场景" class="headerlink" title="option的使用场景"></a>option的使用场景</h4><p>CMake option使用场景 : 编译脚本传递参数 -&gt; CMake脚本接收option -&gt; 源代码宏。</p>
+<p>​               </p>
+<ul>
+<li>编译脚本传入参数<br> 传入一个cmake option TEST_DEBUG</li>
+</ul>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/bin/sh</span></span><br><span class="line"></span><br><span class="line">cmake -DTEST_DEBUG=<span class="keyword">ON</span> .</span><br><span class="line">cmake --build .</span><br></pre></td></tr></table></figure>
+
+<p>​               </p>
+<ul>
+<li>CMake脚本接收option<br> cmake 脚本定义TEST_DEBUG 默认关闭OFF</li>
+</ul>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">project</span>(<span class="keyword">test</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">option</span>(TEST_DEBUG <span class="string">"option for debug"</span> <span class="keyword">OFF</span>)</span><br><span class="line"><span class="keyword">if</span> (TEST_DEBUG)</span><br><span class="line"><span class="keyword">add_definitions</span>(-DTEST_DEBUG)</span><br><span class="line"><span class="keyword">endif</span>()</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>​               </p>
+<ul>
+<li>源代码宏 test.c</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"test.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> TEST_DEBUG</span></span><br><span class="line">...</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
+<p>————————————————</p>
+<p>参考链接（这个写的挺清晰的）：<a href="https://www.jianshu.com/p/035bc18f8f62" target="_blank" rel="noopener">https://www.jianshu.com/p/035bc18f8f62</a></p>
+<p><span id="jump">  </span>          </p>
+<h2 id="extern-C"><a href="#extern-C" class="headerlink" title="extern C"></a>extern C</h2><p>​    <strong>extern “C”的主要作用</strong>就是为了能够正确实现C++代码调用其他C语言代码。加上extern “C”后，会指示编译器这部分代码按C语言（而不是C++）的方式进行编译。由于C++支持函数重载，因此编译器编译函数的过程中会将函数的参数类型也加到编译后的代码中，而不仅仅是函数名；而C语言并不支持函数重载，因此编译C语言代码的函数时不会带上函数的参数类型，一般只包括函数名。</p>
+<pre><code>这个功能十分有用处，因为在C++出现以前，很多代码都是C语言写的，而且很底层的库也是C语言写的，**为了更好的支持原来的C代码和已经写好的C语言库，需要在C++中尽可能的支持C，而extern &quot;C&quot;就是其中的一个策略。**</code></pre><p>​        这个功能主要用在下面的情况：</p>
+<ul>
+<li><p><strong>C++代码调用C语言代码</strong></p>
+</li>
+<li><p><strong>在C++的头文件中使用</strong></p>
+</li>
+<li><p><strong>在多个人协同开发时，可能有的人比较擅长C语言，而有的人擅长C++，这样的情况下也会有用到</strong></p>
+</li>
+</ul>
+<p>————————————————</p>
+<p> 参考链接：<a href="https://www.cnblogs.com/xiangtingshen/p/10980055.html" target="_blank" rel="noopener">https://www.cnblogs.com/xiangtingshen/p/10980055.html</a>           </p>
+<p>​             </p>
+<p>​      </p>
+<h2 id="宏"><a href="#宏" class="headerlink" title="宏"></a>宏</h2><p>​        宏（英语：Macro）是一种<a href="https://baike.baidu.com/item/批量处理" target="_blank" rel="noopener">批量处理</a>的称谓。</p>
+<p>​        <a href="https://baike.baidu.com/item/计算机科学/9132" target="_blank" rel="noopener">计算机科学</a>里的宏是一种<a href="https://baike.baidu.com/item/抽象" target="_blank" rel="noopener">抽象</a>（Abstraction），它根据一系列预定义的规则替换一定的文本模式。<a href="https://baike.baidu.com/item/解释器" target="_blank" rel="noopener">解释器</a>或<a href="https://baike.baidu.com/item/编译器" target="_blank" rel="noopener">编译器</a>在遇到宏时会自动进行这一模式替换。对于<a href="https://baike.baidu.com/item/编译语言" target="_blank" rel="noopener">编译语言</a>，宏展开在编译时发生，进行宏展开的工具常被称为宏展开器。</p>
+<p>​        宏这一术语也常常被用于许多类似的环境中，它们是源自宏展开的概念，这包括键盘宏和宏语言。绝大多数情况下，“宏”这个词的使用暗示着将小命令或动作转化为一系列指令。</p>
+<p>​        <code>#define</code> 这样的就是宏。</p>
+<p>​               </p>
+<p>​               </p>
+<p>​                 </p>
+<p>​               </p>
+<h1 id="搭docker跑remill"><a href="#搭docker跑remill" class="headerlink" title="搭docker跑remill"></a>搭docker跑remill</h1><p>​        想做</p>
+<p>​               </p>
+<p>​               </p>
+<p>​               </p>
+<p>​               </p>
+<h2 id="各种文件类型"><a href="#各种文件类型" class="headerlink" title="各种文件类型"></a>各种文件类型</h2><p>​               </p>
+<h3 id="lib"><a href="#lib" class="headerlink" title="lib"></a>lib</h3><p>​        LIB有两种，一种是静态库，比如C-Runtime库，这种LIB中有函数的实现代码，一般用在静态连编上，它是将LIB中的代码加入目标模块(EXE或者DLL)文件中，所以链接好了之后，LIB文件就没有用了。一种LIB是和DLL配合使用的，里面没有代码，代码在DLL中，这种LIB是用在静态调用DLL上的，所以起的作用也是链接作用，链接完成了，LIB也没用了。至于动态调用DLL的话，根本用不上LIB文件。 目标模块（EXE或者DLL）文件生成之后，就用不着LIB文件了。</p>
+<p>​               </p>
+<h3 id="dll"><a href="#dll" class="headerlink" title="dll"></a>dll</h3><p>​        .dll，动态链接库。英文为<strong>DLL</strong>，是<strong>Dynamic Link Library</strong>的缩写。DLL是一个包含可由多个程序，同时使用的代码和数据的库。</p>
+<p>​        <strong>优势</strong>是可以更为容易地将更新应用于各个模块，而不会影响该程序的其他部分。例如，您可能具有一个工资计算程序，而税率每年都会更改。当这些更改被隔离到 DLL 中以后，您无需重新生成或安装整个程序就可以应用更新。</p>
+<p>​               </p>
+<p>​               </p>
+<h2 id="环境变量与系统变量"><a href="#环境变量与系统变量" class="headerlink" title="环境变量与系统变量"></a>环境变量与系统变量</h2><p>​        在装软件的时候我们往往要配置环境变量。这是为什么呢？</p>
+<blockquote>
+<p>​        环境变量是为了调用方便</p>
+<p>​        1、软件依赖项。</p>
+<p>​        比如java，很多软件会用到，如果不加入到环境变量，当需要调用java的时候就要指定java.exe的完整路径，如c:\program files\java\xxxxx\vvvv\java.exe，指定完整路径不要紧，问题是完整路径根本不知道，可能在D盘，也可能在E盘，不知道路径没法调用。加入到环境变量，其他软件直接call 一下 java.exe就行。管你在哪儿，os 帮你唤醒。</p>
+<p>​        2、方便。</p>
+<p>​        其实我感觉和上一条差不多，比如我们要打开注册表，运行，输入regedit就行，如果没有环境变量，就需要输入c:\windows\system32\regedit.exe。</p>
+<p>​        3、系统路径。</p>
+<p>​        比如有的软件想要到windows目录写入自己的文件，有些脚本语言是并没有类似的GetWindowsDirectory等函数获取windows目录，那可以直接使用类似%windir%的方式，直接切换到需要的系统路径。</p>
+<p>作者：单纯的淫<br>链接：<a href="https://www.zhihu.com/question/381822915/answer/1099137710" target="_blank" rel="noopener">https://www.zhihu.com/question/381822915/answer/1099137710</a></p>
+</blockquote>
+<p>​               </p>
+<p>​        那么环境变量和系统变量是什么呢？</p>
+<h3 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h3><p>​        环境变量（environment variables）一般是指在<a href="https://baike.baidu.com/item/操作系统/192" target="_blank" rel="noopener">操作系统</a>中用来指定操作系统运行环境的一些参数，如：<a href="https://baike.baidu.com/item/临时文件夹/1061467" target="_blank" rel="noopener">临时文件夹</a>位置和<a href="https://baike.baidu.com/item/系统文件夹/5328647" target="_blank" rel="noopener">系统文件夹</a>位置等。</p>
+<p>​        环境<a href="https://baike.baidu.com/item/变量" target="_blank" rel="noopener">变量</a>是在操作系统中一个具有特定名字的对象，它包含了一个或者多个应用<a href="https://baike.baidu.com/item/程序" target="_blank" rel="noopener">程序</a>所将使用到的信息。例如<a href="https://baike.baidu.com/item/Windows/165458" target="_blank" rel="noopener">Windows</a>和<a href="https://baike.baidu.com/item/DOS/32025" target="_blank" rel="noopener">DOS</a>操作系统中的path环境变量，当要求系统运行一个<a href="https://baike.baidu.com/item/程序/71525" target="_blank" rel="noopener">程序</a>而没有告诉它程序所在的完整路径时，系统除了在<a href="https://baike.baidu.com/item/当前目录/7205107" target="_blank" rel="noopener">当前目录</a>下面寻找此程序外，还应到path中指定的路径去找。用户通过设置环境<a href="https://baike.baidu.com/item/变量" target="_blank" rel="noopener">变量</a>，来更好的运行进程。</p>
+<p>​        path 表示：指定可执行文件的搜索路径。</p>
+<p>​        实际上我们用的最多的也是这个变量，在我们安装各种软件，搭建各种开发环境时，一般也都是直接在这个path里面放入配置程序路径的。</p>
+<p>​        为了安全一般配置用户环境变量；为了省事一般配置系统环境变量。</p>
+<p>​               </p>
+<h3 id="系统变量"><a href="#系统变量" class="headerlink" title="系统变量"></a>系统变量</h3><p>​        系统变量是由操作系统定义的数据存储位置，无论谁登录该计算机，该位置都相同。Administrators 组（即管理员用户组）的用户可以添加新的变量或更改这些值。</p>
+<p>————————————————</p>
+<p>参考链接（这个写的挺清晰的）：<a href="https://jingyan.baidu.com/article/a17d5285c9b0c48099c8f26a.html" target="_blank" rel="noopener">https://jingyan.baidu.com/article/a17d5285c9b0c48099c8f26a.html</a></p>
+<p>​               </p>
+<p>​               </p>
+<p>​               </p>
+<p>​               </p>
+<h1 id="一份笔记，没看，mark一下"><a href="#一份笔记，没看，mark一下" class="headerlink" title="一份笔记，没看，mark一下"></a>一份笔记，没看，mark一下</h1><p><a href="https://sfumecjf.github.io/cmake-examples-Chinese/01-basic/1.7%20%20Including%20Third%20Party%20Library.html" target="_blank" rel="noopener">https://sfumecjf.github.io/cmake-examples-Chinese/01-basic/1.7%20%20Including%20Third%20Party%20Library.html</a></p>
+
+      
+      <!-- reward -->
+      
+      <div id="reward-btn">
+        打赏
+      </div>
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+        <div class="declare">
+          <ul class="post-copyright">
+            <li>
+              <i class="ri-copyright-line"></i>
+              <strong>版权声明： </strong s>
+              本博客所有文章除特别声明外，均采用 <a href="https://www.apache.org/licenses/LICENSE-2.0.html" rel="external nofollow"
+                target="_blank">Apache License 2.0</a> 许可协议。转载请注明出处！
+            </li>
+          </ul>
+        </div>
+        
+    <footer class="article-footer">
+      
+          
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://glisses.github.io/2021/07/19/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%BC%E5%90%88%E8%AE%AD%E7%BB%83/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%A4%A7%E5%AD%A6%E4%B8%93%E4%B8%9A%E8%AF%BE/" rel="tag">大学专业课</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+  
+  <nav class="article-nav">
+    
+      <a href="/2021/07/21/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%BC%E5%90%88%E8%AE%AD%E7%BB%83-%E5%9F%BA%E4%BA%8EQt%E7%9A%84%E6%95%B0%E7%8B%AC%E5%B0%8F%E6%B8%B8%E6%88%8F/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            计算机综合训练-基于Qt的数独小游戏
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2021/06/29/%E8%AE%A4%E7%9F%A5%E7%A5%9E%E7%BB%8F%E7%A7%91%E5%AD%A6%E5%AF%BC%E8%AE%BA%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">认知神经科学导论期末复习</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+  
+<!-- valine评论 -->
+<div id="vcomments-box">
+    <div id="vcomments">
+    </div>
+</div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js'></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        app_id: 'wopEkNOS3jcH99vLw4Fv3G7p-gzGzoHsz',
+        app_key: 'nmKagbdNc4YoBGAAziafy7YX',
+        path: window.location.pathname,
+        notify: 'false',
+        verify: 'false',
+        avatar: 'mp',
+        placeholder: '给我的文章加点评论吧~',
+        recordIP: true
+    });
+    const infoEle = document.querySelector('#vcomments .info');
+    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0) {
+        infoEle.childNodes.forEach(function (item) {
+            item.parentNode.removeChild(item);
+        });
+    }
+</script>
+<style>
+    #vcomments-box {
+        padding: 5px 30px;
+    }
+
+    @media screen and (max-width: 800px) {
+        #vcomments-box {
+            padding: 5px 0px;
+        }
+    }
+
+    #vcomments-box #vcomments {
+        background-color: #fff;
+    }
+
+    .v .vlist .vcard .vh {
+        padding-right: 20px;
+    }
+
+    .v .vlist .vcard {
+        padding-left: 10px;
+    }
+</style>
+
+  
+
+  
+  
+  
+
+</article>
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>
+        &copy;
+        2022
+        glisses
+      </li>
+      <li>
+        
+      </li>
+    </ul>
+    <ul class="list-inline">
+      <li>
+        
+        
+        <span>
+  <i>PV:<span id="busuanzi_value_page_pv"></span></i>
+  <i>UV:<span id="busuanzi_value_site_uv"></span></i>
+</span>
+        
+      </li>
+      
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="to_top">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+      </div>
+    </main>
+    <aside class="sidebar">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="glisses"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags/%E6%97%85%E8%A1%8C/">旅行</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="http://shenyu-vip.lofter.com" target="_blank" rel="noopener">摄影</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/2019/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/share.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script>
+  try {
+    var typed = new Typed("#subtitle", {
+      strings: ['There is no royal road to learning.', 'Inner peace.', 'It is never too old to learn.'],
+      startDelay: 0,
+      typeSpeed: 200,
+      loop: true,
+      backSpeed: 100,
+      showCursor: true
+    });
+  } catch (err) {
+  }
+
+</script>
+
+
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: 'main',
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto',
+    onClick: (e) => {
+      $('.toc-link').removeClass('is-active-link');
+      $(`a[href=${e.target.hash}]`).addClass('is-active-link');
+      $(e.target.hash).scrollIntoView();
+      return false;
+    }
+  });
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/js/ayer.js"></script>
+
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+
+<script type="text/javascript" src="https://js.users.51.la/20544303.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css">
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+
+    
+    <div id="music">
+    
+    
+    
+    <iframe frameborder="no" border="1" marginwidth="0" marginheight="0" width="200" height="52"
+        src="//music.163.com/outchain/player?type=2&id=1492283139&auto=1&height=32"></iframe>
+</div>
+
+<style>
+    #music {
+        position: fixed;
+        right: 15px;
+        bottom: 0;
+        z-index: 998;
+    }
+</style>
+    
+  </div>
+</body>
+
+</html>

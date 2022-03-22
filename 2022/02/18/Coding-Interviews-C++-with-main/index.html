@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    包含主程序的《剑指offer》C++代码 |  glisses
+  </title>
+  <meta name="generator" content="hexo-theme-yilia-plus">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+  
+  
+
+  
+
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    <main class="content">
+      <section class="outer">
+  <article id="post-Coding-Interviews-C++-with-main" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  包含主程序的《剑指offer》C++代码
+</h1>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2022/02/18/Coding-Interviews-C++-with-main/" class="article-date">
+  <time datetime="2022-02-18T14:30:16.000Z" itemprop="datePublished">2022-02-18</time>
+</a>
+      
+      
+      
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">6.4k字</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">32分钟</span>
+        </span>
+    </span>
+</div>
+
+      
+    </div>
+    
+
+    
+    
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <p>本文严格按照<a href="https://leetcode-cn.com/study-plan/lcof/?progress=wp5ibz5" target="_blank" rel="noopener">LeetCode上《剑指offer》学习计划</a>的顺序撰写。代码皆为C++。</p>
+<p><strong>动机</strong>：LeetCode题解没有主程序，对我在本地测试造成了麻烦。想提供一份包含测试的完整程序，供大家使用。</p>
+<p>对于《剑指offer》上的大部分题目，本文包含：</p>
+<ul>
+<li><p><strong>该题的LeetCode链接</strong></p>
+</li>
+<li><p><strong>解题思路（简单题可能略过）</strong></p>
+</li>
+<li><p><strong>完整代码（输入在main函数中）</strong></p>
+</li>
+<li><p><strong>样例输出</strong></p>
+</li>
+<li><p><strong>执行用时、内存消耗在LeetCode评测的排名</strong></p>
+<p>​                 </p>
+</li>
+</ul>
+<p>截至目前，本文中代码在所有CPP提交中，<strong>执行用时平均击败97.17%的用户，内存消耗平均击败76.61%的用户</strong>。</p>
+<p><a href="https://github.com/glisses/Coding-Interviews-Cplusplus-with-main" target="_blank" rel="noopener">如果这篇文章对你有所帮助的话，请帮我点亮star!</a></p>
+<a id="more"></a>
+
+<p>​                           </p>
+<h2 id="Day-1"><a href="#Day-1" class="headerlink" title="Day 1"></a>Day 1</h2><h3 id="剑指-Offer-09-用两个栈实现队列"><a href="#剑指-Offer-09-用两个栈实现队列" class="headerlink" title="剑指 Offer 09. 用两个栈实现队列"></a><a href="https://leetcode-cn.com/problems/yong-liang-ge-zhan-shi-xian-dui-lie-lcof/" target="_blank" rel="noopener">剑指 Offer 09. 用两个栈实现队列</a></h3><h4 id="【解题思路】"><a href="#【解题思路】" class="headerlink" title="【解题思路】"></a>【解题思路】</h4><p>栈的特点是先进后出，队列的特点是先进先出。</p>
+<p>两个栈，stack1负责插入，stack2负责删除。</p>
+<p>对于插入操作，插入stack1即可；</p>
+<p>对于删除操作，若stack2非空，则stack2.pop()；若stack2为空，则将stack1中所有值按顺序pop到stack2中。然后stack2再pop。</p>
+<h4 id="【完整代码】"><a href="#【完整代码】" class="headerlink" title="【完整代码】"></a>【完整代码】</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CQueue</span> &#123;</span></span><br><span class="line">    <span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; stack1, stack2;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    CQueue() &#123;</span><br><span class="line">        <span class="keyword">while</span> (!stack1.empty())</span><br><span class="line">            stack1.pop();</span><br><span class="line">        <span class="keyword">while</span> (!stack2.empty())</span><br><span class="line">            stack2.pop();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">appendTail</span><span class="params">(<span class="keyword">int</span> value)</span> </span>&#123;</span><br><span class="line">        stack1.push(value);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">deleteHead</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (stack1.empty() &amp;&amp; stack2.empty())</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    </span><br><span class="line">        <span class="keyword">if</span> (!stack2.empty())</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">int</span> ret = stack2.top();</span><br><span class="line">            stack2.pop();</span><br><span class="line">            <span class="keyword">return</span> ret;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span>(!stack1.empty())</span><br><span class="line">        &#123;</span><br><span class="line">            stack2.push(stack1.top());</span><br><span class="line">            stack1.pop();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> ret = stack2.top();</span><br><span class="line">        stack2.pop();</span><br><span class="line">        <span class="keyword">return</span> ret;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    CQueue* obj = <span class="keyword">new</span> CQueue();</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;(obj-&gt;deleteHead())&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    obj-&gt;appendTail(<span class="number">5</span>);</span><br><span class="line">    obj-&gt;appendTail(<span class="number">2</span>);</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;obj-&gt;deleteHead()&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;obj-&gt;deleteHead()&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="【样例输出】"><a href="#【样例输出】" class="headerlink" title="【样例输出】"></a>【样例输出】</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">-1</span></span><br><span class="line"><span class="number">5</span></span><br><span class="line"><span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="【执行用时、内存消耗排名】"><a href="#【执行用时、内存消耗排名】" class="headerlink" title="【执行用时、内存消耗排名】"></a>【<strong>执行用时、内存消耗排名</strong>】</h4><p>执行用时：212 ms, 在所有 C++ 提交中击败了99%的用户</p>
+<p>内存消耗：101MB, 在所有 C++ 提交中击败了78%的用户</p>
+<p>通过测试用例：55 / 55</p>
+<p>​                          </p>
+<h3 id="剑指-Offer-30-包含min函数的栈"><a href="#剑指-Offer-30-包含min函数的栈" class="headerlink" title="剑指 Offer 30. 包含min函数的栈"></a><a href="https://leetcode-cn.com/problems/bao-han-minhan-shu-de-zhan-lcof/" target="_blank" rel="noopener">剑指 Offer 30. 包含min函数的栈</a></h3><h4 id="【解题思路】-1"><a href="#【解题思路】-1" class="headerlink" title="【解题思路】"></a>【解题思路】</h4><p>正常stack1，让stack2存放stack1中的<strong>不上升</strong>序列。注意是<strong>不上升序列</strong>而不是<strong>下降序列</strong>，不然无法处理有相同值的情况。我在这儿RE了。</p>
+<h4 id="【完整代码】-1"><a href="#【完整代码】-1" class="headerlink" title="【完整代码】"></a>【完整代码】</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MinStack</span> &#123;</span></span><br><span class="line">    <span class="built_in">stack</span> &lt;<span class="keyword">int</span>&gt; stack1, stack2;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">/** initialize your data structure here. */</span></span><br><span class="line">    MinStack() &#123;</span><br><span class="line">        <span class="keyword">while</span> (!stack1.empty()) stack1.pop();</span><br><span class="line">        <span class="keyword">while</span> (!stack2.empty()) stack2.pop();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">push</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        stack1.push(x);</span><br><span class="line">        <span class="keyword">if</span> (stack2.empty() <span class="keyword">or</span> x&lt;=stack2.top())  stack2.push(x);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">pop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (stack2.top()==stack1.top()) stack2.pop();</span><br><span class="line">        stack1.pop();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">top</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> stack1.top();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">min</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> stack2.top();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    MinStack minStack = MinStack();</span><br><span class="line">    minStack.push(<span class="number">0</span>);</span><br><span class="line">    minStack.push(<span class="number">1</span>);</span><br><span class="line">    minStack.push(<span class="number">0</span>);</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;minStack.<span class="built_in">min</span>()&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    minStack.pop();</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;minStack.<span class="built_in">min</span>()&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="【样例输出】-1"><a href="#【样例输出】-1" class="headerlink" title="【样例输出】"></a>【样例输出】</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span></span><br><span class="line"><span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="【执行用时、内存消耗排名】-1"><a href="#【执行用时、内存消耗排名】-1" class="headerlink" title="【执行用时、内存消耗排名】"></a>【<strong>执行用时、内存消耗排名</strong>】</h4><p>执行用时：12ms, 在所有 C++ 提交中击败了100%的用户</p>
+<p>内存消耗：14.6MB, 在所有 C++ 提交中击败了81%的用户</p>
+<p>通过测试用例：19 / 19</p>
+<p>​                          </p>
+<h2 id="Day-2"><a href="#Day-2" class="headerlink" title="Day 2"></a>Day 2</h2><h3 id="剑指-Offer-06-从尾到头打印链表"><a href="#剑指-Offer-06-从尾到头打印链表" class="headerlink" title="剑指 Offer 06. 从尾到头打印链表"></a><a href="https://leetcode-cn.com/problems/cong-wei-dao-tou-da-yin-lian-biao-lcof/" target="_blank" rel="noopener">剑指 Offer 06. 从尾到头打印链表</a></h3><h4 id="【解题思路】-2"><a href="#【解题思路】-2" class="headerlink" title="【解题思路】"></a>【解题思路】</h4><p>递归</p>
+<h4 id="【完整代码】-2"><a href="#【完整代码】-2" class="headerlink" title="【完整代码】"></a>【完整代码】</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> val;</span><br><span class="line">    ListNode *next;</span><br><span class="line">    ListNode(<span class="keyword">int</span> x) : val(x), next(<span class="literal">NULL</span>) &#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">reversePrint</span><span class="params">(ListNode* head)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!head) <span class="keyword">return</span> &#123;&#125;;</span><br><span class="line">        <span class="built_in">vector</span> &lt;<span class="keyword">int</span>&gt; a = reversePrint(head-&gt;next);</span><br><span class="line">        a.push_back(head-&gt;val);</span><br><span class="line">        <span class="keyword">return</span> a;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ListNode* head = <span class="keyword">new</span> ListNode(<span class="number">1</span>);</span><br><span class="line">    ListNode* node2 = <span class="keyword">new</span> ListNode(<span class="number">3</span>);</span><br><span class="line">    ListNode* node3 = <span class="keyword">new</span> ListNode(<span class="number">2</span>);</span><br><span class="line">    head-&gt;next = node2;</span><br><span class="line">    node2-&gt;next = node3;</span><br><span class="line">    Solution solution = Solution();</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">vector</span> &lt;<span class="keyword">int</span>&gt; ans = solution.reversePrint(head);</span><br><span class="line">    <span class="comment">// requires C++ 11</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> i = ans.<span class="built_in">begin</span>(); i != ans.<span class="built_in">end</span>(); i++) <span class="built_in">cout</span> &lt;&lt; *i &lt;&lt; <span class="string">' '</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="【样例输出】-2"><a href="#【样例输出】-2" class="headerlink" title="【样例输出】"></a>【样例输出】</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2</span> <span class="number">3</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="【执行用时、内存消耗排名】-2"><a href="#【执行用时、内存消耗排名】-2" class="headerlink" title="【执行用时、内存消耗排名】"></a>【<strong>执行用时、内存消耗排名</strong>】</h4><p>执行用时：0ms, 在所有 C++ 提交中击败了100%的用户</p>
+<p>内存消耗：11MB, 在所有 C++ 提交中击败了7%的用户</p>
+<p>通过测试用例：24 / 24</p>
+<p>​            </p>
+<h3 id="剑指-Offer-24-反转链表"><a href="#剑指-Offer-24-反转链表" class="headerlink" title="剑指 Offer 24. 反转链表"></a><a href="https://leetcode-cn.com/problems/fan-zhuan-lian-biao-lcof/" target="_blank" rel="noopener">剑指 Offer 24. 反转链表</a></h3><h4 id="【解题思路】-3"><a href="#【解题思路】-3" class="headerlink" title="【解题思路】"></a>【解题思路】</h4><p>用head和tail表示已经处理好了的链表部分的头指针和尾指针。</p>
+<p>每次将tail后的一个节点放到最前面。</p>
+<h4 id="【完整代码】-3"><a href="#【完整代码】-3" class="headerlink" title="【完整代码】"></a>【完整代码】</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Definition for singly-linked list.</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> val;</span><br><span class="line">    ListNode *next;</span><br><span class="line">    ListNode(<span class="keyword">int</span> x) : val(x), next(<span class="literal">NULL</span>) &#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">ListNode* <span class="title">reverseList</span><span class="params">(ListNode* head)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">auto</span> tail = head;</span><br><span class="line">        <span class="keyword">while</span> (tail &amp;&amp; tail-&gt;next)  <span class="comment">//判断tail是为了防止输入是空链表 </span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">auto</span> swap = tail-&gt;next-&gt;next;</span><br><span class="line">            tail-&gt;next-&gt;next = head; </span><br><span class="line">            head = tail-&gt;next;</span><br><span class="line">            tail-&gt;next = swap;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> head;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ListNode* head = <span class="keyword">new</span> ListNode(<span class="number">1</span>);</span><br><span class="line">    ListNode* node2 = <span class="keyword">new</span> ListNode(<span class="number">2</span>); head-&gt;next = node2;</span><br><span class="line">    ListNode* node3 = <span class="keyword">new</span> ListNode(<span class="number">3</span>); node2-&gt;next = node3;</span><br><span class="line">    ListNode* node4 = <span class="keyword">new</span> ListNode(<span class="number">4</span>); node3-&gt;next = node4;</span><br><span class="line">    ListNode* node5 = <span class="keyword">new</span> ListNode(<span class="number">5</span>); node4-&gt;next = node5;</span><br><span class="line"></span><br><span class="line">    Solution solution = Solution();</span><br><span class="line">    ListNode* ans = solution.reverseList(head);</span><br><span class="line">    <span class="comment">// requires C++ 11</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> i = ans; i; i=i-&gt;next) <span class="built_in">cout</span>&lt;&lt;i-&gt;val&lt;&lt;<span class="string">"-&gt;"</span>;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"NULL\n"</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="【样例输出】-3"><a href="#【样例输出】-3" class="headerlink" title="【样例输出】"></a>【样例输出】</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">5</span>-&gt;<span class="number">4</span>-&gt;<span class="number">3</span>-&gt;<span class="number">2</span>-&gt;<span class="number">1</span>-&gt;<span class="literal">NULL</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="【执行用时、内存消耗排名】-3"><a href="#【执行用时、内存消耗排名】-3" class="headerlink" title="【执行用时、内存消耗排名】"></a>【<strong>执行用时、内存消耗排名</strong>】</h4><p>执行用时：4 ms, 在所有 C++ 提交中击败了94.34%的用户</p>
+<p>内存消耗：8.1 MB, 在所有 C++ 提交中击败了61.40%的用户</p>
+<p>通过测试用例：27 / 27</p>
+<p>​                          </p>
+<h3 id="剑指-Offer-35-复杂链表的复制"><a href="#剑指-Offer-35-复杂链表的复制" class="headerlink" title="剑指 Offer 35. 复杂链表的复制"></a><a href="https://leetcode-cn.com/problems/fu-za-lian-biao-de-fu-zhi-lcof/" target="_blank" rel="noopener">剑指 Offer 35. 复杂链表的复制</a></h3><h4 id="【解题思路】-4"><a href="#【解题思路】-4" class="headerlink" title="【解题思路】"></a>【解题思路】</h4><p>参考了leetcode官方题解的第二种解法。</p>
+<p>遍历链表三次：</p>
+<ul>
+<li>第一遍，对每个节点产生复制节点</li>
+<li>第二遍，处理复制节点的random指针</li>
+<li>第三遍，分开原链表和复制链表</li>
+</ul>
+<h4 id="【完整代码】-4"><a href="#【完整代码】-4" class="headerlink" title="【完整代码】"></a>【完整代码】</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>; </span><br><span class="line"><span class="comment">// Definition for a Node.</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Node</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">int</span> val;</span><br><span class="line">    Node* next;</span><br><span class="line">    Node* <span class="built_in">random</span>;</span><br><span class="line">    </span><br><span class="line">    Node(<span class="keyword">int</span> _val) &#123;</span><br><span class="line">        val = _val;</span><br><span class="line">        next = <span class="literal">NULL</span>;</span><br><span class="line">        <span class="built_in">random</span> = <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">Node* <span class="title">copyRandomList</span><span class="params">(Node* head)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!head) <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">        Node* curr = head;</span><br><span class="line">        Node* copy = <span class="literal">NULL</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//第一遍，产生复制节点S'</span></span><br><span class="line">        <span class="keyword">while</span> (curr)</span><br><span class="line">        &#123;</span><br><span class="line">            copy = <span class="keyword">new</span> Node(curr-&gt;val);</span><br><span class="line">            copy-&gt;next = curr-&gt;next;</span><br><span class="line">            curr-&gt;next = copy;</span><br><span class="line">            curr = copy-&gt;next;        </span><br><span class="line">        &#125;</span><br><span class="line">        copy = head-&gt;next;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//第二遍，处理S'-&gt;random </span></span><br><span class="line">        curr = head;</span><br><span class="line">        <span class="keyword">while</span> (curr)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (curr-&gt;<span class="built_in">random</span>)</span><br><span class="line">                curr-&gt;next-&gt;<span class="built_in">random</span> = curr-&gt;<span class="built_in">random</span>-&gt;next; <span class="comment">// amazing</span></span><br><span class="line">            curr = curr-&gt;next-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//第三遍，分开原链表head和复制链表copy </span></span><br><span class="line">        curr = head;</span><br><span class="line">        <span class="keyword">while</span> (curr)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">auto</span> x = curr-&gt;next-&gt;next;</span><br><span class="line">            <span class="keyword">if</span> (x) curr-&gt;next-&gt;next = x-&gt;next;</span><br><span class="line">            curr-&gt;next = x;</span><br><span class="line">            curr = x;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> copy;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Node* head = <span class="keyword">new</span> Node(<span class="number">7</span>);</span><br><span class="line">    Node* node1 = <span class="keyword">new</span> Node(<span class="number">13</span>); head-&gt;next = node1;</span><br><span class="line">    Node* node2 = <span class="keyword">new</span> Node(<span class="number">11</span>); node1-&gt;next = node2;</span><br><span class="line">    Node* node3 = <span class="keyword">new</span> Node(<span class="number">10</span>); node2-&gt;next = node3;</span><br><span class="line">    Node* node4 = <span class="keyword">new</span> Node(<span class="number">1</span>);  node3-&gt;next = node4;</span><br><span class="line">    node1-&gt;<span class="built_in">random</span> = head;</span><br><span class="line">    node2-&gt;<span class="built_in">random</span> = node4;</span><br><span class="line">    node3-&gt;<span class="built_in">random</span> = node2;</span><br><span class="line">    node4-&gt;<span class="built_in">random</span> = head;</span><br><span class="line">    </span><br><span class="line">    Solution solution = Solution();</span><br><span class="line">    Node* ans = solution.copyRandomList(head);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> i=ans; i; i=i-&gt;next) </span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;i-&gt;val&lt;&lt;<span class="string">" "</span>;</span><br><span class="line">        <span class="keyword">if</span> (i-&gt;<span class="built_in">random</span>) <span class="built_in">cout</span>&lt;&lt;i-&gt;<span class="built_in">random</span>-&gt;val; <span class="keyword">else</span> <span class="built_in">cout</span>&lt;&lt;<span class="string">"NULL"</span>;</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="【样例输出】-4"><a href="#【样例输出】-4" class="headerlink" title="【样例输出】"></a>【样例输出】</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">7</span> <span class="literal">NULL</span></span><br><span class="line"><span class="number">13</span> <span class="number">7</span></span><br><span class="line"><span class="number">11</span> <span class="number">1</span></span><br><span class="line"><span class="number">10</span> <span class="number">11</span></span><br><span class="line"><span class="number">1</span> <span class="number">7</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="【执行用时、内存消耗排名】-4"><a href="#【执行用时、内存消耗排名】-4" class="headerlink" title="【执行用时、内存消耗排名】"></a>【<strong>执行用时、内存消耗排名</strong>】</h4><p>执行用时：4 ms, 在所有 C++ 提交中击败了97.67%的用户</p>
+<p>内存消耗：11 MB, 在所有 C++ 提交中击败了58.37%的用户</p>
+<p>通过测试用例：18 / 18</p>
+<p>​                           </p>
+<h2 id="Day-3"><a href="#Day-3" class="headerlink" title="Day 3"></a>Day 3</h2><h3 id="剑指-Offer-05-替换空格"><a href="#剑指-Offer-05-替换空格" class="headerlink" title="剑指 Offer 05. 替换空格"></a><a href="https://leetcode-cn.com/problems/ti-huan-kong-ge-lcof/" target="_blank" rel="noopener">剑指 Offer 05. 替换空格</a></h3><h4 id="【解题思路】-5"><a href="#【解题思路】-5" class="headerlink" title="【解题思路】"></a>【解题思路】</h4><p>没啥好说的。不过这个代码写法来自LeetCode用户<a href="https://leetcode-cn.com/u/lcuserlixj/" target="_blank" rel="noopener">Charge yourself</a>。学习了。</p>
+<h4 id="【完整代码】-5"><a href="#【完整代码】-5" class="headerlink" title="【完整代码】"></a>【完整代码】</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">replaceSpace</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">string</span> ret = <span class="string">""</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> c:s)</span><br><span class="line">            <span class="keyword">if</span> (c==<span class="string">' '</span>)</span><br><span class="line">                ret.push_back(<span class="string">'%'</span>), ret.push_back(<span class="string">'2'</span>), ret.push_back(<span class="string">'0'</span>);</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                ret.push_back(c);</span><br><span class="line">        <span class="keyword">return</span> ret;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Solution solution = Solution();</span><br><span class="line">    <span class="built_in">string</span> s = <span class="string">"We are happy."</span>;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;solution.replaceSpace(s)&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="【样例输出】-5"><a href="#【样例输出】-5" class="headerlink" title="【样例输出】"></a>【样例输出】</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">We%<span class="number">20</span>are%<span class="number">20</span>happy.</span><br></pre></td></tr></table></figure>
+
+<h4 id="【执行用时、内存消耗排名】-5"><a href="#【执行用时、内存消耗排名】-5" class="headerlink" title="【执行用时、内存消耗排名】"></a>【<strong>执行用时、内存消耗排名</strong>】</h4><p>执行用时：0 ms, 在所有 C++ 提交中击败了100.00%的用户</p>
+<p>内存消耗：5.9 MB, 在所有 C++ 提交中击败了95.39%的用户</p>
+<p>通过测试用例：27 / 27</p>
+<p>​                                                     </p>
+<h3 id="剑指-Offer-58-II-左旋转字符串"><a href="#剑指-Offer-58-II-左旋转字符串" class="headerlink" title="剑指 Offer 58 - II. 左旋转字符串"></a><a href="https://leetcode-cn.com/problems/zuo-xuan-zhuan-zi-fu-chuan-lcof/" target="_blank" rel="noopener">剑指 Offer 58 - II. 左旋转字符串</a></h3><h4 id="【解题思路】-6"><a href="#【解题思路】-6" class="headerlink" title="【解题思路】"></a>【解题思路】</h4><p>略 </p>
+<h4 id="【完整代码】-6"><a href="#【完整代码】-6" class="headerlink" title="【完整代码】"></a>【完整代码】</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">reverseLeftWords</span><span class="params">(<span class="built_in">string</span> s, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> s.substr(n)+s.substr(<span class="number">0</span>,n);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Solution solution = Solution();</span><br><span class="line">    <span class="built_in">string</span> s = <span class="string">"abcdefg"</span>;</span><br><span class="line">    <span class="keyword">int</span> k = <span class="number">2</span>;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;solution.reverseLeftWords(s,k)&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="【样例输出】-6"><a href="#【样例输出】-6" class="headerlink" title="【样例输出】"></a>【样例输出】</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cdefgab</span><br></pre></td></tr></table></figure>
+
+<h4 id="【执行用时、内存消耗排名】-6"><a href="#【执行用时、内存消耗排名】-6" class="headerlink" title="【执行用时、内存消耗排名】"></a>【<strong>执行用时、内存消耗排名</strong>】</h4><p>执行用时：0 ms, 在所有 C++ 提交中击败了100.00%的用户</p>
+<p>内存消耗：7.7 MB, 在所有 C++ 提交中击败了21.72%的用户</p>
+<p>通过测试用例：34 / 34</p>
+<h4 id="【备注】"><a href="#【备注】" class="headerlink" title="【备注】"></a>【备注】</h4><p>看到一种更棒的写法：</p>
+<p>执行用时：0 ms, 在所有 C++ 提交中击败了100.00%的用户</p>
+<p>内存消耗：7 MB, 在所有 C++ 提交中击败了88.84%的用户</p>
+<p>通过测试用例：34 / 34</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">reverseLeftWords</span><span class="params">(<span class="built_in">string</span> s, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        n = n % s.<span class="built_in">size</span>();</span><br><span class="line">        reverse(s.<span class="built_in">begin</span>(), s.<span class="built_in">begin</span>() + n);</span><br><span class="line">        reverse(s.<span class="built_in">begin</span>() + n, s.<span class="built_in">end</span>());</span><br><span class="line">        reverse(s.<span class="built_in">begin</span>(), s.<span class="built_in">end</span>());</span><br><span class="line">        <span class="keyword">return</span> s;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>​                          </p>
+<h2 id="Day-4"><a href="#Day-4" class="headerlink" title="Day 4"></a>Day 4</h2><p>​                          </p>
+<h3 id="剑指-Offer-03-数组中重复的数字"><a href="#剑指-Offer-03-数组中重复的数字" class="headerlink" title="剑指 Offer 03. 数组中重复的数字"></a><a href="https://leetcode-cn.com/problems/shu-zu-zhong-zhong-fu-de-shu-zi-lcof/" target="_blank" rel="noopener">剑指 Offer 03. 数组中重复的数字</a></h3><h4 id="【解题思路】-7"><a href="#【解题思路】-7" class="headerlink" title="【解题思路】"></a>【解题思路】</h4><p>用一个数组判断是否访问过</p>
+<h4 id="【完整代码】-7"><a href="#【完整代码】-7" class="headerlink" title="【完整代码】"></a>【完整代码】</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">findRepeatNumber</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">bool</span>&gt; <span class="title">vis</span><span class="params">(nums.<span class="built_in">size</span>())</span></span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;vis.<span class="built_in">size</span>();i++) vis[i]=<span class="literal">false</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> x:nums)</span><br><span class="line">            <span class="keyword">if</span> (!vis[x]) vis[x] = <span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">return</span> x;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;  <span class="comment">// denotes no repeat nums</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">vector</span> &lt;<span class="keyword">int</span>&gt; nums = &#123;<span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">3</span>&#125;;</span><br><span class="line">    Solution solution = Solution();</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt; solution.findRepeatNumber(nums)&lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="【样例输出】-7"><a href="#【样例输出】-7" class="headerlink" title="【样例输出】"></a>【样例输出】</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="【执行用时、内存消耗排名】-7"><a href="#【执行用时、内存消耗排名】-7" class="headerlink" title="【执行用时、内存消耗排名】"></a>【<strong>执行用时、内存消耗排名</strong>】</h4><p>执行用时：20 ms, 在所有 C++ 提交中击败了99.25%的用户</p>
+<p>内存消耗：22.3 MB, 在所有 C++ 提交中击败了96.92%的用户</p>
+<p>通过测试用例：25 / 25</p>
+<h4 id="【备注】-1"><a href="#【备注】-1" class="headerlink" title="【备注】"></a>【备注】</h4><p>看到一种更棒的写法：</p>
+<p>时间复杂度O(n)，<strong>空间复杂度O(1)</strong>。</p>
+<p>思想是用下标进行控制，把nums[nums[i]]减掉n（即数组中数的上限）。如果某个nums[nums[i]]还没减掉n就是负数了，那就表示nums[i]重复了。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">findRepeatNumber</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = nums.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)&#123;</span><br><span class="line">            <span class="keyword">int</span> k = nums[i];</span><br><span class="line">            <span class="keyword">if</span>(k &lt; <span class="number">0</span>) k += n;</span><br><span class="line">            <span class="keyword">if</span>(nums[k] &lt; <span class="number">0</span>) <span class="keyword">return</span> k;</span><br><span class="line">            nums[k] -= n;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>​                                                    </p>
+<h3 id="剑指-Offer-53-I-在排序数组中查找数字-I"><a href="#剑指-Offer-53-I-在排序数组中查找数字-I" class="headerlink" title="剑指 Offer 53 - I. 在排序数组中查找数字 I"></a><a href="https://leetcode-cn.com/problems/zai-pai-xu-shu-zu-zhong-cha-zhao-shu-zi-lcof/" target="_blank" rel="noopener">剑指 Offer 53 - I. 在排序数组中查找数字 I</a></h3><h4 id="【解题思路】-8"><a href="#【解题思路】-8" class="headerlink" title="【解题思路】"></a>【解题思路】</h4><p>因为是有序的数组，所以可以用二分查找。</p>
+<p>时间复杂度O(log n)，空间复杂度O(1)。</p>
+<h4 id="【完整代码】-8"><a href="#【完整代码】-8" class="headerlink" title="【完整代码】"></a>【完整代码】</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">search</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> l=<span class="number">0</span>, r=nums.<span class="built_in">size</span>()<span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">if</span> (r&lt;<span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span> (l&lt;r)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">int</span> mid=(l+r)&gt;&gt;<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">if</span> (nums[mid]&lt;target) l=mid+<span class="number">1</span>; <span class="keyword">else</span> r=mid;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (nums[l]!=target) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        </span><br><span class="line">        r = nums.<span class="built_in">size</span>()<span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">while</span> (l&lt;r)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">int</span> mid = (l+r)&gt;&gt;<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">if</span> (nums[mid]&gt;target) r=mid<span class="number">-1</span>; <span class="keyword">else</span> <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span> (nums[r]!=target &amp;&amp; r&gt;=l) r--;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> r-l+<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">vector</span> &lt;<span class="keyword">int</span>&gt; nums = &#123;<span class="number">5</span>,<span class="number">7</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">8</span>,<span class="number">8</span>,<span class="number">8</span>,<span class="number">8</span>,<span class="number">8</span>,<span class="number">8</span>,<span class="number">10</span>&#125;;</span><br><span class="line"><span class="comment">//    vector &lt;int&gt; nums = &#123;&#125;;</span></span><br><span class="line">    <span class="keyword">int</span> target = <span class="number">8</span>;</span><br><span class="line">    Solution solution = Solution();</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt; solution.search(nums, target)&lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="【样例输出】-8"><a href="#【样例输出】-8" class="headerlink" title="【样例输出】"></a>【样例输出】</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">7</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="【执行用时、内存消耗排名】-8"><a href="#【执行用时、内存消耗排名】-8" class="headerlink" title="【执行用时、内存消耗排名】"></a>【<strong>执行用时、内存消耗排名</strong>】</h4><p>执行用时：4 ms, 在所有 C++ 提交中击败了91.69%的用户</p>
+<p>内存消耗：12.8 MB, 在所有 C++ 提交中击败了80.90%的用户</p>
+<p>通过测试用例：88 / 88</p>
+<p>​                                                    </p>
+<h3 id="剑指-Offer-53-II-0～n-1中缺失的数字"><a href="#剑指-Offer-53-II-0～n-1中缺失的数字" class="headerlink" title="剑指 Offer 53 - II. 0～n-1中缺失的数字"></a><a href="https://leetcode-cn.com/problems/que-shi-de-shu-zi-lcof/" target="_blank" rel="noopener">剑指 Offer 53 - II. 0～n-1中缺失的数字</a></h3><h4 id="【解题思路】-9"><a href="#【解题思路】-9" class="headerlink" title="【解题思路】"></a>【解题思路】</h4><p>二分。idx和nums[idx]有对应关系。</p>
+<p>注意边界情况：即缺失数字0或数字n-1的情况。</p>
+<h4 id="【完整代码】-9"><a href="#【完整代码】-9" class="headerlink" title="【完整代码】"></a>【完整代码】</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">missingNumber</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (nums[<span class="number">0</span>]!=<span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> l=<span class="number">0</span>, r=nums.<span class="built_in">size</span>()<span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">if</span> (nums[r]==r) <span class="keyword">return</span> r+<span class="number">1</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span> (l&lt;r)</span><br><span class="line">            <span class="keyword">if</span> (nums[(l+r)&gt;&gt;<span class="number">1</span>]==(l+r)&gt;&gt;<span class="number">1</span>) l=((l+r)&gt;&gt;<span class="number">1</span>)+<span class="number">1</span>; <span class="keyword">else</span> r=(l+r)&gt;&gt;<span class="number">1</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> l; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">vector</span> &lt;<span class="keyword">int</span>&gt; nums = &#123;<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">9</span>&#125;;</span><br><span class="line"><span class="comment">//    vector &lt;int&gt; nums = &#123;0,1&#125;; //一种很坑的情况 </span></span><br><span class="line">    Solution solution = Solution();</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt; solution.missingNumber(nums)&lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="【样例输出】-9"><a href="#【样例输出】-9" class="headerlink" title="【样例输出】"></a>【样例输出】</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">8</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="【执行用时、内存消耗排名】-9"><a href="#【执行用时、内存消耗排名】-9" class="headerlink" title="【执行用时、内存消耗排名】"></a>【<strong>执行用时、内存消耗排名</strong>】</h4><p>执行用时：12 ms, 在所有 C++ 提交中击败了86.68%的用户</p>
+<p>内存消耗：16.6 MB, 在所有 C++ 提交中击败了91.05%的用户</p>
+<p>通过测试用例：122 / 122</p>
+<h2 id="Day-5"><a href="#Day-5" class="headerlink" title="Day 5"></a>Day 5</h2><p>​                          </p>
+<h3 id="剑指-Offer-03-数组中重复的数字-1"><a href="#剑指-Offer-03-数组中重复的数字-1" class="headerlink" title="剑指 Offer 03. 数组中重复的数字"></a><a href="https://leetcode-cn.com/problems/shu-zu-zhong-zhong-fu-de-shu-zi-lcof/" target="_blank" rel="noopener">剑指 Offer 03. 数组中重复的数字</a></h3><h4 id="【解题思路】-10"><a href="#【解题思路】-10" class="headerlink" title="【解题思路】"></a>【解题思路】</h4><p>从右上角开始找，每次要么左移一格，要么下移一格。时间复杂度O(n+m)。</p>
+<h4 id="【完整代码】-10"><a href="#【完整代码】-10" class="headerlink" title="【完整代码】"></a>【完整代码】</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">findNumberIn2DArray</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; matrix, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> row = matrix.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">if</span> (row&lt;<span class="number">1</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">int</span> column = matrix[<span class="number">0</span>].<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">if</span> (column&lt;<span class="number">1</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> indexI = <span class="number">0</span>, indexJ = column<span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">while</span> (indexI&lt;row &amp;&amp; indexJ&gt;=<span class="number">0</span> &amp;&amp; matrix[indexI][indexJ]!=target)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (matrix[indexI][indexJ]&gt;target) indexJ--; <span class="keyword">else</span></span><br><span class="line">                                               indexI++;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> indexI&lt;row &amp;&amp; indexJ&gt;=<span class="number">0</span> &amp;&amp; matrix[indexI][indexJ]==target;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Solution solution = Solution();</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; matrix = </span><br><span class="line">              &#123;</span><br><span class="line">              &#123;<span class="number">1</span>,   <span class="number">4</span>,  <span class="number">7</span>, <span class="number">11</span>, <span class="number">15</span>&#125;,</span><br><span class="line">              &#123;<span class="number">2</span>,   <span class="number">5</span>,  <span class="number">8</span>, <span class="number">12</span>, <span class="number">19</span>&#125;,</span><br><span class="line">              &#123;<span class="number">3</span>,   <span class="number">6</span>,  <span class="number">9</span>, <span class="number">16</span>, <span class="number">22</span>&#125;,</span><br><span class="line">              &#123;<span class="number">10</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">17</span>, <span class="number">24</span>&#125;,</span><br><span class="line">              &#123;<span class="number">18</span>, <span class="number">21</span>, <span class="number">23</span>, <span class="number">26</span>, <span class="number">30</span>&#125;</span><br><span class="line">              &#125;;</span><br><span class="line"><span class="comment">//                &#123;&#123;-5&#125;</span></span><br><span class="line"><span class="comment">//                &#125;;</span></span><br><span class="line">    <span class="keyword">int</span> target = <span class="number">20</span>;        </span><br><span class="line">    </span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;solution.findNumberIn2DArray(matrix, target)&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="【样例输出】-10"><a href="#【样例输出】-10" class="headerlink" title="【样例输出】"></a>【样例输出】</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="【执行用时、内存消耗排名】-10"><a href="#【执行用时、内存消耗排名】-10" class="headerlink" title="【执行用时、内存消耗排名】"></a>【<strong>执行用时、内存消耗排名</strong>】</h4><p>执行用时：16 ms, 在所有 C++ 提交中击败了96.93%的用户</p>
+<p>内存消耗：12.6 MB, 在所有 C++ 提交中击败了74.41%的用户</p>
+<p>通过测试用例：129 / 129</p>
+<p>​                                                </p>
+<h3 id="剑指-Offer-11-旋转数组的最小数字"><a href="#剑指-Offer-11-旋转数组的最小数字" class="headerlink" title="剑指 Offer 11. 旋转数组的最小数字"></a><a href="https://leetcode-cn.com/problems/xuan-zhuan-shu-zu-de-zui-xiao-shu-zi-lcof/" target="_blank" rel="noopener">剑指 Offer 11. 旋转数组的最小数字</a></h3><h4 id="【解题思路】-11"><a href="#【解题思路】-11" class="headerlink" title="【解题思路】"></a>【解题思路】</h4><p>这题虽然我一开始想到了二分，但又想了想，如果序列中绝大部分数字是重复的，就二分不了了，于是选择写线性去了。结果官方题解是二分和线性的结合体：能二分的时候二分，不能二分的时候就一个个移动。</p>
+<hr>
+<p>学到了：官方题解的二分， mid=low+((high-low)&gt;&gt;1)而不是mid=(low+high)&gt;&gt;1，这是用减法来防止加法溢出。</p>
+<hr>
+<h4 id="【完整代码】-11"><a href="#【完整代码】-11" class="headerlink" title="【完整代码】"></a>【完整代码】</h4><p>线性O(n)：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">minArray</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; numbers)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (numbers.<span class="built_in">size</span>()==<span class="number">1</span>) <span class="keyword">return</span> numbers[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">if</span> (numbers.<span class="built_in">size</span>()==<span class="number">2</span>) <span class="keyword">return</span> <span class="built_in">min</span>(numbers[<span class="number">0</span>],numbers[<span class="number">1</span>]);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;numbers.<span class="built_in">size</span>()<span class="number">-1</span>;i++)</span><br><span class="line">            <span class="keyword">if</span> (numbers[i]&gt;numbers[i+<span class="number">1</span>])</span><br><span class="line">                <span class="keyword">return</span> numbers[i+<span class="number">1</span>];</span><br><span class="line">        <span class="keyword">return</span> numbers[<span class="number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>二分，平均时间复杂度$O_{avg}(log_{2}x)$：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">minArray</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; numbers)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = numbers.<span class="built_in">size</span>()<span class="number">-1</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> left = <span class="number">0</span>, right = n; <span class="comment">// denotes the possible area of min</span></span><br><span class="line">        <span class="keyword">while</span> (left&lt;right)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">int</span> mid = left + ((right-left)&gt;&gt;<span class="number">1</span>);</span><br><span class="line">            <span class="keyword">if</span> (numbers[mid]&gt;numbers[right]) left = mid+<span class="number">1</span>; <span class="keyword">else</span></span><br><span class="line">            <span class="keyword">if</span> (numbers[mid]&lt;numbers[left]) right = mid; <span class="keyword">else</span></span><br><span class="line">                                            right--;                        </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> numbers[left];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Solution solution = Solution();</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; numbers = &#123;<span class="number">2</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>&#125;;        </span><br><span class="line">    </span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;solution.minArray(numbers)&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="【样例输出】-11"><a href="#【样例输出】-11" class="headerlink" title="【样例输出】"></a>【样例输出】</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="【执行用时、内存消耗排名】-11"><a href="#【执行用时、内存消耗排名】-11" class="headerlink" title="【执行用时、内存消耗排名】"></a>【<strong>执行用时、内存消耗排名</strong>】</h4><p>执行用时：4 ms, 在所有 C++ 提交中击败了85.51%的用户</p>
+<p>内存消耗：11.7 MB, 在所有 C++ 提交中击败了97.55%的用户</p>
+<p>​             </p>
+<h3 id="剑指-Offer-50-第一个只出现一次的字符"><a href="#剑指-Offer-50-第一个只出现一次的字符" class="headerlink" title="剑指 Offer 50. 第一个只出现一次的字符"></a><a href="https://leetcode-cn.com/problems/di-yi-ge-zhi-chu-xian-yi-ci-de-zi-fu-lcof/" target="_blank" rel="noopener">剑指 Offer 50. 第一个只出现一次的字符</a></h3><h4 id="【解题思路】-12"><a href="#【解题思路】-12" class="headerlink" title="【解题思路】"></a>【解题思路】</h4><p>俩数组，一个存某个字母访问了几次，一个存第一次访问该字母是在哪个位置。</p>
+<p>visit数组用了点技巧，用vis[char-‘a’]表示访问一次以上，vis[char-‘a’+26]表示访问两次以上。</p>
+<h4 id="【完整代码】-12"><a href="#【完整代码】-12" class="headerlink" title="【完整代码】"></a>【完整代码】</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">char</span> <span class="title">firstUniqChar</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">bool</span> vis[<span class="number">26</span>+<span class="number">26</span>];</span><br><span class="line">        <span class="keyword">int</span> first[<span class="number">26</span>];</span><br><span class="line">        <span class="built_in">memset</span>(vis,<span class="literal">false</span>,<span class="keyword">sizeof</span>(vis));</span><br><span class="line">        <span class="built_in">memset</span>(first,<span class="number">0</span>,<span class="keyword">sizeof</span>(first));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> index=<span class="number">0</span>; index&lt;s.length(); index++)</span><br><span class="line">            <span class="keyword">if</span> (vis[s[index]-<span class="string">'a'</span>+<span class="number">26</span>]) <span class="keyword">continue</span>; <span class="keyword">else</span></span><br><span class="line">                <span class="keyword">if</span> (vis[s[index]-<span class="string">'a'</span>]) vis[s[index]-<span class="string">'a'</span>+<span class="number">26</span>]=<span class="literal">true</span>; <span class="keyword">else</span></span><br><span class="line">                                     vis[s[index]-<span class="string">'a'</span>]=<span class="literal">true</span>, first[s[index]-<span class="string">'a'</span>]=index;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> ans=s.length(); <span class="comment">//s[ans] denotes the firstUnicChar</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> index=<span class="number">0</span>; index&lt;<span class="number">26</span>; index++)</span><br><span class="line">            <span class="keyword">if</span> (vis[index] &amp;&amp; !vis[index+<span class="number">26</span>] &amp;&amp; first[index]&lt;ans) ans=first[index];</span><br><span class="line">        <span class="keyword">return</span> (ans&lt;s.length())? s[ans] : <span class="string">' '</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">string</span> s = <span class="string">"abaccdeff"</span>;</span><br><span class="line">    Solution* solution = <span class="keyword">new</span> Solution();</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt; solution-&gt;firstUniqChar(s)&lt;&lt;<span class="built_in">endl</span>; </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="【样例输出】-12"><a href="#【样例输出】-12" class="headerlink" title="【样例输出】"></a>【样例输出】</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">b</span><br></pre></td></tr></table></figure>
+
+<h4 id="【执行用时、内存消耗排名】-12"><a href="#【执行用时、内存消耗排名】-12" class="headerlink" title="【执行用时、内存消耗排名】"></a>【<strong>执行用时、内存消耗排名</strong>】</h4><p>执行用时：12 ms, 在所有 C++ 提交中击败了97.52%的用户</p>
+<p>内存消耗：10.3 MB, 在所有 C++ 提交中击败了90.70%的用户</p>
+<p>通过测试用例：104 / 104</p>
+<p>​                </p>
+<h2 id="Day-6"><a href="#Day-6" class="headerlink" title="Day 6"></a>Day 6</h2><p>​                          </p>
+<h3 id="面试题32-I-从上到下打印二叉树"><a href="#面试题32-I-从上到下打印二叉树" class="headerlink" title="面试题32 - I. 从上到下打印二叉树"></a><a href="https://leetcode-cn.com/problems/cong-shang-dao-xia-da-yin-er-cha-shu-lcof/" target="_blank" rel="noopener">面试题32 - I. 从上到下打印二叉树</a></h3><h4 id="【解题思路】-13"><a href="#【解题思路】-13" class="headerlink" title="【解题思路】"></a>【解题思路】</h4><p>bfs</p>
+<h4 id="【完整代码】-13"><a href="#【完整代码】-13" class="headerlink" title="【完整代码】"></a>【完整代码】</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Definition for a binary tree node.</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">TreeNode</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> val;</span><br><span class="line">    TreeNode *left;</span><br><span class="line">    TreeNode *right;</span><br><span class="line">    TreeNode(<span class="keyword">int</span> x) : val(x), left(<span class="literal">NULL</span>), right(<span class="literal">NULL</span>) &#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; ret;</span><br><span class="line">    <span class="built_in">queue</span>&lt;TreeNode*&gt; tree;</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">levelOrder</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        ret.<span class="built_in">clear</span>();</span><br><span class="line">        <span class="keyword">while</span> (!tree.empty()) tree.pop();</span><br><span class="line">        <span class="keyword">if</span> (!root) <span class="keyword">return</span> ret;</span><br><span class="line"></span><br><span class="line">        ret.push_back(root-&gt;val);</span><br><span class="line">        tree.push(root);</span><br><span class="line">        <span class="keyword">while</span> (!tree.empty())</span><br><span class="line">        &#123;</span><br><span class="line">            TreeNode* curr = tree.front();</span><br><span class="line">            tree.pop();</span><br><span class="line">            <span class="keyword">if</span> (curr-&gt;left) ret.push_back(curr-&gt;left-&gt;val), tree.push(curr-&gt;left);</span><br><span class="line">            <span class="keyword">if</span> (curr-&gt;right) ret.push_back(curr-&gt;right-&gt;val), tree.push(curr-&gt;right);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> ret;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    TreeNode* root = <span class="keyword">new</span> TreeNode(<span class="number">3</span>);</span><br><span class="line">    TreeNode* node1 = <span class="keyword">new</span> TreeNode(<span class="number">9</span>);</span><br><span class="line">    TreeNode* node2 = <span class="keyword">new</span> TreeNode(<span class="number">20</span>);</span><br><span class="line">    TreeNode* node3 = <span class="keyword">new</span> TreeNode(<span class="number">15</span>);</span><br><span class="line">    TreeNode* node4 = <span class="keyword">new</span> TreeNode(<span class="number">7</span>);</span><br><span class="line">    </span><br><span class="line">    root-&gt;left = node1; root-&gt;right = node2;</span><br><span class="line">    node2-&gt;left = node3; node2-&gt;right = node4;</span><br><span class="line">    </span><br><span class="line">    Solution solution = Solution();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> x:solution.levelOrder(root))</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;x&lt;&lt;<span class="string">" "</span>;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="【样例输出】-13"><a href="#【样例输出】-13" class="headerlink" title="【样例输出】"></a>【样例输出】</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">3</span> <span class="number">9</span> <span class="number">20</span> <span class="number">15</span> <span class="number">7</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="【执行用时、内存消耗排名】-13"><a href="#【执行用时、内存消耗排名】-13" class="headerlink" title="【执行用时、内存消耗排名】"></a>【<strong>执行用时、内存消耗排名</strong>】</h4><p>执行用时：0 ms, 在所有 C++ 提交中击败了100.00%的用户</p>
+<p>内存消耗：11.6 MB, 在所有 C++ 提交中击败了98.00%的用户</p>
+<p>通过测试用例：34 / 34</p>
+<p>​                          </p>
+<h3 id="剑指-Offer-32-II-从上到下打印二叉树-II"><a href="#剑指-Offer-32-II-从上到下打印二叉树-II" class="headerlink" title="剑指 Offer 32 - II. 从上到下打印二叉树 II"></a><a href="https://leetcode-cn.com/problems/cong-shang-dao-xia-da-yin-er-cha-shu-ii-lcof/" target="_blank" rel="noopener">剑指 Offer 32 - II. 从上到下打印二叉树 II</a></h3><h4 id="【解题思路】-14"><a href="#【解题思路】-14" class="headerlink" title="【解题思路】"></a>【解题思路】</h4><p>很巧妙！用每一轮队列的size来控制，将相同深度的节点放在return vector的同一层。</p>
+<h4 id="【完整代码】-14"><a href="#【完整代码】-14" class="headerlink" title="【完整代码】"></a>【完整代码】</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Definition for a binary tree node.</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">TreeNode</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> val;</span><br><span class="line">    TreeNode *left;</span><br><span class="line">    TreeNode *right;</span><br><span class="line">    TreeNode(<span class="keyword">int</span> x) : val(x), left(<span class="literal">NULL</span>), right(<span class="literal">NULL</span>) &#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; <span class="title">levelOrder</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; ret;</span><br><span class="line">        <span class="built_in">queue</span>&lt;TreeNode*&gt; tree;</span><br><span class="line">        <span class="keyword">if</span> (!root) <span class="keyword">return</span> ret;</span><br><span class="line"></span><br><span class="line">        tree.push(root);</span><br><span class="line">        <span class="keyword">while</span> (!tree.empty())</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">int</span> num = tree.<span class="built_in">size</span>();</span><br><span class="line">            ret.push_back(&#123;&#125;);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">while</span> (num--)</span><br><span class="line">            &#123;</span><br><span class="line">                TreeNode* currNode = tree.front();</span><br><span class="line">                ret.back().push_back(currNode-&gt;val);</span><br><span class="line">                tree.pop();</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (currNode-&gt;left) tree.push(currNode-&gt;left);</span><br><span class="line">                <span class="keyword">if</span> (currNode-&gt;right) tree.push(currNode-&gt;right);                </span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> ret;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    TreeNode* root = <span class="keyword">new</span> TreeNode(<span class="number">3</span>);</span><br><span class="line">    TreeNode* node1 = <span class="keyword">new</span> TreeNode(<span class="number">9</span>);</span><br><span class="line">    TreeNode* node2 = <span class="keyword">new</span> TreeNode(<span class="number">20</span>);</span><br><span class="line">    TreeNode* node3 = <span class="keyword">new</span> TreeNode(<span class="number">15</span>);</span><br><span class="line">    TreeNode* node4 = <span class="keyword">new</span> TreeNode(<span class="number">7</span>);</span><br><span class="line">    </span><br><span class="line">    root-&gt;left = node1; root-&gt;right = node2;</span><br><span class="line">    node2-&gt;left = node3; node2-&gt;right = node4;</span><br><span class="line">    </span><br><span class="line">    Solution solution = Solution();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> x:solution.levelOrder(root))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> y:x)</span><br><span class="line">            <span class="built_in">cout</span>&lt;&lt;y&lt;&lt;<span class="string">" "</span>;    </span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;    </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="【样例输出】-14"><a href="#【样例输出】-14" class="headerlink" title="【样例输出】"></a>【样例输出】</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">3</span></span><br><span class="line"><span class="number">9</span> <span class="number">20</span></span><br><span class="line"><span class="number">15</span> <span class="number">7</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="【执行用时、内存消耗排名】-14"><a href="#【执行用时、内存消耗排名】-14" class="headerlink" title="【执行用时、内存消耗排名】"></a>【<strong>执行用时、内存消耗排名</strong>】</h4><p>执行用时：0 ms, 在所有 C++ 提交中击败了100.00%的用户</p>
+<p>内存消耗：12 MB, 在所有 C++ 提交中击败了97.90%的用户</p>
+<p>通过测试用例：34 / 34</p>
+<p>​                              </p>
+<h3 id="剑指-Offer-32-III-从上到下打印二叉树-III"><a href="#剑指-Offer-32-III-从上到下打印二叉树-III" class="headerlink" title="剑指 Offer 32 - III. 从上到下打印二叉树 III"></a><a href="https://leetcode-cn.com/problems/cong-shang-dao-xia-da-yin-er-cha-shu-iii-lcof/" target="_blank" rel="noopener">剑指 Offer 32 - III. 从上到下打印二叉树 III</a></h3><h4 id="【解题思路】-15"><a href="#【解题思路】-15" class="headerlink" title="【解题思路】"></a>【解题思路】</h4><p>没啥好说的。在上一题的基础上加个reverse。</p>
+<h4 id="【完整代码】-15"><a href="#【完整代码】-15" class="headerlink" title="【完整代码】"></a>【完整代码】</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Definition for a binary tree node.</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">TreeNode</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> val;</span><br><span class="line">    TreeNode *left;</span><br><span class="line">    TreeNode *right;</span><br><span class="line">    TreeNode(<span class="keyword">int</span> x) : val(x), left(<span class="literal">NULL</span>), right(<span class="literal">NULL</span>) &#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; <span class="title">levelOrder</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; ret;</span><br><span class="line">        <span class="built_in">queue</span>&lt;TreeNode*&gt; tree;</span><br><span class="line">        <span class="keyword">if</span> (!root) <span class="keyword">return</span> ret;</span><br><span class="line"></span><br><span class="line">        tree.push(root);</span><br><span class="line">        <span class="keyword">bool</span> odd = <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">while</span> (!tree.empty())</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">int</span> num = tree.<span class="built_in">size</span>();</span><br><span class="line">            ret.push_back(&#123;&#125;);</span><br><span class="line">                                                 </span><br><span class="line">            <span class="keyword">while</span> (num--)</span><br><span class="line">            &#123;</span><br><span class="line">                TreeNode* currNode = tree.front();</span><br><span class="line">                ret.back().push_back(currNode-&gt;val);</span><br><span class="line">                tree.pop();</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (currNode-&gt;left) tree.push(currNode-&gt;left);</span><br><span class="line">                <span class="keyword">if</span> (currNode-&gt;right) tree.push(currNode-&gt;right);                </span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> (!odd) reverse(ret.back().<span class="built_in">begin</span>(), ret.back().<span class="built_in">end</span>());</span><br><span class="line">            odd^=<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> ret;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    TreeNode* root = <span class="keyword">new</span> TreeNode(<span class="number">3</span>);</span><br><span class="line">    TreeNode* node1 = <span class="keyword">new</span> TreeNode(<span class="number">9</span>);</span><br><span class="line">    TreeNode* node2 = <span class="keyword">new</span> TreeNode(<span class="number">20</span>);</span><br><span class="line">    TreeNode* node3 = <span class="keyword">new</span> TreeNode(<span class="number">15</span>);</span><br><span class="line">    TreeNode* node4 = <span class="keyword">new</span> TreeNode(<span class="number">7</span>);</span><br><span class="line">    </span><br><span class="line">    root-&gt;left = node1; root-&gt;right = node2;</span><br><span class="line">    node2-&gt;left = node3; node2-&gt;right = node4;</span><br><span class="line">    </span><br><span class="line">    Solution solution = Solution();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> x:solution.levelOrder(root))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> y:x)</span><br><span class="line">            <span class="built_in">cout</span>&lt;&lt;y&lt;&lt;<span class="string">" "</span>;    </span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;    </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="【样例输出】-15"><a href="#【样例输出】-15" class="headerlink" title="【样例输出】"></a>【样例输出】</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">3</span></span><br><span class="line"><span class="number">20</span> <span class="number">9</span></span><br><span class="line"><span class="number">15</span> <span class="number">7</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="【执行用时、内存消耗排名】-15"><a href="#【执行用时、内存消耗排名】-15" class="headerlink" title="【执行用时、内存消耗排名】"></a>【<strong>执行用时、内存消耗排名</strong>】</h4><p>执行用时：0 ms, 在所有 C++ 提交中击败了100.00%的用户</p>
+<p>内存消耗：11.9 MB, 在所有 C++ 提交中击败了99.57%的用户</p>
+<p>通过测试用例：34 / 34               </p>
+<p>​                    </p>
+<p>​                </p>
+<h2 id="Day-7"><a href="#Day-7" class="headerlink" title="Day 7"></a>Day 7</h2><h3 id="剑指-Offer-26-树的子结构"><a href="#剑指-Offer-26-树的子结构" class="headerlink" title="剑指 Offer 26. 树的子结构"></a><a href="https://leetcode-cn.com/problems/shu-de-zi-jie-gou-lcof/" target="_blank" rel="noopener">剑指 Offer 26. 树的子结构</a></h3><h4 id="【解题思路】-16"><a href="#【解题思路】-16" class="headerlink" title="【解题思路】"></a>【解题思路】</h4><p>递归</p>
+<h4 id="【完整代码】-16"><a href="#【完整代码】-16" class="headerlink" title="【完整代码】"></a>【完整代码】</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * struct TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     TreeNode *left;</span></span><br><span class="line"><span class="comment"> *     TreeNode *right;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isSameStructure</span><span class="params">(TreeNode* A, TreeNode* B)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (A == <span class="literal">nullptr</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">if</span> (A-&gt;val != B-&gt;val) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">if</span> (B-&gt;left &amp;&amp; !isSameStructure(A-&gt;left, B-&gt;left)) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">if</span> (B-&gt;right &amp;&amp; !isSameStructure(A-&gt;right, B-&gt;right)) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isSubStructure</span><span class="params">(TreeNode* A, TreeNode* B)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!B) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">if</span> (isSameStructure(A, B)) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">if</span> (A-&gt;left &amp;&amp; isSubStructure(A-&gt;left, B)) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">if</span> (A-&gt;right &amp;&amp; isSubStructure(A-&gt;right, B)) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="【执行用时、内存消耗排名】-16"><a href="#【执行用时、内存消耗排名】-16" class="headerlink" title="【执行用时、内存消耗排名】"></a>【<strong>执行用时、内存消耗排名</strong>】</h4><p>执行用时：32 ms, 在所有 C++ 提交中击败了91.36%的用户</p>
+<p>内存消耗：32.9 MB, 在所有 C++ 提交中击败了41.02%的用户</p>
+<p>通过测试用例：48 / 48</p>
+<p>​                   </p>
+<h3 id="剑指-Offer-27-二叉树的镜像"><a href="#剑指-Offer-27-二叉树的镜像" class="headerlink" title="剑指 Offer 27. 二叉树的镜像"></a><a href="https://leetcode-cn.com/problems/er-cha-shu-de-jing-xiang-lcof/" target="_blank" rel="noopener">剑指 Offer 27. 二叉树的镜像</a></h3><h4 id="【解题思路】-17"><a href="#【解题思路】-17" class="headerlink" title="【解题思路】"></a>【解题思路】</h4><p>递归</p>
+<h4 id="【完整代码】-17"><a href="#【完整代码】-17" class="headerlink" title="【完整代码】"></a>【完整代码】</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * struct TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     TreeNode *left;</span></span><br><span class="line"><span class="comment"> *     TreeNode *right;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">TreeNode* <span class="title">mirrorTree</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (root == <span class="literal">nullptr</span>) <span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">        TreeNode* left = mirrorTree(root-&gt;right);</span><br><span class="line">        TreeNode* right = mirrorTree(root-&gt;left);</span><br><span class="line">        root-&gt;left = left;</span><br><span class="line">        root-&gt;right = right;</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="【执行用时、内存消耗排名】-17"><a href="#【执行用时、内存消耗排名】-17" class="headerlink" title="【执行用时、内存消耗排名】"></a>【<strong>执行用时、内存消耗排名</strong>】</h4><p>执行用时：0 ms, 在所有 C++ 提交中击败了100.00%的用户</p>
+<p>内存消耗：8.9 MB, 在所有 C++ 提交中击败了64.52%的用户</p>
+<p>通过测试用例：68 / 68</p>
+<p>​                   </p>
+<h3 id="剑指-Offer-28-对称的二叉树"><a href="#剑指-Offer-28-对称的二叉树" class="headerlink" title="剑指 Offer 28. 对称的二叉树"></a><a href="https://leetcode-cn.com/problems/dui-cheng-de-er-cha-shu-lcof/" target="_blank" rel="noopener">剑指 Offer 28. 对称的二叉树</a></h3><h4 id="【解题思路】-18"><a href="#【解题思路】-18" class="headerlink" title="【解题思路】"></a>【解题思路】</h4><p>递归</p>
+<h4 id="【完整代码】-18"><a href="#【完整代码】-18" class="headerlink" title="【完整代码】"></a>【完整代码】</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * struct TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     TreeNode *left;</span></span><br><span class="line"><span class="comment"> *     TreeNode *right;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isPair</span><span class="params">(TreeNode* L, TreeNode* R)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!L &amp;&amp; !R) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">if</span> (!L || !R) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">if</span> (L-&gt;val != R-&gt;val) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">return</span> isPair(L-&gt;left, R-&gt;right) <span class="keyword">and</span> isPair(L-&gt;right, R-&gt;left);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isSymmetric</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!root) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">return</span> isPair(root-&gt;left, root-&gt;right);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="【执行用时、内存消耗排名】-18"><a href="#【执行用时、内存消耗排名】-18" class="headerlink" title="【执行用时、内存消耗排名】"></a>【<strong>执行用时、内存消耗排名</strong>】</h4><p>执行用时：0 ms, 在所有 C++ 提交中击败了100.00%的用户</p>
+<p>内存消耗：15.8 MB, 在所有 C++ 提交中击败了88.05%的用户</p>
+<p>通过测试用例：195 / 195</p>
+<p>​                          </p>
+<p>​               </p>
+<h2 id="Day-8"><a href="#Day-8" class="headerlink" title="Day 8"></a>Day 8</h2><h3 id="剑指-Offer-10-I-斐波那契数列"><a href="#剑指-Offer-10-I-斐波那契数列" class="headerlink" title="剑指 Offer 10- I. 斐波那契数列"></a><a href="https://leetcode-cn.com/problems/fei-bo-na-qi-shu-lie-lcof/" target="_blank" rel="noopener">剑指 Offer 10- I. 斐波那契数列</a></h3><h4 id="【解题思路1】"><a href="#【解题思路1】" class="headerlink" title="【解题思路1】"></a>【解题思路1】</h4><p>思想是用a,b两个变量，分别存储fib[n]和fib[n+1]。</p>
+<p>从知乎上看到的，很妙的解法。时间复杂度O(N)，空间复杂度O(1)。</p>
+<h4 id="【完整代码1】"><a href="#【完整代码1】" class="headerlink" title="【完整代码1】"></a>【完整代码1】</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">fib2</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b, <span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (n&lt;<span class="number">1</span>) <span class="keyword">return</span> a;</span><br><span class="line">        <span class="keyword">return</span> fib2(b, (a+b)%<span class="number">1000000007</span>, n<span class="number">-1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">fib</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> fib2(<span class="number">0</span>, <span class="number">1</span>, n);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="【解题思路2】"><a href="#【解题思路2】" class="headerlink" title="【解题思路2】"></a>【解题思路2】</h4><p>把斐波那契数列的公式写成矩阵乘法的形式，然后就可以用矩阵快速幂加速，O(log N)的时间复杂度。</p>
+<h4 id="【完整代码2】"><a href="#【完整代码2】" class="headerlink" title="【完整代码2】"></a>【完整代码2】</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">matrixMultiply</span><span class="params">(<span class="keyword">int</span> A[][<span class="number">2</span>], <span class="keyword">int</span> B[][<span class="number">2</span>])</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> C[<span class="number">2</span>][<span class="number">2</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">2</span>;i++)</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;<span class="number">2</span>;j++)</span><br><span class="line">            C[i][j] = (<span class="number">1l</span>l*A[i][<span class="number">0</span>]*B[<span class="number">0</span>][j] + <span class="number">1l</span>l*A[i][<span class="number">1</span>]*B[<span class="number">1</span>][j])%<span class="number">1000000007</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">4</span>;i++) A[i/<span class="number">2</span>][i%<span class="number">2</span>]=C[i/<span class="number">2</span>][i%<span class="number">2</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">fib</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> A[<span class="number">2</span>][<span class="number">2</span>], B[<span class="number">2</span>][<span class="number">2</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">4</span>;i++) A[i/<span class="number">2</span>][i%<span class="number">2</span>]=<span class="number">0</span>, B[i/<span class="number">2</span>][i%<span class="number">2</span>]=<span class="number">1</span>; B[<span class="number">0</span>][<span class="number">0</span>]=<span class="number">0</span>;</span><br><span class="line">        A[<span class="number">0</span>][<span class="number">0</span>]=<span class="number">1</span>; A[<span class="number">1</span>][<span class="number">1</span>]=<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (n)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (n&amp;<span class="number">1</span>) matrixMultiply(A, B);</span><br><span class="line">            n/=<span class="number">2</span>;</span><br><span class="line">            matrixMultiply(B, B);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> A[<span class="number">1</span>][<span class="number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><a href="https://www.cnblogs.com/alexandergan/p/12225814.html中介绍了C++二维数组传参的方法" target="_blank" rel="noopener">https://www.cnblogs.com/alexandergan/p/12225814.html中介绍了C++二维数组传参的方法</a></p>
+</blockquote>
+<h4 id="【执行用时、内存消耗排名】-19"><a href="#【执行用时、内存消耗排名】-19" class="headerlink" title="【执行用时、内存消耗排名】"></a>【<strong>执行用时、内存消耗排名</strong>】</h4><p>执行用时：0 ms, 在所有 C++ 提交中击败了100.00%的用户</p>
+<p>内存消耗：5.7 MB, 在所有 C++ 提交中击败了97.66%的用户</p>
+<p>通过测试用例：51 / 51</p>
+<p>​                         </p>
+<h3 id="剑指-Offer-10-II-青蛙跳台阶问题"><a href="#剑指-Offer-10-II-青蛙跳台阶问题" class="headerlink" title="剑指 Offer 10- II. 青蛙跳台阶问题"></a><a href="https://leetcode-cn.com/problems/qing-wa-tiao-tai-jie-wen-ti-lcof/" target="_blank" rel="noopener">剑指 Offer 10- II. 青蛙跳台阶问题</a></h3><h4 id="【解题思路】-19"><a href="#【解题思路】-19" class="headerlink" title="【解题思路】"></a>【解题思路】</h4><p>与上一题基本相同。</p>
+<h4 id="【完整代码】-19"><a href="#【完整代码】-19" class="headerlink" title="【完整代码】"></a>【完整代码】</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">fib</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b, <span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (n&lt;<span class="number">1</span>) <span class="keyword">return</span> a;</span><br><span class="line">        <span class="keyword">return</span> fib(b, (a+b)%<span class="number">1000000007</span>, n<span class="number">-1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">numWays</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> fib(<span class="number">1</span>, <span class="number">1</span>, n);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="【执行用时、内存消耗排名】-20"><a href="#【执行用时、内存消耗排名】-20" class="headerlink" title="【执行用时、内存消耗排名】"></a>【<strong>执行用时、内存消耗排名</strong>】</h4><p>执行用时：0 ms, 在所有 C++ 提交中击败了100.00%的用户</p>
+<p>内存消耗：5.8 MB, 在所有 C++ 提交中击败了72.21%的用户</p>
+<p>通过测试用例：51 / 51</p>
+<p>​                 </p>
+<h3 id="剑指-Offer-63-股票的最大利润"><a href="#剑指-Offer-63-股票的最大利润" class="headerlink" title="剑指 Offer 63. 股票的最大利润"></a><a href="https://leetcode-cn.com/problems/gu-piao-de-zui-da-li-run-lcof/" target="_blank" rel="noopener">剑指 Offer 63. 股票的最大利润</a></h3><h4 id="【解题思路】-20"><a href="#【解题思路】-20" class="headerlink" title="【解题思路】"></a>【解题思路】</h4><p>如果必在第i天出售，则在前i-1天中股票最低价时购入是最划算的。贪心。</p>
+<h4 id="【完整代码】-20"><a href="#【完整代码】-20" class="headerlink" title="【完整代码】"></a>【完整代码】</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">maxProfit</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; prices)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> min_price = <span class="number">1e9</span>, ans = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> price:prices)&#123;</span><br><span class="line">            ans = <span class="built_in">max</span>(ans, price-min_price);</span><br><span class="line">            min_price = <span class="built_in">min</span>(min_price, price);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="【执行用时、内存消耗排名】-21"><a href="#【执行用时、内存消耗排名】-21" class="headerlink" title="【执行用时、内存消耗排名】"></a>【<strong>执行用时、内存消耗排名</strong>】</h4><p>执行用时：4 ms, 在所有 C++ 提交中击败了88.50%的用户</p>
+<p>内存消耗：12.4 MB, 在所有 C++ 提交中击败了86.17%的用户</p>
+<p>通过测试用例：200 / 200</p>
+<p>​                 </p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="32-最长有效括号"><a href="#32-最长有效括号" class="headerlink" title="32. 最长有效括号"></a><a href="https://leetcode-cn.com/problems/longest-valid-parentheses/" target="_blank" rel="noopener">32. 最长有效括号</a></h3><h4 id="【解题思路】-21"><a href="#【解题思路】-21" class="headerlink" title="【解题思路】"></a>【解题思路】</h4><p>用counter记录，遇到左括号就+1，遇到右括号就-1。         </p>
+<p>用数组index[x]存放counter值为x时的合法字符串的左端点下标。           </p>
+<p>如果遇到一个右括号，那么index[counter+2]就会变得不合法。不合法记为1e9。        </p>
+<p>由于这个过程中，counter可能因为右括号很多而变为负数，所以用counter_convert存放取模后的值。</p>
+<h4 id="【完整代码】-21"><a href="#【完整代码】-21" class="headerlink" title="【完整代码】"></a>【完整代码】</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">int</span> index[<span class="number">30001</span>];</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">longestValidParentheses</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> counter = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> ans = <span class="number">0</span>;                    <span class="comment">// length of the longest valid parentheses</span></span><br><span class="line">        <span class="keyword">int</span> n = s.length();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n+<span class="number">1</span>; i++) index[i]=<span class="number">1e9</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;s.length(); i++)&#123;</span><br><span class="line">            <span class="keyword">char</span> c = s[i];</span><br><span class="line">            assert (c==<span class="string">'('</span> <span class="keyword">or</span> c==<span class="string">')'</span>);  <span class="comment">// only () in the string</span></span><br><span class="line">            counter = (c==<span class="string">'('</span>)? counter+<span class="number">1</span> : counter<span class="number">-1</span>;</span><br><span class="line">            <span class="keyword">int</span> counter_convert = (counter+n)%n;    <span class="comment">// to avoid negative index</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (c==<span class="string">')'</span>)&#123;</span><br><span class="line">                ans = <span class="built_in">max</span>(ans, i-index[(counter_convert+<span class="number">1</span>)%n]+<span class="number">1</span>);</span><br><span class="line">                index[(counter_convert+<span class="number">2</span>)%n] = <span class="number">1e9</span>;   <span class="comment">// becomes invalid</span></span><br><span class="line">            &#125; <span class="keyword">else</span></span><br><span class="line">                index[counter_convert] = <span class="built_in">min</span>(index[counter_convert], i);</span><br><span class="line">        </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">string</span> s = <span class="string">")()())"</span>;</span><br><span class="line">	</span><br><span class="line">	Solution solution = Solution();</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;solution.longestValidParentheses(s)&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="【样例输出】-16"><a href="#【样例输出】-16" class="headerlink" title="【样例输出】"></a>【样例输出】</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">4</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="【执行用时、内存消耗排名】-22"><a href="#【执行用时、内存消耗排名】-22" class="headerlink" title="【执行用时、内存消耗排名】"></a>【<strong>执行用时、内存消耗排名</strong>】</h4><p>时间和空间复杂度都是O(n)</p>
+<p>执行用时：0 ms, 在所有 C++ 提交中击败了100.00%的用户</p>
+<p>内存消耗：6.7 MB, 在所有 C++ 提交中击败了86.75%的用户</p>
+<h2 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h2><p>​                          </p>
+<h3 id="剑指-Offer-09-用两个栈实现队列-1"><a href="#剑指-Offer-09-用两个栈实现队列-1" class="headerlink" title="剑指 Offer 09. 用两个栈实现队列"></a><a href="https://leetcode-cn.com/problems/yong-liang-ge-zhan-shi-xian-dui-lie-lcof/" target="_blank" rel="noopener">剑指 Offer 09. 用两个栈实现队列</a></h3><h4 id="【解题思路】-22"><a href="#【解题思路】-22" class="headerlink" title="【解题思路】"></a>【解题思路】</h4><h4 id="【完整代码】-22"><a href="#【完整代码】-22" class="headerlink" title="【完整代码】"></a>【完整代码】</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="【样例输出】-17"><a href="#【样例输出】-17" class="headerlink" title="【样例输出】"></a>【样例输出】</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="【执行用时、内存消耗排名】-23"><a href="#【执行用时、内存消耗排名】-23" class="headerlink" title="【执行用时、内存消耗排名】"></a>【<strong>执行用时、内存消耗排名</strong>】</h4>
+      
+      <!-- reward -->
+      
+      <div id="reward-btn">
+        打赏
+      </div>
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+        <div class="declare">
+          <ul class="post-copyright">
+            <li>
+              <i class="ri-copyright-line"></i>
+              <strong>版权声明： </strong s>
+              本博客所有文章除特别声明外，均采用 <a href="https://www.apache.org/licenses/LICENSE-2.0.html" rel="external nofollow"
+                target="_blank">Apache License 2.0</a> 许可协议。转载请注明出处！
+            </li>
+          </ul>
+        </div>
+        
+    <footer class="article-footer">
+      
+          
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://glisses.github.io/2022/02/18/Coding-Interviews-C++-with-main/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/code/" rel="tag">code</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+  
+  <nav class="article-nav">
+    
+    
+      <a href="/2022/02/18/ssh-The-authenticity-of-host-hostname-can-t-be-established/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">ssh:The authenticity of host &#39;hostname&#39; can&#39;t be established</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+  
+<!-- valine评论 -->
+<div id="vcomments-box">
+    <div id="vcomments">
+    </div>
+</div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js'></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        app_id: 'wopEkNOS3jcH99vLw4Fv3G7p-gzGzoHsz',
+        app_key: 'nmKagbdNc4YoBGAAziafy7YX',
+        path: window.location.pathname,
+        notify: 'false',
+        verify: 'false',
+        avatar: 'mp',
+        placeholder: '给我的文章加点评论吧~',
+        recordIP: true
+    });
+    const infoEle = document.querySelector('#vcomments .info');
+    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0) {
+        infoEle.childNodes.forEach(function (item) {
+            item.parentNode.removeChild(item);
+        });
+    }
+</script>
+<style>
+    #vcomments-box {
+        padding: 5px 30px;
+    }
+
+    @media screen and (max-width: 800px) {
+        #vcomments-box {
+            padding: 5px 0px;
+        }
+    }
+
+    #vcomments-box #vcomments {
+        background-color: #fff;
+    }
+
+    .v .vlist .vcard .vh {
+        padding-right: 20px;
+    }
+
+    .v .vlist .vcard {
+        padding-left: 10px;
+    }
+</style>
+
+  
+
+  
+  
+  
+
+</article>
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>
+        &copy;
+        2022
+        glisses
+      </li>
+      <li>
+        
+      </li>
+    </ul>
+    <ul class="list-inline">
+      <li>
+        
+        
+        <span>
+  <i>PV:<span id="busuanzi_value_page_pv"></span></i>
+  <i>UV:<span id="busuanzi_value_site_uv"></span></i>
+</span>
+        
+      </li>
+      
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="to_top">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+      </div>
+    </main>
+    <aside class="sidebar">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="glisses"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags/%E6%97%85%E8%A1%8C/">旅行</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="http://shenyu-vip.lofter.com" target="_blank" rel="noopener">摄影</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/2019/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/share.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script>
+  try {
+    var typed = new Typed("#subtitle", {
+      strings: ['There is no royal road to learning.', 'Inner peace.', 'It is never too old to learn.'],
+      startDelay: 0,
+      typeSpeed: 200,
+      loop: true,
+      backSpeed: 100,
+      showCursor: true
+    });
+  } catch (err) {
+  }
+
+</script>
+
+
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: 'main',
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto',
+    onClick: (e) => {
+      $('.toc-link').removeClass('is-active-link');
+      $(`a[href=${e.target.hash}]`).addClass('is-active-link');
+      $(e.target.hash).scrollIntoView();
+      return false;
+    }
+  });
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/js/ayer.js"></script>
+
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+
+<script type="text/javascript" src="https://js.users.51.la/20544303.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css">
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+
+    
+    <div id="music">
+    
+    
+    
+    <iframe frameborder="no" border="1" marginwidth="0" marginheight="0" width="200" height="52"
+        src="//music.163.com/outchain/player?type=2&id=1492283139&auto=1&height=32"></iframe>
+</div>
+
+<style>
+    #music {
+        position: fixed;
+        right: 15px;
+        bottom: 0;
+        z-index: 998;
+    }
+</style>
+    
+  </div>
+</body>
+
+</html>

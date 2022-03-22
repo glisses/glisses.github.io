@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    终端复用器Tmux |  glisses
+  </title>
+  <meta name="generator" content="hexo-theme-yilia-plus">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+  
+  
+
+  
+
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    <main class="content">
+      <section class="outer">
+  <article id="post-终端复用器Tmux" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  终端复用器Tmux
+</h1>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2021/08/05/%E7%BB%88%E7%AB%AF%E5%A4%8D%E7%94%A8%E5%99%A8Tmux/" class="article-date">
+  <time datetime="2021-08-05T03:37:58.000Z" itemprop="datePublished">2021-08-05</time>
+</a>
+      
+      
+      
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">2.3k字</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">8分钟</span>
+        </span>
+    </span>
+</div>
+
+      
+    </div>
+    
+
+    
+    
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <h1 id="Tmux-使用教程"><a href="#Tmux-使用教程" class="headerlink" title="Tmux 使用教程"></a>Tmux 使用教程</h1><p>本文全部转载自<a href="https://www.ruanyifeng.com/blog/2019/10/tmux.html" target="_blank" rel="noopener">https://www.ruanyifeng.com/blog/2019/10/tmux.html</a></p>
+<p>作者： <a href="https://www.ruanyifeng.com/" target="_blank" rel="noopener">阮一峰</a></p>
+<p>日期： <a href="https://www.ruanyifeng.com/blog/2019/10/" target="_blank" rel="noopener">2019年10月21日</a></p>
+<p>Tmux 是一个终端复用器（terminal multiplexer），非常有用，属于常用的开发工具。</p>
+<p>本文介绍如何使用 Tmux。</p>
+<p><img src="https://www.wangbase.com/blogimg/asset/201910/bg2019102005.png" alt="img"></p>
+<a id="more"></a>
+
+<h2 id="一、Tmux-是什么？"><a href="#一、Tmux-是什么？" class="headerlink" title="一、Tmux 是什么？"></a>一、Tmux 是什么？</h2><h3 id="1-1-会话与进程"><a href="#1-1-会话与进程" class="headerlink" title="1.1 会话与进程"></a>1.1 会话与进程</h3><p>命令行的典型使用方式是，打开一个终端窗口（terminal window，以下简称”窗口”），在里面输入命令。<strong>用户与计算机的这种临时的交互，称为一次”会话”（session）</strong> 。</p>
+<p>会话的一个重要特点是，窗口与其中启动的进程是<a href="https://www.ruanyifeng.com/blog/2016/02/linux-daemon.html" target="_blank" rel="noopener">连在一起</a>的。打开窗口，会话开始；关闭窗口，会话结束，会话内部的进程也会随之终止，不管有没有运行完。</p>
+<p>一个典型的例子就是，<a href="https://www.ruanyifeng.com/blog/2011/12/ssh_remote_login.html" target="_blank" rel="noopener">SSH 登录</a>远程计算机，打开一个远程窗口执行命令。这时，网络突然断线，再次登录的时候，是找不回上一次执行的命令的。因为上一次 SSH 会话已经终止了，里面的进程也随之消失了。</p>
+<p>为了解决这个问题，会话与窗口可以”解绑”：窗口关闭时，会话并不终止，而是继续运行，等到以后需要的时候，再让会话”绑定”其他窗口。</p>
+<h3 id="1-2-Tmux-的作用"><a href="#1-2-Tmux-的作用" class="headerlink" title="1.2 Tmux 的作用"></a>1.2 Tmux 的作用</h3><p><strong>Tmux 就是会话与窗口的”解绑”工具，将它们彻底分离。</strong></p>
+<blockquote>
+<p>（1）它允许在单个窗口中，同时访问多个会话。这对于同时运行多个命令行程序很有用。</p>
+<p>（2） 它可以让新窗口”接入”已经存在的会话。</p>
+<p>（3）它允许每个会话有多个连接窗口，因此可以多人实时共享会话。</p>
+<p>（4）它还支持窗口任意的垂直和水平拆分。</p>
+</blockquote>
+<p>类似的终端复用器还有 GNU Screen。Tmux 与它功能相似，但是更易用，也更强大。</p>
+<h2 id="二、基本用法"><a href="#二、基本用法" class="headerlink" title="二、基本用法"></a>二、基本用法</h2><h3 id="2-1-安装"><a href="#2-1-安装" class="headerlink" title="2.1 安装"></a>2.1 安装</h3><p>Tmux 一般需要自己安装。</p>
+<blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Ubuntu 或 Debian</span></span><br><span class="line">$ sudo apt-get install tmux</span><br><span class="line"></span><br><span class="line"><span class="comment"># CentOS 或 Fedora</span></span><br><span class="line">$ sudo yum install tmux</span><br><span class="line"></span><br><span class="line"><span class="comment"># Mac</span></span><br><span class="line">$ brew install tmux</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h3 id="2-2-启动与退出"><a href="#2-2-启动与退出" class="headerlink" title="2.2 启动与退出"></a>2.2 启动与退出</h3><p>安装完成后，键入<code>tmux</code>命令，就进入了 Tmux 窗口。</p>
+<blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ tmux</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>上面命令会启动 Tmux 窗口，底部有一个状态栏。状态栏的左侧是窗口信息（编号和名称），右侧是系统信息。</p>
+<p><img src="https://www.wangbase.com/blogimg/asset/201910/bg2019102006.png" alt="img"></p>
+<p>按下<code>Ctrl+d</code>或者显式输入<code>exit</code>命令，就可以退出 Tmux 窗口。</p>
+<blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
+</blockquote>
+<h3 id="2-3-前缀键"><a href="#2-3-前缀键" class="headerlink" title="2.3 前缀键"></a>2.3 前缀键</h3><p>Tmux 窗口有大量的快捷键。所有快捷键都要通过前缀键唤起。默认的前缀键是<code>Ctrl+b</code>，即先按下<code>Ctrl+b</code>，快捷键才会生效。</p>
+<p>举例来说，帮助命令的快捷键是<code>Ctrl+b ?</code>。它的用法是，在 Tmux 窗口中，先按下<code>Ctrl+b</code>，再按下<code>?</code>，就会显示帮助信息。</p>
+<p>然后，按下 ESC 键或<code>q</code>键，就可以退出帮助。</p>
+<h2 id="三、会话管理"><a href="#三、会话管理" class="headerlink" title="三、会话管理"></a>三、会话管理</h2><h3 id="3-1-新建会话"><a href="#3-1-新建会话" class="headerlink" title="3.1 新建会话"></a>3.1 新建会话</h3><p>第一个启动的 Tmux 窗口，编号是<code>0</code>，第二个窗口的编号是<code>1</code>，以此类推。这些窗口对应的会话，就是 0 号会话、1 号会话。</p>
+<p>使用编号区分会话，不太直观，更好的方法是为会话起名。</p>
+<blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ tmux new -s &lt;session-name&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>上面命令新建一个指定名称的会话。</p>
+<h3 id="3-2-分离会话"><a href="#3-2-分离会话" class="headerlink" title="3.2 分离会话"></a>3.2 分离会话</h3><p>在 Tmux 窗口中，按下<code>Ctrl+b d</code>或者输入<code>tmux detach</code>命令，就会将当前会话与窗口分离。</p>
+<blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ tmux detach</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>上面命令执行后，就会退出当前 Tmux 窗口，但是会话和里面的进程仍然在后台运行。</p>
+<p><code>tmux ls</code>命令可以查看当前所有的 Tmux 会话。</p>
+<blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ tmux ls</span><br><span class="line"><span class="comment"># or</span></span><br><span class="line">$ tmux list-session</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h3 id="3-3-接入会话"><a href="#3-3-接入会话" class="headerlink" title="3.3 接入会话"></a>3.3 接入会话</h3><p><code>tmux attach</code>命令用于重新接入某个已存在的会话。</p>
+<blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用会话编号</span></span><br><span class="line">$ tmux attach -t 0</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用会话名称</span></span><br><span class="line">$ tmux attach -t &lt;session-name&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h3 id="3-4-杀死会话"><a href="#3-4-杀死会话" class="headerlink" title="3.4 杀死会话"></a>3.4 杀死会话</h3><p><code>tmux kill-session</code>命令用于杀死某个会话。</p>
+<blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用会话编号</span></span><br><span class="line">$ tmux <span class="built_in">kill</span>-session -t 0</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用会话名称</span></span><br><span class="line">$ tmux <span class="built_in">kill</span>-session -t &lt;session-name&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h3 id="3-5-切换会话"><a href="#3-5-切换会话" class="headerlink" title="3.5 切换会话"></a>3.5 切换会话</h3><p><code>tmux switch</code>命令用于切换会话。</p>
+<blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用会话编号</span></span><br><span class="line">$ tmux switch -t 0</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用会话名称</span></span><br><span class="line">$ tmux switch -t &lt;session-name&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h3 id="3-6-重命名会话"><a href="#3-6-重命名会话" class="headerlink" title="3.6 重命名会话"></a>3.6 重命名会话</h3><p><code>tmux rename-session</code>命令用于重命名会话。</p>
+<blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ tmux rename-session -t 0 &lt;new-name&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>上面命令将0号会话重命名。</p>
+<h3 id="3-7-会话快捷键"><a href="#3-7-会话快捷键" class="headerlink" title="3.7 会话快捷键"></a>3.7 会话快捷键</h3><p>下面是一些会话相关的快捷键。</p>
+<blockquote>
+<ul>
+<li><code>Ctrl+b d</code>：分离当前会话。</li>
+<li><code>Ctrl+b s</code>：列出所有会话。</li>
+<li><code>Ctrl+b $</code>：重命名当前会话。</li>
+</ul>
+</blockquote>
+<h2 id="四、最简操作流程"><a href="#四、最简操作流程" class="headerlink" title="四、最简操作流程"></a>四、最简操作流程</h2><p>综上所述，以下是 Tmux 的最简操作流程。</p>
+<blockquote>
+<ol>
+<li>新建会话<code>tmux new -s my_session</code>。</li>
+<li>在 Tmux 窗口运行所需的程序。</li>
+<li>按下快捷键<code>Ctrl+b d</code>将会话分离。</li>
+<li>下次使用时，重新连接到会话<code>tmux attach-session -t my_session</code>。</li>
+</ol>
+</blockquote>
+<h2 id="五、窗格操作"><a href="#五、窗格操作" class="headerlink" title="五、窗格操作"></a>五、窗格操作</h2><p>Tmux 可以将窗口分成多个窗格（pane），每个窗格运行不同的命令。以下命令都是在 Tmux 窗口中执行。</p>
+<h3 id="5-1-划分窗格"><a href="#5-1-划分窗格" class="headerlink" title="5.1 划分窗格"></a>5.1 划分窗格</h3><p><code>tmux split-window</code>命令用来划分窗格。</p>
+<blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 划分上下两个窗格</span></span><br><span class="line">$ tmux split-window</span><br><span class="line"></span><br><span class="line"><span class="comment"># 划分左右两个窗格</span></span><br><span class="line">$ tmux split-window -h</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p><img src="https://www.wangbase.com/blogimg/asset/201910/bg2019102007.jpg" alt="img"></p>
+<h3 id="5-2-移动光标"><a href="#5-2-移动光标" class="headerlink" title="5.2 移动光标"></a>5.2 移动光标</h3><p><code>tmux select-pane</code>命令用来移动光标位置。</p>
+<blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 光标切换到上方窗格</span></span><br><span class="line">$ tmux select-pane -U</span><br><span class="line"></span><br><span class="line"><span class="comment"># 光标切换到下方窗格</span></span><br><span class="line">$ tmux select-pane -D</span><br><span class="line"></span><br><span class="line"><span class="comment"># 光标切换到左边窗格</span></span><br><span class="line">$ tmux select-pane -L</span><br><span class="line"></span><br><span class="line"><span class="comment"># 光标切换到右边窗格</span></span><br><span class="line">$ tmux select-pane -R</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h3 id="5-3-交换窗格位置"><a href="#5-3-交换窗格位置" class="headerlink" title="5.3 交换窗格位置"></a>5.3 交换窗格位置</h3><p><code>tmux swap-pane</code>命令用来交换窗格位置。</p>
+<blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 当前窗格上移</span></span><br><span class="line">$ tmux swap-pane -U</span><br><span class="line"></span><br><span class="line"><span class="comment"># 当前窗格下移</span></span><br><span class="line">$ tmux swap-pane -D</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h3 id="5-4-窗格快捷键"><a href="#5-4-窗格快捷键" class="headerlink" title="5.4 窗格快捷键"></a>5.4 窗格快捷键</h3><p>下面是一些窗格操作的快捷键。</p>
+<blockquote>
+<ul>
+<li><code>Ctrl+b %</code>：划分左右两个窗格。</li>
+<li><code>Ctrl+b &quot;</code>：划分上下两个窗格。</li>
+<li><code>Ctrl+b &lt;arrow key&gt;</code>：光标切换到其他窗格。<code>&lt;arrow key&gt;</code>是指向要切换到的窗格的方向键，比如切换到下方窗格，就按方向键<code>↓</code>。</li>
+<li><code>Ctrl+b ;</code>：光标切换到上一个窗格。</li>
+<li><code>Ctrl+b o</code>：光标切换到下一个窗格。</li>
+<li><code>Ctrl+b {</code>：当前窗格与上一个窗格交换位置。</li>
+<li><code>Ctrl+b }</code>：当前窗格与下一个窗格交换位置。</li>
+<li><code>Ctrl+b Ctrl+o</code>：所有窗格向前移动一个位置，第一个窗格变成最后一个窗格。</li>
+<li><code>Ctrl+b Alt+o</code>：所有窗格向后移动一个位置，最后一个窗格变成第一个窗格。</li>
+<li><code>Ctrl+b x</code>：关闭当前窗格。</li>
+<li><code>Ctrl+b !</code>：将当前窗格拆分为一个独立窗口。</li>
+<li><code>Ctrl+b z</code>：当前窗格全屏显示，再使用一次会变回原来大小。</li>
+<li><code>Ctrl+b Ctrl+&lt;arrow key&gt;</code>：按箭头方向调整窗格大小。</li>
+<li><code>Ctrl+b q</code>：显示窗格编号。</li>
+</ul>
+</blockquote>
+<h2 id="六、窗口管理"><a href="#六、窗口管理" class="headerlink" title="六、窗口管理"></a>六、窗口管理</h2><p>除了将一个窗口划分成多个窗格，Tmux 也允许新建多个窗口。</p>
+<h3 id="6-1-新建窗口"><a href="#6-1-新建窗口" class="headerlink" title="6.1 新建窗口"></a>6.1 新建窗口</h3><p><code>tmux new-window</code>命令用来创建新窗口。</p>
+<blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ tmux new-window</span><br><span class="line"></span><br><span class="line"><span class="comment"># 新建一个指定名称的窗口</span></span><br><span class="line">$ tmux new-window -n &lt;window-name&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h3 id="6-2-切换窗口"><a href="#6-2-切换窗口" class="headerlink" title="6.2 切换窗口"></a>6.2 切换窗口</h3><p><code>tmux select-window</code>命令用来切换窗口。</p>
+<blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 切换到指定编号的窗口</span></span><br><span class="line">$ tmux select-window -t &lt;window-number&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 切换到指定名称的窗口</span></span><br><span class="line">$ tmux select-window -t &lt;window-name&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h3 id="6-3-重命名窗口"><a href="#6-3-重命名窗口" class="headerlink" title="6.3 重命名窗口"></a>6.3 重命名窗口</h3><p><code>tmux rename-window</code>命令用于为当前窗口起名（或重命名）。</p>
+<blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ tmux rename-window &lt;new-name&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h3 id="6-4-窗口快捷键"><a href="#6-4-窗口快捷键" class="headerlink" title="6.4 窗口快捷键"></a>6.4 窗口快捷键</h3><p>下面是一些窗口操作的快捷键。</p>
+<blockquote>
+<ul>
+<li><code>Ctrl+b c</code>：创建一个新窗口，状态栏会显示多个窗口的信息。</li>
+<li><code>Ctrl+b p</code>：切换到上一个窗口（按照状态栏上的顺序）。</li>
+<li><code>Ctrl+b n</code>：切换到下一个窗口。</li>
+<li><code>Ctrl+b &lt;number&gt;</code>：切换到指定编号的窗口，其中的<code>&lt;number&gt;</code>是状态栏上的窗口编号。</li>
+<li><code>Ctrl+b w</code>：从列表中选择窗口。</li>
+<li><code>Ctrl+b ,</code>：窗口重命名。</li>
+</ul>
+</blockquote>
+<h2 id="七、其他命令"><a href="#七、其他命令" class="headerlink" title="七、其他命令"></a>七、其他命令</h2><p>下面是一些其他命令。</p>
+<blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 列出所有快捷键，及其对应的 Tmux 命令</span></span><br><span class="line">$ tmux list-keys</span><br><span class="line"></span><br><span class="line"><span class="comment"># 列出所有 Tmux 命令及其参数</span></span><br><span class="line">$ tmux list-commands</span><br><span class="line"></span><br><span class="line"><span class="comment"># 列出当前所有 Tmux 会话的信息</span></span><br><span class="line">$ tmux info</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重新加载当前的 Tmux 配置</span></span><br><span class="line">$ tmux <span class="built_in">source</span>-file ~/.tmux.conf</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="八、参考链接"><a href="#八、参考链接" class="headerlink" title="八、参考链接"></a>八、参考链接</h2><ul>
+<li><a href="https://www.hamvocke.com/blog/a-quick-and-easy-guide-to-tmux/" target="_blank" rel="noopener">A Quick and Easy Guide to tmux</a></li>
+<li><a href="https://danielmiessler.com/study/tmux/" target="_blank" rel="noopener">Tactical tmux: The 10 Most Important Commands</a></li>
+<li><a href="https://linuxize.com/post/getting-started-with-tmux/" target="_blank" rel="noopener">Getting started with Tmux</a></li>
+</ul>
+<p>（完）</p>
+<h3 id="文档信息"><a href="#文档信息" class="headerlink" title="文档信息"></a>文档信息</h3><ul>
+<li>版权声明：自由转载-非商用-非衍生-保持署名（<a href="https://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" target="_blank" rel="noopener">创意共享3.0许可证</a>）</li>
+<li>发表日期： 2019年10月21日</li>
+</ul>
+<h2 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h2><ul>
+<li><p>2021.05.10: <a href="https://www.ruanyifeng.com/blog/2021/05/scaling-problem.html" target="_blank" rel="noopener">软件工程的最大难题</a></p>
+<p>一、引言 大学有一门课程《软件工程》，研究如何组织和管理软件项目。</p>
+</li>
+<li><p>2020.12.13: <a href="https://www.ruanyifeng.com/blog/2020/12/ssh-tutorial.html" target="_blank" rel="noopener">《SSH 入门教程》发布了</a></p>
+<p>SSH 是登录 Linux 服务器的必备工具，只要你在做互联网开发，多多少少都会用到它。</p>
+</li>
+<li><p>2020.11.02: <a href="https://www.ruanyifeng.com/blog/2020/11/wechat-miniprogram-tutorial-part-four.html" target="_blank" rel="noopener">微信小程序入门教程之四：API 使用</a></p>
+<p>今天是这个系列教程的最后一篇。</p>
+</li>
+<li><p>2020.10.29: <a href="https://www.ruanyifeng.com/blog/2020/10/wechat-miniprogram-tutorial-part-three.html" target="_blank" rel="noopener">微信小程序入门教程之三：脚本编程</a></p>
+<p>这个系列教程的前两篇，介绍了小程序的项目结构和页面样式。</p>
+</li>
+</ul>
+
+      
+      <!-- reward -->
+      
+      <div id="reward-btn">
+        打赏
+      </div>
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+        <div class="declare">
+          <ul class="post-copyright">
+            <li>
+              <i class="ri-copyright-line"></i>
+              <strong>版权声明： </strong s>
+              本博客所有文章除特别声明外，均采用 <a href="https://www.apache.org/licenses/LICENSE-2.0.html" rel="external nofollow"
+                target="_blank">Apache License 2.0</a> 许可协议。转载请注明出处！
+            </li>
+          </ul>
+        </div>
+        
+    <footer class="article-footer">
+      
+          
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://glisses.github.io/2021/08/05/%E7%BB%88%E7%AB%AF%E5%A4%8D%E7%94%A8%E5%99%A8Tmux/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/code/" rel="tag">code</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+  
+  <nav class="article-nav">
+    
+      <a href="/2021/08/10/Python%E8%B0%83%E8%AF%95%E6%96%B0%E5%88%A9%E5%99%A8pdb/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            Python调试新利器pdb++
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2021/07/21/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%BC%E5%90%88%E8%AE%AD%E7%BB%83-%E5%9F%BA%E4%BA%8EQt%E7%9A%84%E6%95%B0%E7%8B%AC%E5%B0%8F%E6%B8%B8%E6%88%8F/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">计算机综合训练-基于Qt的数独小游戏</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+  
+<!-- valine评论 -->
+<div id="vcomments-box">
+    <div id="vcomments">
+    </div>
+</div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js'></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        app_id: 'wopEkNOS3jcH99vLw4Fv3G7p-gzGzoHsz',
+        app_key: 'nmKagbdNc4YoBGAAziafy7YX',
+        path: window.location.pathname,
+        notify: 'false',
+        verify: 'false',
+        avatar: 'mp',
+        placeholder: '给我的文章加点评论吧~',
+        recordIP: true
+    });
+    const infoEle = document.querySelector('#vcomments .info');
+    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0) {
+        infoEle.childNodes.forEach(function (item) {
+            item.parentNode.removeChild(item);
+        });
+    }
+</script>
+<style>
+    #vcomments-box {
+        padding: 5px 30px;
+    }
+
+    @media screen and (max-width: 800px) {
+        #vcomments-box {
+            padding: 5px 0px;
+        }
+    }
+
+    #vcomments-box #vcomments {
+        background-color: #fff;
+    }
+
+    .v .vlist .vcard .vh {
+        padding-right: 20px;
+    }
+
+    .v .vlist .vcard {
+        padding-left: 10px;
+    }
+</style>
+
+  
+
+  
+  
+  
+
+</article>
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>
+        &copy;
+        2022
+        glisses
+      </li>
+      <li>
+        
+      </li>
+    </ul>
+    <ul class="list-inline">
+      <li>
+        
+        
+        <span>
+  <i>PV:<span id="busuanzi_value_page_pv"></span></i>
+  <i>UV:<span id="busuanzi_value_site_uv"></span></i>
+</span>
+        
+      </li>
+      
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="to_top">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+      </div>
+    </main>
+    <aside class="sidebar">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="glisses"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags/%E6%97%85%E8%A1%8C/">旅行</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="http://shenyu-vip.lofter.com" target="_blank" rel="noopener">摄影</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/2019/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/share.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script>
+  try {
+    var typed = new Typed("#subtitle", {
+      strings: ['There is no royal road to learning.', 'Inner peace.', 'It is never too old to learn.'],
+      startDelay: 0,
+      typeSpeed: 200,
+      loop: true,
+      backSpeed: 100,
+      showCursor: true
+    });
+  } catch (err) {
+  }
+
+</script>
+
+
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: 'main',
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto',
+    onClick: (e) => {
+      $('.toc-link').removeClass('is-active-link');
+      $(`a[href=${e.target.hash}]`).addClass('is-active-link');
+      $(e.target.hash).scrollIntoView();
+      return false;
+    }
+  });
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/js/ayer.js"></script>
+
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+
+<script type="text/javascript" src="https://js.users.51.la/20544303.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css">
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+
+    
+    <div id="music">
+    
+    
+    
+    <iframe frameborder="no" border="1" marginwidth="0" marginheight="0" width="200" height="52"
+        src="//music.163.com/outchain/player?type=2&id=1492283139&auto=1&height=32"></iframe>
+</div>
+
+<style>
+    #music {
+        position: fixed;
+        right: 15px;
+        bottom: 0;
+        z-index: 998;
+    }
+</style>
+    
+  </div>
+</body>
+
+</html>

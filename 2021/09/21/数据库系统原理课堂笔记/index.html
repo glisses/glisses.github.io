@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    数据库系统原理课堂笔记 |  glisses
+  </title>
+  <meta name="generator" content="hexo-theme-yilia-plus">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+  
+  
+
+  
+
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    <main class="content">
+      <section class="outer">
+  <article id="post-数据库系统原理课堂笔记" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  数据库系统原理课堂笔记
+</h1>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2021/09/21/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E8%AF%BE%E5%A0%82%E7%AC%94%E8%AE%B0/" class="article-date">
+  <time datetime="2021-09-21T07:16:09.000Z" itemprop="datePublished">2021-09-21</time>
+</a>
+      
+      
+      
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">5k字</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">17分钟</span>
+        </span>
+    </span>
+</div>
+
+      
+    </div>
+    
+
+    
+    
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <h1 id="课程基本信息"><a href="#课程基本信息" class="headerlink" title="课程基本信息"></a>课程基本信息</h1><p>教师：林友芳</p>
+<ul>
+<li>办公地点：计算中心300</li>
+<li>邮箱：<a href="mailto:yflin@bjtu.edu.cn">yflin@bjtu.edu.cn</a></li>
+</ul>
+<p>教材：</p>
+<p><a href="https://sm.ms/image/u3YmKzFJa6VyfPH" target="_blank"><img src="https://i.loli.net/2021/09/21/u3YmKzFJa6VyfPH.png" width = "500" height = "500" alt="image.png"></a></p>
+<h3 id="课程安排"><a href="#课程安排" class="headerlink" title="课程安排"></a>课程安排</h3><p><img src="https://i.loli.net/2021/09/21/Lqx6lkKcaVWEDCG.png" alt="image.png"></p>
+<a id="more"></a>
+
+<p>&nbsp;</p>
+<h3 id="分数构成"><a href="#分数构成" class="headerlink" title="分数构成"></a>分数构成</h3><table>
+<thead>
+<tr>
+<th align="center">平时分</th>
+<th align="center">考勤、作业</th>
+<th align="center">50</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>期末考试</strong></td>
+<td align="center"><strong>客观题（考察概念）</strong></td>
+<td align="center"><strong>25</strong></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center"><strong>主观题</strong></td>
+<td align="center"><strong>25</strong></td>
+</tr>
+</tbody></table>
+<img src="https://i.loli.net/2021/09/21/vfWhzqxsuodjQ4K.png" alt="image.png"  />
+
+<p>&nbsp;</p>
+<h3 id="慕课"><a href="#慕课" class="headerlink" title="慕课"></a><font color='red'>慕课</font></h3><p><a href="https://www.icourse163.org/learn/NJTU-1450818183?tid=1464964445#/learn/content" target="_blank" rel="noopener">https://www.icourse163.org/learn/NJTU-1450818183?tid=1464964445#/learn/content</a></p>
+<p>&nbsp;</p>
+<h3 id="作业详细信息"><a href="#作业详细信息" class="headerlink" title="作业详细信息"></a>作业详细信息</h3><p>要求学生掌握四层以上架构数据库系统全栈编程技术。培养学生复杂系统设计与编程实现能力，树立技术自信，有效串接多科知识。</p>
+<p><img src="https://i.loli.net/2021/09/21/i7QbHYvt3DRNSZe.png" alt="image.png"></p>
+<p>&nbsp;</p>
+<h1 id="第一章-数据库系统概述"><a href="#第一章-数据库系统概述" class="headerlink" title="第一章 数据库系统概述"></a>第一章 数据库系统概述</h1><p>&nbsp;</p>
+<h2 id="本章主要教学内容"><a href="#本章主要教学内容" class="headerlink" title="本章主要教学内容"></a>本章主要教学内容</h2><p><img src="https://i.loli.net/2021/09/21/einRcdZ2PfNqOtu.png" alt="image.png"></p>
+<p>&nbsp;</p>
+<h2 id="第一节-数据库的四个基本概念"><a href="#第一节-数据库的四个基本概念" class="headerlink" title="第一节 数据库的四个基本概念"></a>第一节 数据库的四个基本概念</h2><ol>
+<li>数据（Data）</li>
+<li>数据库（Database, DB）</li>
+<li>数据库系统（Database System, DBS）</li>
+<li>数据库管理系统（Database Management System, DBMS）</li>
+</ol>
+<p>这四个概念之间关系的语义网络：</p>
+<p><img src="https://i.loli.net/2021/09/21/rAqdjcQBfFzOe68.png" alt="image.png"></p>
+<p>&nbsp;</p>
+<h3 id="数据"><a href="#数据" class="headerlink" title="数据"></a>数据</h3><p>数是符号，据是凭据。</p>
+<p>数据，是记录下来当成凭据的符号。</p>
+<p>这个理解挺有意思。</p>
+<p><img src="https://i.loli.net/2021/09/21/BKA8f17zeIigsy2.png" alt="image.png"></p>
+<p>&nbsp;</p>
+<h3 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h3><p>数据库与水库类比：</p>
+<ul>
+<li>水库：有需求，有水源，有设施，有空间，实现水流控制，有组织，有管理，可共享，有服务，服务于不同的目的</li>
+<li>数据库：有需求，有<strong>数据</strong>源，有设施，有空间，实现<strong>数据</strong>控制，有组织，有管理，可共享，有服务，服务于不同的目的</li>
+</ul>
+<p><img src="https://i.loli.net/2021/09/21/gQXeilUhLa3Dt6d.png" alt="image.png"></p>
+<h4 id="数据库的定义"><a href="#数据库的定义" class="headerlink" title="数据库的定义"></a>数据库的定义</h4><p>A database is an organized collection of data. Formally, a “database” refers to a set of related data and the way it  is organized.</p>
+<p>数据库是<strong>长期存放在计算机内、有组织的、可共享</strong>的数据集合。 数据库中的数据按一定的数据模型组织、描述和存储，且具有<strong>较小的冗余度、较高的数据独立性和易扩展性</strong>，并可为多个用户共享。</p>
+<p>&nbsp;</p>
+<h3 id="数据库管理系统"><a href="#数据库管理系统" class="headerlink" title="数据库管理系统"></a>数据库管理系统</h3><h4 id="数据库管理系统的定义"><a href="#数据库管理系统的定义" class="headerlink" title="数据库管理系统的定义"></a>数据库管理系统的定义</h4><p>A database-management system (DBMS) is a computer software  application that interacts with end-users, other applications, and  the database itself to capture, provide access to and analyze data.</p>
+<p>数据库管理系统是用于<strong>建立、使用和维护</strong>数据库的软件。 </p>
+<ul>
+<li>“建立”：如何定义、组织和存储数据 </li>
+<li>“使用”：查询、插入、删除和修改数据 </li>
+<li>“维护”：保证数据的安全性、完整性</li>
+</ul>
+<p>&nbsp;</p>
+<h4 id="数据库管理系统的位置与功能"><a href="#数据库管理系统的位置与功能" class="headerlink" title="数据库管理系统的位置与功能"></a>数据库管理系统的位置与功能</h4><p><img src="https://i.loli.net/2021/09/21/Cf2cNGm1uKo5dLr.png" alt="image.png"></p>
+<p>&nbsp;</p>
+<h3 id="数据库系统"><a href="#数据库系统" class="headerlink" title="数据库系统"></a>数据库系统</h3><h4 id="数据库系统的定义"><a href="#数据库系统的定义" class="headerlink" title="数据库系统的定义"></a><font color='red'>数据库系统的定义</font></h4><p>采用了数据库技术的计 算机系统，包括DB、 DBMS、开发工具、 应用系统、硬件、软件、 用户和DBA（数据库管理员）。</p>
+<p><img src="https://i.loli.net/2021/09/21/MP4FRc5sWaLE37q.png" alt="image.png"></p>
+<p>&nbsp;</p>
+<h3 id="数据处理与数据管理"><a href="#数据处理与数据管理" class="headerlink" title="数据处理与数据管理"></a>数据处理与数据管理</h3><p>【数据处理】: 是对各种形式的数据进行收集、储存、加工、 管理和传播的一系列活动的总和。 </p>
+<p>【数据管理】： 是指数据的分类、组织、编码、存储、维护、 检索等操作，是数据处理的核心。 </p>
+<p>数据的管理经历了多个阶段。</p>
+<p>&nbsp;</p>
+<h2 id="第二节-数据管理技术的发展阶段"><a href="#第二节-数据管理技术的发展阶段" class="headerlink" title="第二节 数据管理技术的发展阶段"></a>第二节 数据管理技术的发展阶段</h2><img src="https://i.loli.net/2021/09/21/1PLG3qzwSehQOBR.png" alt="image.png" style="zoom:75%;" />
+
+<p>&nbsp;</p>
+<hr>
+<p>先聊聊磁带。磁带是<strong>顺序存取</strong>数据的。也就是说，即使我们知道数据在哪里，也要先按顺序，倒带到那个位置，再存取数据（比如说播放录音）。</p>
+<p><strong>直接存取</strong>则是知道了地址，就可以取出该地址的内容了。</p>
+<p>虽然磁带是顺序存储的，速度慢且体积大，但磁带依然又它的地位。因为磁带的存储寿命较长，而且维护成本低廉——不用插电，只要找个地方放磁带就行。</p>
+<p><strong>参考资料</strong></p>
+<hr>
+<p><a href="https://zh.wikipedia.org/wiki/%E7%A3%81%E5%B8%A6" target="_blank" rel="noopener">https://zh.wikipedia.org/wiki/%E7%A3%81%E5%B8%A6</a></p>
+<p>&nbsp;</p>
+<h3 id="人工管理阶段"><a href="#人工管理阶段" class="headerlink" title="人工管理阶段"></a>人工管理阶段</h3><img src="https://i.loli.net/2021/09/21/6SRwAzruLN4jBWF.png" alt="image.png" style="zoom:150%;" />
+
+<h4 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h4><ol>
+<li><p>数据不长期保存 </p>
+</li>
+<li><p>应用程序管理数据</p>
+<p><strong>没有专有的软件</strong>对数据进行管理, (应用程序要规定数据的逻辑结构和物理结构，包括存储结构，存取方法，输入方式)。</p>
+</li>
+<li><p>数据不具有独立性</p>
+<p>数据的逻辑结构或物理结构发生变化后，必须对应用程序做相应的修改。</p>
+</li>
+<li><p>数据不共享</p>
+<p>数据面向程序，即一组数据对应一个程序，当多个应用涉及相同 数据时，程序之间有大量的冗余数据。</p>
+</li>
+</ol>
+<hr>
+<p>【自己的补充】</p>
+<p><strong><font color='red'>数据独立性</font></strong>，指应用程序和数据结构之间相互独立，一方改变，另一方不需要如何改变。</p>
+<p>正是三级模式间的两层映像保证了数据库系统中的数据具有较高的数据独立性。 </p>
+<p>数据独立性包括数据逻辑独立性和数据物理独立性。</p>
+<p>但我们追求的不是绝对独立，而是相对独立。</p>
+<hr>
+<p>&nbsp;</p>
+<h3 id="文件系统阶段"><a href="#文件系统阶段" class="headerlink" title="文件系统阶段"></a>文件系统阶段</h3><img src="https://i.loli.net/2021/09/21/N7cvgmAHf6M4YqV.png" alt="image.png" style="zoom:150%;" />
+
+<p>&nbsp;</p>
+<hr>
+<p>【自己的补充】</p>
+<ul>
+<li><p><strong>批处理(Batch)</strong>，也称为批处理<a href="https://baike.baidu.com/item/脚本" target="_blank" rel="noopener">脚本</a>。</p>
+<p>顾名思义，批处理就是对某对象进行批量的处理，通常被认为是一种简化的<a href="https://baike.baidu.com/item/脚本语言/1379708" target="_blank" rel="noopener">脚本语言</a>，它应用于<a href="https://baike.baidu.com/item/DOS" target="_blank" rel="noopener">DOS</a>和<a href="https://baike.baidu.com/item/Windows" target="_blank" rel="noopener">Windows</a>系统中。</p>
+<p><a href="https://baike.baidu.com/item/批处理文件/5363369" target="_blank" rel="noopener">批处理文件</a>的扩展名为<a href="https://baike.baidu.com/item/bat/365230" target="_blank" rel="noopener">bat</a> 。目前比较常见的批处理包含两类：<a href="https://baike.baidu.com/item/DOS" target="_blank" rel="noopener">DOS</a>批处理和PS批处理。</p>
+<p>PS批处理是基于微软的强大的PowerShell的，用来<a href="https://baike.baidu.com/item/批量处理/4973973" target="_blank" rel="noopener">批量处理</a>一些任务的<a href="https://baike.baidu.com/item/脚本/399" target="_blank" rel="noopener">脚本</a>；而DOS批处理则是基于DOS命令的，用来自动地<a href="https://baike.baidu.com/item/批量" target="_blank" rel="noopener">批量</a>地执行DOS命令以实现特定操作的脚本。</p>
+<p>更复杂的情况，需要使用if、for、goto等命令控制程式的运行过程，如同<a href="https://baike.baidu.com/item/C" target="_blank" rel="noopener">C</a>、<a href="https://baike.baidu.com/item/Basic" target="_blank" rel="noopener">Basic</a>等高级语言一样。如果需要实现更复杂的应用，利用外部程式是必要的，这包括系统本身提供的外部命令和第三方提供的工具或者软件。</p>
+<p><a href="https://baike.baidu.com/item/批处理程序/2192936" target="_blank" rel="noopener">批处理程序</a>虽然是在命令行环境中运行，但不仅仅能使用命令行软件，任何当前系统下可运行的程序都可以放在批处理文件中运行。</p>
+</li>
+<li><p><strong>并行处理（Parallel Processing）</strong>是计算机系统中能同时执行两个或多个处理的一种计算方法。</p>
+<p>并行处理可同时工作于同一程序的不同方面。并行处理的主要目的是节省大型和复杂问题的解决时间。<strong>为使用并行处理，首先需要对程序进行并行化处理，也就是说将工作各部分分配到不同处理进程（线程）中。</strong></p>
+<p>并行处理由于存在相互关联的问题，因此不能自动实现。另外，并行也不能保证加速。从理论上讲，在 n 个并行处理的执行速度可能会是在单一处理机上执行的速度的 n 倍。</p>
+</li>
+<li><p><strong>分布式处理（distributed processing）</strong>和并行处理（Parallel processing）是为了提高并行处理速度采用的两种不同的体系架构。</p>
+<p>并行处理是利用多个功能部件或多个<a href="https://baike.baidu.com/item/处理机/128842" target="_blank" rel="noopener">处理机</a>同时工作来提高系统性能或可靠性的<a href="https://baike.baidu.com/item/计算机系统/7210959" target="_blank" rel="noopener">计算机系统</a>，这种系统至少包含指令级或指令级以上的并行。</p>
+<p>分布式处理则是将不同地点的，或具有不同功能的，或拥有不同数据的<strong>多台计算机</strong>通过通信网络连接起来，在<a href="https://baike.baidu.com/item/控制系统/1051898" target="_blank" rel="noopener">控制系统</a>的统一管理控制下，协调地完成大规模<a href="https://baike.baidu.com/item/信息处理/9855337" target="_blank" rel="noopener">信息处理</a>任务的<a href="https://baike.baidu.com/item/计算机系统/7210959" target="_blank" rel="noopener">计算机系统</a>。</p>
+</li>
+<li><p><strong>并行处理与分布式处理的区别</strong></p>
+<p>并行处理与串行处理相对。也就是说，在有多个任务时，串行处理是一个接一个地处理，而并行处理是同时做这多个任务。并行处理包括多线程。</p>
+<p>而分布式处理与单个计算机处理相对。它强调的是多台计算机。</p>
+<p>所以说，分布式处理和并行处理是在两个不同的维度。用多台计算机，然后同时处理，那就是并行处理和分布式处理都有。</p>
+</li>
+<li><p><strong>联机实时处理</strong></p>
+<p>请求的接受和处理都是实时的，一旦处理完成后就要实时将处理结果传给用户。所以，联机实时处理对处理速度有较高要求。</p>
+</li>
+<li><p><strong>脱机处理</strong></p>
+<p><strong>早期</strong></p>
+<ul>
+<li>早期用手工操作方式使用计算机时，操作和输入输出都是联机的，由<a href="https://baike.baidu.com/item/中央处理机/5926620" target="_blank" rel="noopener">中央处理机</a>直接控制完成，作业时间很长（见<a href="https://baike.baidu.com/item/联机处理" target="_blank" rel="noopener">联机处理</a>）。</li>
+</ul>
+<p>脱机处理技术的出现</p>
+<ul>
+<li>随着计算机速度不断提高，中央处理机在输入输出操作时要等待慢速的联机<a href="https://baike.baidu.com/item/输入输出设备" target="_blank" rel="noopener">输入输出设备</a>，不能充分发挥应有的效率。为此，在<a href="https://baike.baidu.com/item/批处理" target="_blank" rel="noopener">批处理</a>中<strong>引入了脱机输入输出</strong>：在<a href="https://baike.baidu.com/item/主机" target="_blank" rel="noopener">主机</a>之外另设一台小型<strong>微型机</strong>，该机只与<a href="https://baike.baidu.com/item/外部设备" target="_blank" rel="noopener">外部设备</a>打交道，把要处理的信息成批地输入到高速的<a href="https://baike.baidu.com/item/辅助存储器/9230243" target="_blank" rel="noopener">辅助存储器</a>（磁带或磁盘）中，再把<a href="https://baike.baidu.com/item/辅助存储器/9230243" target="_blank" rel="noopener">辅助存储器</a>与主机连接起来。主机仅从高速的辅助存储器中调入信息进行处理，作业完成后，处理结果和有关信息以文件形式存于辅助存储器中，然后再把它们转移到微型机去输出。</li>
+</ul>
+<p>微型机的特点</p>
+<ul>
+<li>工作完全独立于<a href="https://baike.baidu.com/item/主机" target="_blank" rel="noopener">主机</a>进行，使主机能摆脱慢速的输入输出工作的牵制。如果输入输出任务繁重，则可配置若干台微型机，一些专门从事脱机输入，另一些专门从事脱机输出。</li>
+</ul>
+</li>
+</ul>
+<p><strong>参考资料</strong></p>
+<hr>
+<p><a href="https://blog.csdn.net/Vinsuan1993/article/details/72959235" target="_blank" rel="noopener">https://blog.csdn.net/Vinsuan1993/article/details/72959235</a></p>
+<p>&nbsp;</p>
+<p><a id="DocumentSystem"></a></p>
+<h4 id="特点（要理解）"><a href="#特点（要理解）" class="headerlink" title="特点（要理解）"></a><font color='red'>特点（要理解）</font></h4><ol>
+<li><p>数据可长期保存</p>
+<p>在外存的磁盘中</p>
+</li>
+<li><p>由文件系统管理数据</p>
+<p>实现按文件名访问,按记录存取。</p>
+</li>
+<li><p>数据共享性差，冗余度大</p>
+<p>一个文件基本上对应一个应用程序，不同的应用程序具有相同的数据时,造成数据的冗余，以及由于重复存储，各自管理造成数据 的不一致性。</p>
+</li>
+<li><p>数据独立性差</p>
+<p>一旦数据的逻辑结构改变,必须修改应用程序,修改文件结构的 定义。因此数据与程序之间仍缺乏独立性。</p>
+</li>
+</ol>
+<p><em>第一节课到此结束</em></p>
+<p>&nbsp;</p>
+<h3 id="数据库系统阶段"><a href="#数据库系统阶段" class="headerlink" title="数据库系统阶段"></a>数据库系统阶段</h3><p>数据管理技术进入数据库阶段的标志，是1960年代 末发生的三件大事：</p>
+<ul>
+<li>1968年，美国IBM公司推出<strong>层次模型</strong>的IMS系统</li>
+<li>1969年，美国数据系统语言协会(CODASYL)的数据库任 务组（DBTG)发表关于<strong>网状模型</strong>的DBTG报告（1971年通 过）</li>
+<li>1970年，美国IBM公司的<strong>E.F. Codd</strong>提出<strong>关系模型</strong>，奠定 了关系数据库的理论基础。</li>
+</ul>
+<img src="https://i.loli.net/2021/09/21/GoT1Npx5kjSEKvt.png" alt="image.png" style="zoom:150%;" />
+
+<h4 id="特点-1"><a href="#特点-1" class="headerlink" title="特点"></a>特点</h4><ol>
+<li><p>数据结构化</p>
+<p>数据模型不仅描述数据本身的特点，还描述数据 之间的联系。整体数据结构化。不仅数据是结构化的， 存取数据的方式也灵活。</p>
+</li>
+<li><p>数据共享性高, 冗余度低, 易扩充</p>
+<p>数据是面向整个系统，不是面向应用的，所以多应 用多用户可共享数据，减少冗余，避免数据的不一致 性。容易增加新的应用，易于扩充。</p>
+</li>
+<li><p>数据独立性高—包括物理独立性和逻辑独立性。 </p>
+<p>指数据在磁盘上的物理存储改变和逻辑结构改变，应用程序<strong>可能可以</strong>不用变。 数据独立性由DBMS的二级映象功能保证。数据与程序独立,把数据的定义从程序中分离,简化程序的编制、维护和修改工作。</p>
+</li>
+<li><p>数据由DBMS<strong>统一管理</strong>和控制 </p>
+<p>DBMS提供四个方面的数据控制功能： 数据的恢复、并发控制数据完整性和数据安全性。</p>
+<p>这个<strong>统一管理</strong>，可以理解为：</p>
+<p>​    数据不能走后门，都要先通过DBMS，再通过操作系统，到达数据库。不能绕过其中的某一步。</p>
+<p><img src="https://i.loli.net/2021/09/23/EwsOx2Ju1QSlf3X.png" alt="image.png"></p>
+</li>
+</ol>
+<p><a href="#DocumentSystem">可以和文件系统阶段的特点对比一下</a></p>
+<p>&nbsp;</p>
+<h4 id="三级模式，两层映像"><a href="#三级模式，两层映像" class="headerlink" title="三级模式，两层映像"></a>三级模式，两层映像</h4><p><img src="https://i.loli.net/2021/09/21/TvKpzB6iGemtIyV.png" alt="image.png"></p>
+<p>三级模式两层映射的<strong>好处</strong>是：</p>
+<ol>
+<li><p>物理数据独立性</p>
+<p>当用户的局部逻辑结构改变，只需要改变其和数据库的映射关系，数据库里数据的地址不用变动。用户的应用程序与存储在磁盘上的数据库中的数据是相互独立的。</p>
+</li>
+<li><p>逻辑数据独立性</p>
+<p>同样的，当数据库的物理结构改变，用户的局部逻辑结构也不需要变动。即修改了数据库的逻辑模式，也不必重写应用程序。</p>
+</li>
+</ol>
+<p>&nbsp;</p>
+<h4 id="数据库系统与传统文件系统的根本区别"><a href="#数据库系统与传统文件系统的根本区别" class="headerlink" title="数据库系统与传统文件系统的根本区别"></a><font color='red'>数据库系统与传统文件系统的根本区别</font></h4><ol>
+<li><p>在文件系统中，记录内部有了某些结构，但<strong>记录之间没有联系</strong>。数据库系统实现<strong>整体数据结构化</strong>。 </p>
+<p>“整体结构化”是指： </p>
+<p>数据库中的数据不再仅仅针对某个应用，而是面向全组织（企业）； </p>
+<p>不仅数据内部是结构化的，而且整体是结构化的， 数据之间是具有联系的。</p>
+</li>
+<li><p>数据存取对象层级类型不同 </p>
+<p>在文件系统中, 数据的最小存取单位是一般是记录, <strong>粒度不能细到数据项</strong>。 </p>
+<p>数据库系统中可以存取数据库中某一个数据项, 一组数据 项, 一个记录, 一组记录。</p>
+</li>
+</ol>
+<p>&nbsp;</p>
+<h3 id="高级数据库技术阶段"><a href="#高级数据库技术阶段" class="headerlink" title="高级数据库技术阶段"></a>高级数据库技术阶段</h3><img src="https://i.loli.net/2021/09/21/eOzSHoNmcTqi1Q6.png" alt="image.png" style="zoom:75%;" />
+
+<p>&nbsp;</p>
+<hr>
+<p>【自己的补充】</p>
+<h3 id="BigTable"><a href="#BigTable" class="headerlink" title="BigTable"></a><a href="https://baike.baidu.com/item/BigTable/3707131#5" target="_blank" rel="noopener">BigTable</a></h3><p>Bigtable分布式数据存储系统是<a href="https://baike.baidu.com/item/Google/86964" target="_blank" rel="noopener">Google</a>为其内部海量的结构化数据开发的<a href="https://baike.baidu.com/item/云存储/8326238" target="_blank" rel="noopener">云存储</a>技术，是Google的第三项<a href="https://baike.baidu.com/item/云计算/9969353" target="_blank" rel="noopener">云计算</a>关键技术，是所有云时代<a href="https://baike.baidu.com/item/分布式存储系统/6608875" target="_blank" rel="noopener">分布式存储系统</a>的开发蓝本，已经在超过60个Google的产品和项目上得到了应用。</p>
+<p>Bigtable的设计是为了能可靠地处理PB级的海量数据，使其能够部署在千台机器上。Bigtable具有高可靠性、高性能、可伸缩等特性，借鉴了<a href="https://baike.baidu.com/item/并行数据库/5478870" target="_blank" rel="noopener">并行数据库</a>和<a href="https://baike.baidu.com/item/内存数据库/8539890" target="_blank" rel="noopener">内存数据库</a>的一些特性，但Bigtable提供了一个完全不同接口。Bigtable<strong>不支持完整的<a href="https://baike.baidu.com/item/关系数据模型/9330546" target="_blank" rel="noopener">关系数据模型</a></strong>，而是为用户提供了简单的数据模型，使客户可以动态控制数据的分布和格式。</p>
+<hr>
+<p>&nbsp;</p>
+<h2 id="第三节-数据模型"><a href="#第三节-数据模型" class="headerlink" title="第三节 数据模型"></a>第三节 数据模型</h2><p><strong>什么是模型</strong></p>
+<p><img src="https://i.loli.net/2021/09/21/6KX2Nrudi4eGcmw.png" alt="image.png"></p>
+<p>&nbsp;</p>
+<h4 id="数据模型的定义"><a href="#数据模型的定义" class="headerlink" title="数据模型的定义"></a><font color='red'>数据模型的定义</font></h4><p>数据模型也是一种模型，是现实世界数据特征的<strong>抽象</strong>。 </p>
+<p>A data model an abstract model that organizes elements of data and standardizes how they relate to one another and to properties of the real world entities. </p>
+<hr>
+<p><strong>抽象</strong>：抽，提取；抽象的过程中，会撇去不重要的东西，得到共性的东西。可以层层抽象。</p>
+<p>从英文来看，摘要abstract，抽象abstract。（当然，这只是抽象的其中一个意思）</p>
+<hr>
+<p>从用途的角度进行定义： </p>
+<p>数据模型是用于描述现实世界，指导数据的设计 、存储，并作为数据设计结果的检验标准的模型。</p>
+<p>&nbsp;</p>
+<h4 id="数据模型相关概念"><a href="#数据模型相关概念" class="headerlink" title="数据模型相关概念"></a>数据模型相关概念</h4><ul>
+<li><p>数据模型应满足三个要求:</p>
+<ul>
+<li>真实地模拟现实世界</li>
+<li>容易理解</li>
+<li>便于计算机上实现</li>
+</ul>
+</li>
+<li><p>数据模型相关概念</p>
+<ul>
+<li><p>数据模型的层次 </p>
+<ul>
+<li><p>概念、逻辑、物理；高层、中间层、低层</p>
+</li>
+<li><p>OLTP层、数据集成层、ODS或近线层、数据仓库层或离线层</p>
+</li>
+</ul>
+</li>
+<li><p>数据模型的描述工具</p>
+</li>
+<li><p>数据模型的通用性</p>
+</li>
+<li><p>行业数据模型、企业级数据模型</p>
+</li>
+<li><p>主题数据模型、Featuring、Model Embeeding, 自动建模、</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>&nbsp;</p>
+<h4 id="数据模型三个组成部分"><a href="#数据模型三个组成部分" class="headerlink" title="数据模型三个组成部分"></a>数据模型三个组成部分</h4><ol>
+<li>数据结构: 是所研究对象类型的集合，即对实体类型和实体间联系的表达和实现，是系统静态特征的描述。</li>
+<li>数据操作: 是指对数据库中各对象允许执行的操作的集合，包括检索和更新两类，是系统动态特征的描述。(操作 是否归入数据模型有争议)</li>
+<li><strong>数据完整性约束</strong>: 给出数据<strong>及其联系应具有的制约和依存规则</strong>，保证数据的正确、有效、相容。有<strong>实体完整性、 参照完整性和用户定义的完整性</strong>。</li>
+</ol>
+<p>&nbsp;</p>
+<h3 id="数据模型设计"><a href="#数据模型设计" class="headerlink" title="数据模型设计"></a>数据模型设计</h3><img src="https://i.loli.net/2021/09/21/1gMGA4imeCVOIa7.png" alt="image.png" style="zoom:75%;" />
+
+<p>&nbsp;</p>
+<h4 id="数据模型相关的三个世界或领域"><a href="#数据模型相关的三个世界或领域" class="headerlink" title="数据模型相关的三个世界或领域"></a>数据模型相关的三个世界或领域</h4><img src="https://i.loli.net/2021/09/21/ciNvbgPDamqAYO5.png" alt="image.png" style="zoom:75%;" />
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><img src="https://i.loli.net/2021/09/21/eA6ltJmpDfS3hzV.png" alt="image.png"></p>
+<p><em>第二节课到此结束</em></p>
+<p>&nbsp;</p>
+<h3 id="概念模型"><a href="#概念模型" class="headerlink" title="概念模型"></a><font color='red'>概念模型</font></h3><ul>
+<li>概念模型的功能<ul>
+<li>在信息世界里对现实世界进行建模</li>
+<li>表达现实世界中的概念</li>
+<li>表达概念之间的关系</li>
+<li>表达业务领域的语义知识</li>
+</ul>
+</li>
+<li>对概念模型的要求<ul>
+<li>具有很强的表达能力–能力强</li>
+<li>易于理解—容易懂</li>
+<li>简单—容易画</li>
+</ul>
+</li>
+</ul>
+<h4 id="概念模型的定义及特点"><a href="#概念模型的定义及特点" class="headerlink" title="概念模型的定义及特点"></a>概念模型的定义及特点</h4><p>为<strong>正确直观地反映客观事物及其联系</strong>，对所研究的<strong>信息世界</strong>，按<strong>用户观点</strong>对数据和信息建模型，称之为概念模型。(用于数据库设计) </p>
+<p>特点：</p>
+<ol>
+<li>是独立于计算机系统的模型，<strong>完全不涉及</strong>信息在系统中的表示</li>
+<li>用于建立信息世界的数据模型，是现实世界的第一层抽象（是 现实到机器的中间层）</li>
+<li>强调语义表达功能，概念简单、清晰，易于用户理解，是用户 和DB设计人员之间交流的语言,是DB设计人员进行数据库设计的工具</li>
+</ol>
+<h4 id="1、信息世界的术语"><a href="#1、信息世界的术语" class="headerlink" title="1、信息世界的术语"></a>1、信息世界的术语</h4><ul>
+<li>实体—entity<ul>
+<li>可以相互区别的客观事物和概念的抽象，如人，学生，教师，…</li>
+</ul>
+</li>
+<li><strong>属性—attribute</strong><ul>
+<li>对实体某一特征的描述，如学号，姓名，年龄，… </li>
+</ul>
+</li>
+<li>域—domain，属性定义域 <ul>
+<li>属性取值范围，如年龄：[0, 200] </li>
+</ul>
+</li>
+<li>实体的码、实体标识符—entity key or identifier<ul>
+<li>能唯一标识每个实体的属性集，如：学号 </li>
+</ul>
+</li>
+<li>实体型—entity type or entity schema，实体模式，实体类型<ul>
+<li>用实体名及其属性名的集合来抽象和刻画同类实体，称为实体型。</li>
+<li>学生（学号，姓名）</li>
+</ul>
+</li>
+<li>实体集—entity set<ul>
+<li>性质相同的同类实体的集合</li>
+</ul>
+</li>
+<li>联系—relationship，关系<ul>
+<li>分成两类：实体内部的联系、实体之间的联系</li>
+</ul>
+</li>
+<li><strong>实体内部的联系</strong><ul>
+<li>实体各属性之间的联系</li>
+</ul>
+</li>
+<li><strong>实体之间的联系</strong><ul>
+<li>通常指不同实体集之间的联系</li>
+</ul>
+</li>
+</ul>
+<p>&nbsp;</p>
+<h4 id="2、机器世界的术语"><a href="#2、机器世界的术语" class="headerlink" title="2、机器世界的术语"></a>2、机器世界的术语</h4><ul>
+<li>记录—record<ul>
+<li>字段的有序集合(实体)</li>
+</ul>
+</li>
+<li>文件—file<ul>
+<li>同一类记录或不同类记录集合(实体集)</li>
+</ul>
+</li>
+<li>关键码，主键，主码—key <ul>
+<li>能唯一标识文件中每条记录的字段或字段集（实体标识符）</li>
+</ul>
+</li>
+<li>字段—field <ul>
+<li>标记实体属性的命名单位，亦称数据项(属性)</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://i.loli.net/2021/09/21/pEsGK5BNmPFA1yb.png" alt="image.png"></p>
+<p>&nbsp;</p>
+<p>&nbsp;&nbsp;</p>
+<h4 id="3、实体集间的联系"><a href="#3、实体集间的联系" class="headerlink" title="3、实体集间的联系"></a>3、实体集间的联系</h4><p>1 : 1 (一对一联系)    如观众与座位，病人与病床</p>
+<p>1 : n (一对多联系)    如城市与街道，班级与学生</p>
+<p>m : n (多对多联系)    如学生与课程，商店与顾客</p>
+<h5 id=""><a href="#" class="headerlink" title=""></a><img src="https://i.loli.net/2021/09/21/ag8poylEi2469rw.png" alt="image.png"></h5><p>&nbsp;&nbsp;</p>
+<h4 id="4、常用的概念模型——实体联系模型"><a href="#4、常用的概念模型——实体联系模型" class="headerlink" title="4、常用的概念模型——实体联系模型"></a><font color='red'>4、常用的概念模型——实体联系模型</font></h4><p><strong>Entity relationship model，简称ER模型</strong>，是 由美籍华人陈平山于1976 年提出的。ER图提供了表示实体、 属性和联系的方法。</p>
+<h5 id="ER模型三要素（三个基本语义）"><a href="#ER模型三要素（三个基本语义）" class="headerlink" title="ER模型三要素（三个基本语义）"></a>ER模型三要素（三个基本语义）</h5><p>A. 实体 (Entity)：表示客观事物。</p>
+<p>B. 属性 (Attributes) ： 表示客观事物的特征（属性） </p>
+<p>C. 联系 (Relationships) ： 客观事物之间的联系</p>
+<h5 id="ER图表示方法"><a href="#ER图表示方法" class="headerlink" title="ER图表示方法"></a>ER图表示方法</h5><img src="https://i.loli.net/2021/09/21/yoTd51PEFVh27M4.png" alt="image.png" style="zoom:67%;" />
+
+<p>ER图示例：</p>
+<p>业务场景（business scenario）：假设一个学生可选多门 课程，而一门课程又有多个学生选修，一个教师可讲多门 课程，一门课程至多只有一个教师讲授。</p>
+<p><img src="https://i.loli.net/2021/09/21/8cXwTMSPNQnCAzU.png" alt="image.png"></p>
+<p>&nbsp;&nbsp;</p>
+<hr>
+<h5 id="拓展ER模型（Enhanced-Entity-Relationship-Model）"><a href="#拓展ER模型（Enhanced-Entity-Relationship-Model）" class="headerlink" title="拓展ER模型（Enhanced Entity Relationship Model）"></a>拓展ER模型（Enhanced Entity Relationship Model）</h5><p><a href="https://www.lucidchart.com/pages/enhanced-entity-relationship-diagram" target="_blank" rel="noopener">Enhanced ER Diagram Tutorial | Lucidchart</a></p>
+<hr>
+<p>&nbsp;&nbsp;</p>
+<p><em>第三节课讲到PPT第80页，还没写完</em></p>
+<p>mooc上的错题也要记录呀！！</p>
+<p>&nbsp;&nbsp;</p>
+<p>&nbsp;&nbsp;</p>
+<h1 id="致谢"><a href="#致谢" class="headerlink" title="致谢"></a>致谢</h1><p>感谢林友芳老师和助教们的辛勤付出。</p>
+<p>感谢DXQ、CWB、LJY、LYS、GYC解答我的问题。</p>
+
+      
+      <!-- reward -->
+      
+      <div id="reward-btn">
+        打赏
+      </div>
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+        <div class="declare">
+          <ul class="post-copyright">
+            <li>
+              <i class="ri-copyright-line"></i>
+              <strong>版权声明： </strong s>
+              本博客所有文章除特别声明外，均采用 <a href="https://www.apache.org/licenses/LICENSE-2.0.html" rel="external nofollow"
+                target="_blank">Apache License 2.0</a> 许可协议。转载请注明出处！
+            </li>
+          </ul>
+        </div>
+        
+    <footer class="article-footer">
+      
+          
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://glisses.github.io/2021/09/21/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%8E%9F%E7%90%86%E8%AF%BE%E5%A0%82%E7%AC%94%E8%AE%B0/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/class-notes/" rel="tag">class notes</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+  
+  <nav class="article-nav">
+    
+      <a href="/2021/10/10/python%E4%B8%AD%E5%87%BA%E7%8E%B0IndentationError-unindent-does-not-match-any-outer-indentation-level%E9%94%99%E8%AF%AF/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            python中出现IndentationError:unindent does not match any outer indentation level错误【转载】
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2021/09/14/%E7%9F%A5%E8%AF%86%E8%A1%A8%E7%A4%BA%E4%B8%8E%E5%A4%84%E7%90%86%E8%AF%BE%E5%A0%82%E7%AC%94%E8%AE%B0/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">知识表示与处理课堂笔记</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+  
+<!-- valine评论 -->
+<div id="vcomments-box">
+    <div id="vcomments">
+    </div>
+</div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js'></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        app_id: 'wopEkNOS3jcH99vLw4Fv3G7p-gzGzoHsz',
+        app_key: 'nmKagbdNc4YoBGAAziafy7YX',
+        path: window.location.pathname,
+        notify: 'false',
+        verify: 'false',
+        avatar: 'mp',
+        placeholder: '给我的文章加点评论吧~',
+        recordIP: true
+    });
+    const infoEle = document.querySelector('#vcomments .info');
+    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0) {
+        infoEle.childNodes.forEach(function (item) {
+            item.parentNode.removeChild(item);
+        });
+    }
+</script>
+<style>
+    #vcomments-box {
+        padding: 5px 30px;
+    }
+
+    @media screen and (max-width: 800px) {
+        #vcomments-box {
+            padding: 5px 0px;
+        }
+    }
+
+    #vcomments-box #vcomments {
+        background-color: #fff;
+    }
+
+    .v .vlist .vcard .vh {
+        padding-right: 20px;
+    }
+
+    .v .vlist .vcard {
+        padding-left: 10px;
+    }
+</style>
+
+  
+
+  
+  
+  
+
+</article>
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>
+        &copy;
+        2022
+        glisses
+      </li>
+      <li>
+        
+      </li>
+    </ul>
+    <ul class="list-inline">
+      <li>
+        
+        
+        <span>
+  <i>PV:<span id="busuanzi_value_page_pv"></span></i>
+  <i>UV:<span id="busuanzi_value_site_uv"></span></i>
+</span>
+        
+      </li>
+      
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="to_top">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+      </div>
+    </main>
+    <aside class="sidebar">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="glisses"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags/%E6%97%85%E8%A1%8C/">旅行</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="http://shenyu-vip.lofter.com" target="_blank" rel="noopener">摄影</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/2019/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/share.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script>
+  try {
+    var typed = new Typed("#subtitle", {
+      strings: ['There is no royal road to learning.', 'Inner peace.', 'It is never too old to learn.'],
+      startDelay: 0,
+      typeSpeed: 200,
+      loop: true,
+      backSpeed: 100,
+      showCursor: true
+    });
+  } catch (err) {
+  }
+
+</script>
+
+
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: 'main',
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto',
+    onClick: (e) => {
+      $('.toc-link').removeClass('is-active-link');
+      $(`a[href=${e.target.hash}]`).addClass('is-active-link');
+      $(e.target.hash).scrollIntoView();
+      return false;
+    }
+  });
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/js/ayer.js"></script>
+
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+
+<script type="text/javascript" src="https://js.users.51.la/20544303.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css">
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+
+    
+    <div id="music">
+    
+    
+    
+    <iframe frameborder="no" border="1" marginwidth="0" marginheight="0" width="200" height="52"
+        src="//music.163.com/outchain/player?type=2&id=1492283139&auto=1&height=32"></iframe>
+</div>
+
+<style>
+    #music {
+        position: fixed;
+        right: 15px;
+        bottom: 0;
+        z-index: 998;
+    }
+</style>
+    
+  </div>
+</body>
+
+</html>
