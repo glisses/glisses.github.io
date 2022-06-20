@@ -69,6 +69,90 @@
     
     
     
+    <article id="post-Rail-Defect-Detection-Paddle" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2022/06/20/Rail-Defect-Detection-Paddle/"
+    >基于paddle的铁轨缺陷检测-铁路智能感知技术实验二</a
+  >
+</h2>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2022/06/20/Rail-Defect-Detection-Paddle/" class="article-date">
+  <time datetime="2022-06-20T13:33:58.000Z" itemprop="datePublished">2022-06-20</time>
+</a>
+      
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <p><img src="https://s2.loli.net/2022/06/20/kxFbZ4zNVGep3cM.png" alt="image.png"></p>
+<h1 id="铁路智能感知技术实验报告"><a href="#铁路智能感知技术实验报告" class="headerlink" title="铁路智能感知技术实验报告"></a>铁路智能感知技术实验报告</h1><p>[TOC]</p>
+<h2 id="一、整体思路"><a href="#一、整体思路" class="headerlink" title="一、整体思路"></a>一、整体思路</h2><ol>
+<li><p>分析数据集，包括格式、<strong>样本分布</strong>。</p>
+</li>
+<li><p>在<code>Pytorch</code>框架下的<strong><code>torchvision.datasets.ImageFolder</code>源代码</strong>基础上进行修改，编写自己的<code>DataLoader</code>，加载图片与标签。</p>
+</li>
+<li><p>图像增强，包括随即裁剪、旋转、翻转及<strong>归一化</strong>。值得一提的是，由于<code>paddle</code>提供的预训练模型是基于<strong><code>ImageNet</code></strong>训练得到的，这里的归一化应当也取<code>ImageNet</code>数据集的均值和方差。</p>
+</li>
+<li><p>利用<code>paddle.vision.models</code>提供的三个模型：<code>mobilenet_v2</code>、<code>resnet18</code>、<code>resnet34</code>，并修改模型最后一层全连接的<code>unit</code>数量，以化为己用。</p>
+</li>
+<li><p>训练、验证。在此过程中，对三个模型分别绘制其训练与验证期间的损失函数变化图像与精度变化图像，以判断模型学习效果并<strong>调整超参数</strong>。</p>
+</li>
+<li><p>在测试环节，利用上述三个模型的结果进行<strong>投票</strong>，取多数结果为预测结果。</p>
+      
+      <a class="article-more-link" href="/2022/06/20/Rail-Defect-Detection-Paddle/">阅读更多...</a>
+      
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/code/" rel="tag">code</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+
+  
+  
+  
+
+  
+
+</article>
+    
     <article id="post-Prepare-for-English-Interview-NUS-311-Project" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
@@ -773,82 +857,6 @@
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/paper-reading/" rel="tag">paper reading</a></li></ul>
-
-
-    </footer>
-
-  </div>
-
-  
-
-  
-  
-  
-
-  
-
-</article>
-    
-    <article id="post-python中出现IndentationError-unindent-does-not-match-any-outer-indentation-level错误" class="article article-type-post" itemscope
-  itemprop="blogPost" data-scroll-reveal>
-
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2021/10/10/python%E4%B8%AD%E5%87%BA%E7%8E%B0IndentationError-unindent-does-not-match-any-outer-indentation-level%E9%94%99%E8%AF%AF/"
-    >python中出现IndentationError:unindent does not match any outer indentation level错误【转载】</a
-  >
-</h2>
-  
-
-    </header>
-    
-
-    
-    <div class="article-meta">
-      <a href="/2021/10/10/python%E4%B8%AD%E5%87%BA%E7%8E%B0IndentationError-unindent-does-not-match-any-outer-indentation-level%E9%94%99%E8%AF%AF/" class="article-date">
-  <time datetime="2021-10-10T05:36:51.000Z" itemprop="datePublished">2021-10-10</time>
-</a>
-      
-      
-      
-      
-    </div>
-    
-
-    
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-
-      
-
-      
-      <hr>
-<p>版权声明：本文为CSDN博主「HelloWorld_EE」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a href="https://blog.csdn.net/u010412719/article/details/47089473" target="_blank" rel="noopener">https://blog.csdn.net/u010412719/article/details/47089473</a></p>
-<hr>
-<p>​                    </p>
-<p>python中出现IndentationError:unindent does not match any outer indentation level<br>今天在网上copy的一段代码，代码很简单，每行看起来该缩进的都缩进了，运行的时候出现了如下错误：</p>
-<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 这是Glis遇到的报错</span><br><span class="line">  File "xxx.py", line <span class="number">254</span></span><br><span class="line">    pdb.set_trace()</span><br><span class="line">                  ^</span><br><span class="line"><span class="function">IndentationError: <span class="title">unindent</span> <span class="title">does</span> <span class="title">not</span> <span class="title">match</span> <span class="title">any</span> <span class="title">outer</span> <span class="title">indentation</span> <span class="title">level</span></span></span><br></pre></td></tr></table></figure>
-      
-      <a class="article-more-link" href="/2021/10/10/python%E4%B8%AD%E5%87%BA%E7%8E%B0IndentationError-unindent-does-not-match-any-outer-indentation-level%E9%94%99%E8%AF%AF/">阅读更多...</a>
-      
-      
-      <!-- reward -->
-      
-    </div>
-    
-    
-      <!-- copyright -->
-      
-    <footer class="article-footer">
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python-error/" rel="tag">python error</a></li></ul>
 
 
     </footer>

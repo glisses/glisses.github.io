@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    基于paddle的铁轨缺陷检测-铁路智能感知技术实验二 |  glisses
+  </title>
+  <meta name="generator" content="hexo-theme-yilia-plus">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+  
+  
+
+  
+
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    <main class="content">
+      <section class="outer">
+  <article id="post-Rail-Defect-Detection-Paddle" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  基于paddle的铁轨缺陷检测-铁路智能感知技术实验二
+</h1>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2022/06/20/Rail-Defect-Detection-Paddle/" class="article-date">
+  <time datetime="2022-06-20T13:33:58.000Z" itemprop="datePublished">2022-06-20</time>
+</a>
+      
+      
+      
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">6.7k字</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">34分钟</span>
+        </span>
+    </span>
+</div>
+
+      
+    </div>
+    
+
+    
+    
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <p><img src="https://s2.loli.net/2022/06/20/kxFbZ4zNVGep3cM.png" alt="image.png"></p>
+<h1 id="铁路智能感知技术实验报告"><a href="#铁路智能感知技术实验报告" class="headerlink" title="铁路智能感知技术实验报告"></a>铁路智能感知技术实验报告</h1><p>[TOC]</p>
+<h2 id="一、整体思路"><a href="#一、整体思路" class="headerlink" title="一、整体思路"></a>一、整体思路</h2><ol>
+<li><p>分析数据集，包括格式、<strong>样本分布</strong>。</p>
+</li>
+<li><p>在<code>Pytorch</code>框架下的<strong><code>torchvision.datasets.ImageFolder</code>源代码</strong>基础上进行修改，编写自己的<code>DataLoader</code>，加载图片与标签。</p>
+</li>
+<li><p>图像增强，包括随即裁剪、旋转、翻转及<strong>归一化</strong>。值得一提的是，由于<code>paddle</code>提供的预训练模型是基于<strong><code>ImageNet</code></strong>训练得到的，这里的归一化应当也取<code>ImageNet</code>数据集的均值和方差。</p>
+</li>
+<li><p>利用<code>paddle.vision.models</code>提供的三个模型：<code>mobilenet_v2</code>、<code>resnet18</code>、<code>resnet34</code>，并修改模型最后一层全连接的<code>unit</code>数量，以化为己用。</p>
+</li>
+<li><p>训练、验证。在此过程中，对三个模型分别绘制其训练与验证期间的损失函数变化图像与精度变化图像，以判断模型学习效果并<strong>调整超参数</strong>。</p>
+</li>
+<li><p>在测试环节，利用上述三个模型的结果进行<strong>投票</strong>，取多数结果为预测结果。</p>
+<a id="more"></a>
+
+</li>
+</ol>
+<h2 id="二、具体流程"><a href="#二、具体流程" class="headerlink" title="二、具体流程"></a>二、具体流程</h2><h3 id="2-1-参数设置"><a href="#2-1-参数设置" class="headerlink" title="2.1 参数设置"></a>2.1 参数设置</h3><h4 id="2-1-1-常规参数"><a href="#2-1-1-常规参数" class="headerlink" title="2.1.1 常规参数"></a>2.1.1 常规参数</h4><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>取值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>batch_size</td>
+<td>64</td>
+</tr>
+<tr>
+<td>epochs of mobilenetv2</td>
+<td>5</td>
+</tr>
+<tr>
+<td>epochs of resnet18</td>
+<td>10</td>
+</tr>
+<tr>
+<td>epochs of resnet34</td>
+<td>10</td>
+</tr>
+<tr>
+<td>图片resize大小</td>
+<td>512*512</td>
+</tr>
+<tr>
+<td>图片裁剪大小</td>
+<td>448*448</td>
+</tr>
+</tbody></table>
+<h4 id="2-1-2-优化器"><a href="#2-1-2-优化器" class="headerlink" title="2.1.2 优化器"></a>2.1.2 优化器</h4><p>选用Adam(Adaptive Moment Estimation)。与SGD随机梯度下降优化器相比，Adam加入了<strong>对学习率的自适应调整</strong>。Adam不仅存储了过去梯度的平方的指数衰减平均值，还向Monentum一样保持了过去提取的指数衰减平均值。</p>
+<p>SGD的一阶动量：<br>$$<br>m_t = \beta_1 \cdot m_{t-1} + (1-\beta_1)\cdot g_t<br>$$<br>加上AdaDelta的二阶动量：<br>$$<br>V_t = \beta_2 * V_{t-1} + (1-\beta_2) g_t^2<br>$$</p>
+<h4 id="2-1-3-损失函数"><a href="#2-1-3-损失函数" class="headerlink" title="2.1.3 损失函数"></a>2.1.3 损失函数</h4><p>选用交叉熵损失函数。这也是分类任务中常用的损失函数。由于本次实验数据集中，正负样本分布较为均衡，故没有对损失函数进行加权。</p>
+<p>交叉熵损失函数的二分类形式为：<br>$$<br>L = \frac{1}{N}\sum_{i} L_i = \frac{1}{N}\sum_{i}-[y_i\cdot log(p_i) + (1-y_i)\cdot log(1-p_i)]<br>$$</p>
+<h3 id="2-2-关键代码说明"><a href="#2-2-关键代码说明" class="headerlink" title="2.2 关键代码说明"></a>2.2 关键代码说明</h3><h4 id="2-2-1-分析数据集"><a href="#2-2-1-分析数据集" class="headerlink" title="2.2.1 分析数据集"></a>2.2.1 分析数据集</h4><p><img src="https://s2.loli.net/2022/06/20/NCyAabMeJ8iUvlR.png" alt="1655719618(1).png"></p>
+<p>数据集特点：</p>
+<ol>
+<li><strong>正负样本接近1：1，比较平衡。</strong>不需要使用过采样、欠采样等手段，平衡样本数量。</li>
+<li><strong>训练样本共480个，非常少。</strong>这表明我们需要采取多种数据增强手段，并应当采用在<code>ImageNet</code>等大型数据集预训练得到的模型参数，以一定程度上避免出现<strong>过拟合</strong>。</li>
+</ol>
+<h4 id="2-2-2-针对按类别存放样本方式存储数据集的DataLoader"><a href="#2-2-2-针对按类别存放样本方式存储数据集的DataLoader" class="headerlink" title="2.2.2 针对按类别存放样本方式存储数据集的DataLoader"></a>2.2.2 针对按类别存放样本方式存储数据集的DataLoader</h4><p><code>Pytorch</code>框架下的<code>ImageFolder</code>假设所有的文件按文件夹保存，每个文件夹下存储同一个类别的图片。本次实验的数据集，恰好是按照这种方式存储的。</p>
+<p>通过查阅<code>paddle</code>官方文档，我发现<code>paddle</code>框架提供了同名API：<code>paddle.vision.datasets.ImageFolder</code>，并欣然尝试用其读取数据集。然而，在后续训练过程中，却提示我没有读取到标签。</p>
+<p>在<code>paddle</code>官方文档中，我们可以看到：对于ImageFolder的说明似乎并不完整：</p>
+<img src="https://s2.loli.net/2022/06/20/FycSbE1rKPdAw4g.png" alt="paddle_imagefolder" style="zoom:75%;" />
+
+
+
+<p>于是我上<code>GitHub</code>查看<a href="https://github.com/PaddlePaddle/Paddle/blob/release/2.3/python/paddle/vision/datasets/folder.py#L222" target="_blank" rel="noopener">paddle.vision.datasets.ImageFolder的源代码</a>。关键部分如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> root, _, fnames <span class="keyword">in</span> sorted(os.walk(path, followlinks=<span class="literal">True</span>)):</span><br><span class="line">    <span class="keyword">for</span> fname <span class="keyword">in</span> sorted(fnames):</span><br><span class="line">        f = os.path.join(root, fname)</span><br><span class="line">        <span class="keyword">if</span> is_valid_file(f):</span><br><span class="line">            samples.append(f)</span><br></pre></td></tr></table></figure>
+
+<p>即<code>paddle.vision.datasets.ImageFolder</code>只是读取了指定路径下的图片，而没有理会样本按类别存放在不同文件夹下的存储方式。</p>
+<p>至此，我决定使用<code>torchvision.datasets.ImageFolder</code>的源代码进行数据加载。</p>
+<p>训练集、验证集都是按照样本类别存放图片，而测试集将所有样本存放在同一文件夹下。所以我对<code>torchvision.datasets.ImageFolder</code>的源代码略作修改，增加了<code>mode</code>参数：</p>
+<ul>
+<li><code>mode==&#39;train&#39;</code>时，按照ImageFolder方式，读取各个子文件夹下的图片，并根据所属文件夹名称给样本赋予标签</li>
+<li><code>mode==&#39;test&#39;</code>时，只读取文件夹下的所有图片</li>
+</ul>
+<p>修改后的代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ImageFolder</span><span class="params">(Dataset)</span>:</span></span><br><span class="line">    <span class="string">"""A generic data loader where the images are arranged in this way: ::</span></span><br><span class="line"><span class="string">        root/dog/xxx.png</span></span><br><span class="line"><span class="string">        root/dog/xxy.png</span></span><br><span class="line"><span class="string">        root/dog/xxz.png</span></span><br><span class="line"><span class="string">        root/cat/123.png</span></span><br><span class="line"><span class="string">        root/cat/nsdf3.png</span></span><br><span class="line"><span class="string">        root/cat/asd932_.png</span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">        root (string): Root directory path.</span></span><br><span class="line"><span class="string">        transform (callable, optional): A function/transform that  takes in an PIL image</span></span><br><span class="line"><span class="string">            and returns a transformed version. E.g, ``transforms.RandomCrop``</span></span><br><span class="line"><span class="string">        target_transform (callable, optional): A function/transform that takes in the</span></span><br><span class="line"><span class="string">            target and transforms it.</span></span><br><span class="line"><span class="string">        loader (callable, optional): A function to load an image given its path.</span></span><br><span class="line"><span class="string">    Attributes:</span></span><br><span class="line"><span class="string">        classes (list): List of the class names.</span></span><br><span class="line"><span class="string">        class_to_idx (dict): Dict with items (class_name, class_index).</span></span><br><span class="line"><span class="string">        imgs (list): List of (image path, class_index) tuples</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    Speciality:</span></span><br><span class="line"><span class="string">        when self.mode=='test', __getitem__ return img &amp; img_path</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"> </span><br><span class="line">    <span class="comment"># 初始化，继承参数</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, root, transform=None, target_transform=None,</span></span></span><br><span class="line"><span class="function"><span class="params">                 loader=default_loader, mode=None)</span>:</span></span><br><span class="line">        <span class="comment"># TODO</span></span><br><span class="line">        <span class="comment"># 1. Initialize file path or list of file names.</span></span><br><span class="line">        <span class="comment"># 找到root的文件和索引</span></span><br><span class="line">        classes, class_to_idx = find_classes(root)</span><br><span class="line">        <span class="comment"># 保存路径下图片文件路径和索引至imgs</span></span><br><span class="line">        imgs = make_dataset(root, class_to_idx)</span><br><span class="line">        <span class="keyword">if</span> len(imgs) == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">raise</span>(RuntimeError(<span class="string">"Found 0 images in subfolders of: "</span> + root + <span class="string">"\n"</span></span><br><span class="line">                               <span class="string">"Supported image extensions are: "</span> + <span class="string">","</span>.join(IMG_EXTENSIONS)))</span><br><span class="line">        <span class="keyword">if</span> mode <span class="keyword">not</span> <span class="keyword">in</span> [<span class="string">'train'</span>, <span class="string">'test'</span>]:</span><br><span class="line">            <span class="keyword">raise</span>(RuntimeError(<span class="string">'Mode should be train or test'</span>))</span><br><span class="line"> </span><br><span class="line">        self.root = root</span><br><span class="line">        self.imgs = imgs</span><br><span class="line">        self.classes = classes</span><br><span class="line">        self.class_to_idx = class_to_idx</span><br><span class="line">        self.transform = transform</span><br><span class="line">        self.target_transform = target_transform</span><br><span class="line">        self.loader = loader</span><br><span class="line">        self.mode = mode</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getitem__</span><span class="params">(self, index)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Args:</span></span><br><span class="line"><span class="string">            index (int): Index</span></span><br><span class="line"><span class="string">        Returns:</span></span><br><span class="line"><span class="string">            tuple: (image, target) where target is class_index of the target class.</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="comment"># TODO</span></span><br><span class="line">        <span class="comment"># 1. Read one data from file (e.g. using numpy.fromfile, PIL.Image.open).</span></span><br><span class="line">        <span class="comment"># 2. Preprocess the data (e.g. torchvision.Transform).</span></span><br><span class="line">        <span class="comment"># 3. Return a data pair (e.g. image and label).</span></span><br><span class="line">        <span class="comment">#这里需要注意的是，第一步：read one data，是一个data</span></span><br><span class="line"> </span><br><span class="line">        path, target = self.imgs[index] </span><br><span class="line">        <span class="comment"># 这里返回的是图片路径，而需要的是图片格式</span></span><br><span class="line">        img = self.loader(path) <span class="comment"># 将图片路径加载成所需图片格式</span></span><br><span class="line">        <span class="keyword">if</span> self.transform <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">            img = self.transform(img)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> self.mode == <span class="string">'train'</span>:</span><br><span class="line">            <span class="keyword">if</span> self.target_transform <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">                target = self.target_transform(target)</span><br><span class="line">            <span class="keyword">return</span> img, target</span><br><span class="line">        <span class="keyword">elif</span> self.mode == <span class="string">'test'</span>:</span><br><span class="line">            <span class="keyword">return</span> img, path.split(<span class="string">'/'</span>)[<span class="number">-1</span>]</span><br><span class="line">        </span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__len__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="comment"># return the total size of your dataset.</span></span><br><span class="line">        <span class="keyword">return</span> len(self.imgs)</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="2-2-3-数据增强"><a href="#2-2-3-数据增强" class="headerlink" title="2.2.3 数据增强"></a>2.2.3 数据增强</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">train_transform = transforms.Compose([</span><br><span class="line">    transforms.Resize(size=(img_size,img_size)),</span><br><span class="line">    transforms.RandomCrop(size=(crop_size,crop_size)),       <span class="comment"># 通过随机裁剪进行数据增强</span></span><br><span class="line">    transforms.RandomRotation(<span class="number">10</span>),</span><br><span class="line">    transforms.RandomHorizontalFlip(),     <span class="comment"># 通过随机水平翻转进行数据增强</span></span><br><span class="line">    transforms.ToTensor(),</span><br><span class="line">    transforms.Normalize(mean=[<span class="number">0.485</span>, <span class="number">0.456</span>, <span class="number">0.406</span>], std=[<span class="number">0.229</span>, <span class="number">0.224</span>, <span class="number">0.225</span>],data_format=<span class="string">'CHW'</span>)</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line">test_transform = transforms.Compose([</span><br><span class="line">    transforms.Resize(size=(crop_size,crop_size)),</span><br><span class="line">    transforms.ToTensor(),</span><br><span class="line">    transforms.Normalize(mean=[<span class="number">0.485</span>, <span class="number">0.456</span>, <span class="number">0.406</span>], std=[<span class="number">0.229</span>, <span class="number">0.224</span>, <span class="number">0.225</span>],data_format=<span class="string">'CHW'</span>)</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">train_dataset = ImageFolder(<span class="string">"/home/aistudio/work/train/"</span>,transform = train_transform,mode=<span class="string">'train'</span>)</span><br><span class="line">valid_dataset = ImageFolder(<span class="string">"/home/aistudio/work/valid/"</span>,transform = test_transform,mode=<span class="string">'train'</span>)</span><br><span class="line">test_dataset = ImageFolder(<span class="string">"/home/aistudio/work/test_folder/"</span>,transform = test_transform,mode=<span class="string">'test'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用 DataLoader 实现数据加载</span></span><br><span class="line">train_loader = paddle.io.DataLoader(train_dataset, batch_size=batch_size, shuffle=<span class="literal">True</span>)</span><br><span class="line">valid_loader = paddle.io.DataLoader(valid_dataset, batch_size=batch_size, shuffle=<span class="literal">True</span>)</span><br><span class="line">test_loader = paddle.io.DataLoader(test_dataset, batch_size=batch_size, shuffle=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure>
+
+<p>由于训练样本非常少，模型极易过拟合。为此，我加入多种数据增强手段：</p>
+<ul>
+<li>resize后随机裁剪</li>
+<li>随机旋转</li>
+<li>随机水平翻转</li>
+<li>归一化<ul>
+<li>上面代码中的<code>mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]</code>是<code>ImageNet</code>数据集在三通道的均值和方差。</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-2-4-训练"><a href="#2-2-4-训练" class="headerlink" title="2.2.4 训练"></a>2.2.4 训练</h4><p>不使用高阶API，而是手写训练过程。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">train</span><span class="params">(model, optim, epoch, train_loss, train_acc)</span>:</span></span><br><span class="line">    pbar = tqdm(train_loader)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> batch_id, data <span class="keyword">in</span> enumerate(pbar):</span><br><span class="line">        </span><br><span class="line">        x_data = data[<span class="number">0</span>]            <span class="comment"># 训练数据</span></span><br><span class="line">        y_data = data[<span class="number">1</span>]            <span class="comment"># 训练数据标签</span></span><br><span class="line">        predicts = model(x_data)    <span class="comment"># 预测结果  </span></span><br><span class="line">        </span><br><span class="line">        y_data = paddle.unsqueeze(y_data, axis=<span class="number">1</span>)</span><br><span class="line">        predicts = paddle.unsqueeze(predicts, axis=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 计算损失 等价于 prepare 中loss的设置</span></span><br><span class="line">        loss = loss_fn(predicts, y_data)</span><br><span class="line">        train_loss.append(loss)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 计算准确率 等价于 prepare 中metrics的设置</span></span><br><span class="line">        acc = paddle.metric.accuracy(predicts, y_data)</span><br><span class="line">        train_acc.append(acc)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 下面的反向传播、打印训练信息、更新参数、梯度清零都被封装到 Model.fit() 中</span></span><br><span class="line">        <span class="comment"># 反向传播 </span></span><br><span class="line">        loss.backward()</span><br><span class="line">        </span><br><span class="line">        pbar.set_description(<span class="string">f"Training | Epoch: <span class="subst">&#123;epoch&#125;</span> | Loss: <span class="subst">&#123;loss.item():<span class="number">.4</span>f&#125;</span> | ACC: <span class="subst">&#123;acc.item():<span class="number">.4</span>f&#125;</span>"</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 更新参数 </span></span><br><span class="line">        optim.step()</span><br><span class="line">        <span class="comment"># 梯度清零</span></span><br><span class="line">        optim.clear_grad()</span><br></pre></td></tr></table></figure>
+
+<p>好处是可以把每个batch的损失函数与精度记录下来，所绘制的图像更能反映训练情况。</p>
+<p>且通过<code>pbar</code>打印进度条，比较美观：</p>
+<p><img src="https://s2.loli.net/2022/06/20/KoQ2umx9TlnRwLs.png" alt="1655721228(1).png"></p>
+<h4 id="2-2-5-验证"><a href="#2-2-5-验证" class="headerlink" title="2.2.5 验证"></a>2.2.5 验证</h4><p>同上，手写验证：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">velidate</span><span class="params">(model, epoch, val_loss, val_acc)</span>:</span></span><br><span class="line">    val_pbar = tqdm(train_loader)</span><br><span class="line">    <span class="comment"># 不加这行会爆内存</span></span><br><span class="line">    <span class="keyword">with</span> paddle.no_grad():</span><br><span class="line">        <span class="keyword">for</span> batch_id, data <span class="keyword">in</span> enumerate(val_pbar):</span><br><span class="line">            x_data = data[<span class="number">0</span>]            <span class="comment"># 训练数据</span></span><br><span class="line">            y_data = data[<span class="number">1</span>]            <span class="comment"># 训练数据标签</span></span><br><span class="line">            predicts = model(x_data)    <span class="comment"># 预测结果  </span></span><br><span class="line">            </span><br><span class="line">            y_data = paddle.unsqueeze(y_data, axis=<span class="number">1</span>)</span><br><span class="line">            predicts = paddle.unsqueeze(predicts, axis=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 计算损失 等价于 prepare 中loss的设置</span></span><br><span class="line">            loss = loss_fn(predicts, y_data)</span><br><span class="line">            val_loss.append(loss)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 计算准确率 等价于 prepare 中metrics的设置</span></span><br><span class="line">            acc = paddle.metric.accuracy(predicts, y_data)</span><br><span class="line">            val_acc.append(acc)</span><br><span class="line">            val_pbar.set_description(<span class="string">f"Validate | Epoch: <span class="subst">&#123;epoch&#125;</span> | Loss: <span class="subst">&#123;loss.item():<span class="number">.4</span>f&#125;</span> | ACC: <span class="subst">&#123;acc.item():<span class="number">.4</span>f&#125;</span>"</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>【一个小细节】：</strong></p>
+<p>一开始的时候，我总是可以训练，但会在验证时提示<code>cuda out of memory</code>。即使我使用内存32G的GPU也还是爆内存。</p>
+<p>查阅<a href="https://blog.csdn.net/xiaoxifei/article/details/84377204" target="_blank" rel="noopener">资料</a>发现，这是我在验证时没有设置<code>with torch.no_grad</code>导致的。被with torch.no_grad()包住的代码，不用跟踪反向梯度计算，大大节省了内存。</p>
+<h4 id="2-2-6-测试"><a href="#2-2-6-测试" class="headerlink" title="2.2.6 测试"></a>2.2.6 测试</h4><p>同上，手写测试：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">global</span> results</span><br><span class="line">    test_pbar = tqdm(test_loader)</span><br><span class="line">    <span class="keyword">for</span> batch_id, data <span class="keyword">in</span> enumerate(test_pbar):</span><br><span class="line">        x_data = data[<span class="number">0</span>]                               <span class="comment"># 训练数据</span></span><br><span class="line">        y_data = data[<span class="number">1</span>]                               <span class="comment"># 文件名</span></span><br><span class="line">        <span class="comment"># 预测结果</span></span><br><span class="line">        pred0 = np.argmax(model0(x_data), axis=<span class="number">1</span>)</span><br><span class="line">        pred1 = np.argmax(model1(x_data), axis=<span class="number">1</span>)</span><br><span class="line">        pred2 = np.argmax(model2(x_data), axis=<span class="number">1</span>)</span><br><span class="line">		<span class="comment"># vote</span></span><br><span class="line">        results += [[y_data[i], (pred0[i]+pred1[i]+pred2[i] &gt; <span class="number">2</span>)] <span class="keyword">for</span> i <span class="keyword">in</span> range(len(pred0))]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">with</span> open(<span class="string">'result.csv'</span>, <span class="string">'w'</span>) <span class="keyword">as</span> f:</span><br><span class="line">        <span class="keyword">for</span> x <span class="keyword">in</span> results:</span><br><span class="line">            f.write(x[<span class="number">0</span>]+<span class="string">','</span>+str(<span class="number">1</span>-x[<span class="number">1</span>])+<span class="string">'\n'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>对三个模型的结果进行投票。这里巧妙地使用<code>(pred0[i]+pred1[i]+pred2[i] &gt; 2)</code>这样<strong>简洁的代码</strong>，实现了vote。</p>
+<h3 id="2-3-性能提升技巧"><a href="#2-3-性能提升技巧" class="headerlink" title="2.3 性能提升技巧"></a>2.3 性能提升技巧</h3><ol>
+<li>分别训练三个模型，并进行<strong>投票</strong>，所得到的预测结果更为可靠。</li>
+<li>使用多种图像增强方法，一定程度上避免过拟合。</li>
+<li>设置较小的epochs轮数，一定程度上避免过拟合。</li>
+<li><strong>选用Adam优化器，引入动量防止陷入局部最优或鞍点的同时，自动调节学习率。</strong></li>
+<li>多次尝试。</li>
+</ol>
+<h2 id="三、结果分析"><a href="#三、结果分析" class="headerlink" title="三、结果分析"></a>三、结果分析</h2><h3 id="3-1-训练损失与验证损失"><a href="#3-1-训练损失与验证损失" class="headerlink" title="3.1 训练损失与验证损失"></a>3.1 训练损失与验证损失</h3><h4 id="3-1-1-mobilenet-v2"><a href="#3-1-1-mobilenet-v2" class="headerlink" title="3.1.1 mobilenet_v2"></a>3.1.1 mobilenet_v2</h4><p><img src="https://s2.loli.net/2022/06/20/KfRaVQtpZTl9nes.png" alt="output_19_1.png"></p>
+<h4 id="3-1-2-resnet18"><a href="#3-1-2-resnet18" class="headerlink" title="3.1.2 resnet18"></a>3.1.2 resnet18</h4><p><img src="https://s2.loli.net/2022/06/20/7Y82oUdNPTRHpyZ.png" alt="output_20_1.png"></p>
+<h4 id="3-1-3-resnet34"><a href="#3-1-3-resnet34" class="headerlink" title="3.1.3 resnet34"></a>3.1.3 resnet34</h4><p><img src="https://s2.loli.net/2022/06/20/eld9AKxt8LizbFs.png" alt="output_22_1.png"></p>
+<h4 id="3-1-4-分析"><a href="#3-1-4-分析" class="headerlink" title="3.1.4 分析"></a>3.1.4 分析</h4><p>上三图中，loss在一开始就比较小，是由于我使用了预训练模型。</p>
+<p>除去最初的上升，训练与验证的loss基本上都是在震荡中逐步下降。这表明超参数、优化器等选择比较合适，模型在训练过程中学习到有利于这个任务的参数。</p>
+<h3 id="3-2-训练精度与验证精度"><a href="#3-2-训练精度与验证精度" class="headerlink" title="3.2 训练精度与验证精度"></a>3.2 训练精度与验证精度</h3><h4 id="3-2-1-mobilenet-v2"><a href="#3-2-1-mobilenet-v2" class="headerlink" title="3.2.1 mobilenet_v2"></a>3.2.1 mobilenet_v2</h4><p><img src="https://s2.loli.net/2022/06/20/RfZqiQVsLT9jFGK.png" alt="output_19_2.png"></p>
+<h4 id="3-2-2-resnet18"><a href="#3-2-2-resnet18" class="headerlink" title="3.2.2 resnet18"></a>3.2.2 resnet18</h4><p><img src="https://s2.loli.net/2022/06/20/Oy6oZ8dAfcStQge.png" alt="output_20_2.png"></p>
+<h4 id="3-2-3-resnet34"><a href="#3-2-3-resnet34" class="headerlink" title="3.2.3 resnet34"></a>3.2.3 resnet34</h4><p><img src="https://s2.loli.net/2022/06/20/2kcXihu1jsbIO56.png" alt="output_22_2.png"></p>
+<h4 id="3-2-4-分析"><a href="#3-2-4-分析" class="headerlink" title="3.2.4 分析"></a>3.2.4 分析</h4><p>上三图中，accuracy在震荡中从0.5逐步接近1。</p>
+<p>除去最初的上升，训练与验证的accuracy基本上都是在震荡中逐步下降。这表明超参数、优化器等选择比较合适，模型在训练过程中学习到有利于这个任务的参数。</p>
+<h3 id="3-3-得分及排名"><a href="#3-3-得分及排名" class="headerlink" title="3.3 得分及排名"></a>3.3 得分及排名</h3><p>得分97.7755，排名第三（截至2022.6.20）。</p>
+<p><img src="https://s2.loli.net/2022/06/20/F1wRXtP7yfEC3bK.png" alt="image.png"></p>
+<h2 id="四、实验体会和建议"><a href="#四、实验体会和建议" class="headerlink" title="四、实验体会和建议"></a>四、实验体会和建议</h2><h3 id="4-1-实验体会"><a href="#4-1-实验体会" class="headerlink" title="4.1 实验体会"></a>4.1 实验体会</h3><p>本次实验，老师与助教的讲解与所提供的资料，帮助我快速上手国产深度学习框架<code>paddlepaddle</code>。</p>
+<p>在最后一堂课的分享交流环节，各位同学无私的分享，让我受到了很多启发：如warm-up学习率、momentum优化器等。两位“励志”同学的故事，也令我深受感动，啼笑皆非。</p>
+<h3 id="4-2-建议"><a href="#4-2-建议" class="headerlink" title="4.2 建议"></a>4.2 建议</h3><p>pros：</p>
+<ol>
+<li>采取在飞桨实验平台开放比赛、公平竞争的方式，十分新颖，能让同学们实时看到自己的测试得分与排名。建议保持。</li>
+<li>与百度的合作，让同学们可以免费使用<code>V100</code>等先进GPU，不用再为<code>cuda out of memory</code>而发愁。</li>
+</ol>
+<p>cons：</p>
+<ol>
+<li>建议在实验发布时告知评分机制。</li>
+<li>飞桨实验平台不兼容<code>tensorflow</code>、<code>pytorch</code>等深度学习主流框架，不过这也可以理解。</li>
+</ol>
+<h2 id="五、参考资料"><a href="#五、参考资料" class="headerlink" title="五、参考资料"></a>五、参考资料</h2><ol>
+<li><a href="https://zhuanlan.zhihu.com/p/32230623" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/32230623</a></li>
+<li><a href="https://www.paddlepaddle.org.cn/" target="_blank" rel="noopener">https://www.paddlepaddle.org.cn/</a></li>
+<li><a href="https://github.com/PaddlePaddle/PaddleClas/blob/release/2.3/docs/zh_CN/algorithm_introduction/ImageNet_models.md" target="_blank" rel="noopener">https://github.com/PaddlePaddle/PaddleClas/blob/release/2.3/docs/zh_CN/algorithm_introduction/ImageNet_models.md</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/35709485" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/35709485</a></li>
+<li><a href="https://github.com/pytorch/pytorch" target="_blank" rel="noopener">https://github.com/pytorch/pytorch</a></li>
+<li><a href="https://blog.csdn.net/xiaoxifei/article/details/84377204" target="_blank" rel="noopener">https://blog.csdn.net/xiaoxifei/article/details/84377204</a></li>
+</ol>
+<h2 id="六、完整代码"><a href="#六、完整代码" class="headerlink" title="六、完整代码"></a>六、完整代码</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 先解压数据</span></span><br><span class="line">!unzip -o -q -d /home/aistudio/work/ /home/aistudio/data/data140198/data.zip</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">!mkdir /home/aistudio/work/test_folder/</span><br><span class="line">!mv /home/aistudio/work/test/ /home/aistudio/work/test_folder/</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> paddle</span><br><span class="line"><span class="comment"># python第三方图像处理库</span></span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="comment"># python的绘图库 pyplot:matplotlib的绘图框架</span></span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">%matplotlib inline</span><br><span class="line"><span class="comment"># 处理文件和目录</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> paddle.io <span class="keyword">import</span> random_split</span><br><span class="line"><span class="keyword">from</span> paddle.io <span class="keyword">import</span> Dataset, DataLoader</span><br><span class="line"><span class="keyword">from</span> paddle.vision.transforms <span class="keyword">import</span> Compose, Normalize</span><br><span class="line"><span class="keyword">from</span> paddle.vision <span class="keyword">import</span> transforms</span><br><span class="line"><span class="keyword">import</span> paddle</span><br><span class="line"><span class="keyword">import</span> paddle.nn <span class="keyword">as</span> nn</span><br><span class="line"><span class="keyword">import</span> paddle.nn.functional <span class="keyword">as</span> F</span><br><span class="line"><span class="keyword">from</span> paddle.metric <span class="keyword">import</span> Accuracy</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> tqdm</span><br><span class="line"><span class="keyword">from</span> tqdm <span class="keyword">import</span> tqdm, trange</span><br></pre></td></tr></table></figure>
+
+<pre><code>/opt/conda/envs/python35-paddle120-env/lib/python3.7/site-packages/matplotlib/__init__.py:107: DeprecationWarning: Using or importing the ABCs from &apos;collections&apos; instead of from &apos;collections.abc&apos; is deprecated, and in 3.8 it will stop working
+  from collections import MutableMapping
+/opt/conda/envs/python35-paddle120-env/lib/python3.7/site-packages/matplotlib/rcsetup.py:20: DeprecationWarning: Using or importing the ABCs from &apos;collections&apos; instead of from &apos;collections.abc&apos; is deprecated, and in 3.8 it will stop working
+  from collections import Iterable, Mapping
+/opt/conda/envs/python35-paddle120-env/lib/python3.7/site-packages/matplotlib/colors.py:53: DeprecationWarning: Using or importing the ABCs from &apos;collections&apos; instead of from &apos;collections.abc&apos; is deprecated, and in 3.8 it will stop working
+  from collections import Sized</code></pre><h3 id="DataLoader"><a href="#DataLoader" class="headerlink" title="DataLoader"></a>DataLoader</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 图片扩展（图片格式）</span></span><br><span class="line">IMG_EXTENSIONS = [</span><br><span class="line">    <span class="string">'.jpg'</span>, <span class="string">'.JPG'</span>, <span class="string">'.jpeg'</span>, <span class="string">'.JPEG'</span>,</span><br><span class="line">    <span class="string">'.png'</span>, <span class="string">'.PNG'</span>, <span class="string">'.ppm'</span>, <span class="string">'.PPM'</span>, <span class="string">'.bmp'</span>, <span class="string">'.BMP'</span>, <span class="string">'.webp'</span></span><br><span class="line">]</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 判断是不是图片文件</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">is_image_file</span><span class="params">(filename)</span>:</span></span><br><span class="line">    <span class="comment"># 只要文件以IMG_EXTENSIONS结尾，就是图片</span></span><br><span class="line">    <span class="comment"># 注意any的使用</span></span><br><span class="line">    <span class="keyword">return</span> any(filename.endswith(extension) <span class="keyword">for</span> extension <span class="keyword">in</span> IMG_EXTENSIONS)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 打开路径下的图片，并转化为RGB模式</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pil_loader</span><span class="params">(path)</span>:</span></span><br><span class="line">    <span class="comment"># open path as file to avoid ResourceWarning (https://github.com/python-pillow/Pillow/issues/835)</span></span><br><span class="line">    <span class="comment"># with as : 安全方面，可替换：try,finally</span></span><br><span class="line">    <span class="comment"># 'r':以读方式打开文件，可读取文件信息</span></span><br><span class="line">    <span class="comment"># 'b':以二进制模式打开文件，而不是文本</span></span><br><span class="line">    <span class="keyword">with</span> open(path, <span class="string">'rb'</span>) <span class="keyword">as</span> f:</span><br><span class="line">        <span class="keyword">with</span> Image.open(f) <span class="keyword">as</span> img:</span><br><span class="line">            <span class="comment"># convert：，用于图像不同模式图像之间的转换，这里转换为‘RGB’</span></span><br><span class="line">            <span class="keyword">return</span> img.convert(<span class="string">'RGB'</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">default_loader</span><span class="params">(path)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> pil_loader(path)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">find_classes</span><span class="params">(dir)</span>:</span></span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">     返回dir下的类别名，classes:所有的类别，class_to_idx:将文件中str的类别名转化为int类别</span></span><br><span class="line"><span class="string">     classes为目录下所有文件夹名字的集合</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    <span class="comment"># os.listdir：以列表的形式显示当前目录下的所有文件名和目录名，但不会区分文件和目录。</span></span><br><span class="line">    <span class="comment"># os.path.isdir：判定对象是否是目录，是则返回True，否则返回False</span></span><br><span class="line">    <span class="comment"># os.path.join：连接目录和文件名</span></span><br><span class="line"> </span><br><span class="line">    classes = [d <span class="keyword">for</span> d <span class="keyword">in</span> os.listdir(dir) <span class="keyword">if</span> os.path.isdir(os.path.join(dir, d))]</span><br><span class="line">    <span class="comment"># sort:排序</span></span><br><span class="line">    classes.sort()</span><br><span class="line">    <span class="comment"># 将文件名中得到的类别转化为数字class_to_idx['3'] = 3</span></span><br><span class="line">    class_to_idx = &#123;classes[i]: i <span class="keyword">for</span> i <span class="keyword">in</span> range(len(classes))&#125;</span><br><span class="line">    <span class="keyword">return</span> classes, class_to_idx</span><br><span class="line">    <span class="comment"># class_to_idx :&#123;'0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9&#125;</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 如果文件是图片文件，则保留它的路径，和索引至images(path,class_to_idx)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">make_dataset</span><span class="params">(dir, class_to_idx)</span>:</span></span><br><span class="line">    <span class="comment"># 返回（图片的路径，图片的类别）</span></span><br><span class="line">    <span class="comment"># 打开文件夹，一个个索引</span></span><br><span class="line">    images = []</span><br><span class="line">    <span class="comment"># os.path.expanduser(path)：把path中包含的"~"和"~user"转换成用户目录</span></span><br><span class="line">    dir = os.path.expanduser(dir)</span><br><span class="line">    <span class="keyword">for</span> target <span class="keyword">in</span> sorted(os.listdir(dir)):</span><br><span class="line">        d = os.path.join(dir, target)</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> os.path.isdir(d):</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line"> </span><br><span class="line">        <span class="comment"># os.walk:遍历目录下所有内容，产生三元组</span></span><br><span class="line">        <span class="comment"># (dirpath, dirnames, filenames)【文件夹路径, 文件夹名字, 文件名】</span></span><br><span class="line">        <span class="keyword">for</span> root, _, fnames <span class="keyword">in</span> sorted(os.walk(d)):</span><br><span class="line">            <span class="keyword">for</span> fname <span class="keyword">in</span> sorted(fnames):</span><br><span class="line">                <span class="keyword">if</span> is_image_file(fname):</span><br><span class="line">                    path = os.path.join(root, fname)   <span class="comment"># 图片的路径</span></span><br><span class="line">                    item = (path, class_to_idx[target])  <span class="comment"># (图片的路径,图片类别)</span></span><br><span class="line">                    images.append(item)</span><br><span class="line">    random.shuffle(images)</span><br><span class="line">    <span class="keyword">return</span> images</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ImageFolder</span><span class="params">(Dataset)</span>:</span></span><br><span class="line">    <span class="string">"""A generic data loader where the images are arranged in this way: ::</span></span><br><span class="line"><span class="string">        root/dog/xxx.png</span></span><br><span class="line"><span class="string">        root/dog/xxy.png</span></span><br><span class="line"><span class="string">        root/dog/xxz.png</span></span><br><span class="line"><span class="string">        root/cat/123.png</span></span><br><span class="line"><span class="string">        root/cat/nsdf3.png</span></span><br><span class="line"><span class="string">        root/cat/asd932_.png</span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">        root (string): Root directory path.</span></span><br><span class="line"><span class="string">        transform (callable, optional): A function/transform that  takes in an PIL image</span></span><br><span class="line"><span class="string">            and returns a transformed version. E.g, ``transforms.RandomCrop``</span></span><br><span class="line"><span class="string">        target_transform (callable, optional): A function/transform that takes in the</span></span><br><span class="line"><span class="string">            target and transforms it.</span></span><br><span class="line"><span class="string">        loader (callable, optional): A function to load an image given its path.</span></span><br><span class="line"><span class="string">    Attributes:</span></span><br><span class="line"><span class="string">        classes (list): List of the class names.</span></span><br><span class="line"><span class="string">        class_to_idx (dict): Dict with items (class_name, class_index).</span></span><br><span class="line"><span class="string">        imgs (list): List of (image path, class_index) tuples</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    Speciality:</span></span><br><span class="line"><span class="string">        when self.mode=='test', __getitem__ return img &amp; img_path</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"> </span><br><span class="line">    <span class="comment"># 初始化，继承参数</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, root, transform=None, target_transform=None,</span></span></span><br><span class="line"><span class="function"><span class="params">                 loader=default_loader, mode=None)</span>:</span></span><br><span class="line">        <span class="comment"># TODO</span></span><br><span class="line">        <span class="comment"># 1. Initialize file path or list of file names.</span></span><br><span class="line">        <span class="comment"># 找到root的文件和索引</span></span><br><span class="line">        classes, class_to_idx = find_classes(root)</span><br><span class="line">        <span class="comment"># 保存路径下图片文件路径和索引至imgs</span></span><br><span class="line">        imgs = make_dataset(root, class_to_idx)</span><br><span class="line">        <span class="keyword">if</span> len(imgs) == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">raise</span>(RuntimeError(<span class="string">"Found 0 images in subfolders of: "</span> + root + <span class="string">"\n"</span></span><br><span class="line">                               <span class="string">"Supported image extensions are: "</span> + <span class="string">","</span>.join(IMG_EXTENSIONS)))</span><br><span class="line">        <span class="keyword">if</span> mode <span class="keyword">not</span> <span class="keyword">in</span> [<span class="string">'train'</span>, <span class="string">'test'</span>]:</span><br><span class="line">            <span class="keyword">raise</span>(RuntimeError(<span class="string">'Mode should be train or test'</span>))</span><br><span class="line"> </span><br><span class="line">        self.root = root</span><br><span class="line">        self.imgs = imgs</span><br><span class="line">        self.classes = classes</span><br><span class="line">        self.class_to_idx = class_to_idx</span><br><span class="line">        self.transform = transform</span><br><span class="line">        self.target_transform = target_transform</span><br><span class="line">        self.loader = loader</span><br><span class="line">        self.mode = mode</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getitem__</span><span class="params">(self, index)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Args:</span></span><br><span class="line"><span class="string">            index (int): Index</span></span><br><span class="line"><span class="string">        Returns:</span></span><br><span class="line"><span class="string">            tuple: (image, target) where target is class_index of the target class.</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="comment"># TODO</span></span><br><span class="line">        <span class="comment"># 1. Read one data from file (e.g. using numpy.fromfile, PIL.Image.open).</span></span><br><span class="line">        <span class="comment"># 2. Preprocess the data (e.g. torchvision.Transform).</span></span><br><span class="line">        <span class="comment"># 3. Return a data pair (e.g. image and label).</span></span><br><span class="line">        <span class="comment">#这里需要注意的是，第一步：read one data，是一个data</span></span><br><span class="line"> </span><br><span class="line">        path, target = self.imgs[index] </span><br><span class="line">        <span class="comment"># 这里返回的是图片路径，而需要的是图片格式</span></span><br><span class="line">        img = self.loader(path) <span class="comment"># 将图片路径加载成所需图片格式</span></span><br><span class="line">        <span class="keyword">if</span> self.transform <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">            img = self.transform(img)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> self.mode == <span class="string">'train'</span>:</span><br><span class="line">            <span class="keyword">if</span> self.target_transform <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">                target = self.target_transform(target)</span><br><span class="line">            <span class="keyword">return</span> img, target</span><br><span class="line">        <span class="comment"># modified</span></span><br><span class="line">        <span class="keyword">elif</span> self.mode == <span class="string">'test'</span>:</span><br><span class="line">            <span class="keyword">return</span> img, path.split(<span class="string">'/'</span>)[<span class="number">-1</span>]</span><br><span class="line">        </span><br><span class="line"></span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__len__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="comment"># return the total size of your dataset.</span></span><br><span class="line">        <span class="keyword">return</span> len(self.imgs)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Model"><a href="#Model" class="headerlink" title="Model"></a>Model</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># import paddle</span></span><br><span class="line"><span class="comment"># from paddle.vision.models import resnet34</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># # build model</span></span><br><span class="line"><span class="comment"># model = resnet34(pretrained=True)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># # build model and load imagenet pretrained weight</span></span><br><span class="line"><span class="comment"># # model = resnet34(pretrained=True)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># x = paddle.rand([1, 3, 224, 224])</span></span><br><span class="line"><span class="comment"># out = model(x)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># print(out.shape)</span></span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> paddle.vision.models <span class="keyword">import</span> mobilenet_v2, resnet18, resnet34</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">build_model</span><span class="params">(mode = <span class="number">0</span>, num_classes = <span class="number">2</span>)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> mode==<span class="number">0</span>:</span><br><span class="line">        model = mobilenet_v2(pretrained=<span class="literal">True</span>)</span><br><span class="line">        model.classifier = nn.Sequential(</span><br><span class="line">        nn.Dropout(p=<span class="number">0.2</span>),</span><br><span class="line">        nn.Linear(in_features=<span class="number">1280</span>, out_features=num_classes)</span><br><span class="line">        )</span><br><span class="line">    <span class="keyword">elif</span> mode==<span class="number">1</span>:</span><br><span class="line">        model = resnet18(pretrained=<span class="literal">True</span>)</span><br><span class="line">        model.fc = nn.Linear(in_features=<span class="number">512</span>, out_features=num_classes)</span><br><span class="line">    <span class="keyword">elif</span> mode==<span class="number">2</span>:</span><br><span class="line">        model = resnet34(pretrained=<span class="literal">True</span>)</span><br><span class="line">        model.fc = nn.Linear(in_features=<span class="number">512</span>, out_features=num_classes)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">raise</span>(RuntimeError(<span class="string">'Mode should be in [0,1,2].'</span>))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> model</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">test = [[ <span class="number">3.29275370e-01</span>, <span class="number">-1.15783066e-01</span>],</span><br><span class="line">       [ <span class="number">7.25766659e-01</span>,  <span class="number">2.16264486e-01</span>],</span><br><span class="line">       [ <span class="number">1.21175408e-01</span>,  <span class="number">3.12835097e-01</span>]]</span><br><span class="line">np.argmax(test, axis=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+
+<pre><code>array([0, 0, 1])</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">model0 = build_model(mode=<span class="number">0</span>)</span><br><span class="line">x = paddle.rand([<span class="number">1</span>, <span class="number">3</span>, <span class="number">224</span>, <span class="number">224</span>])</span><br><span class="line">out = model0(x)</span><br><span class="line">print(out.shape)</span><br></pre></td></tr></table></figure>
+
+<pre><code>W0620 17:28:38.303269 11498 device_context.cc:447] Please NOTE: device: 0, GPU Compute Capability: 7.0, Driver API Version: 11.2, Runtime API Version: 10.1
+W0620 17:28:38.312353 11498 device_context.cc:465] device: 0, cuDNN Version: 7.6.
+
+
+[1, 2]
+
+
+/opt/conda/envs/python35-paddle120-env/lib/python3.7/site-packages/paddle/nn/layer/norm.py:653: UserWarning: When training, we now always track global mean and variance.
+  &quot;When training, we now always track global mean and variance.&quot;)</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">model1 = build_model(mode=<span class="number">1</span>)</span><br><span class="line">x = paddle.rand([<span class="number">1</span>, <span class="number">3</span>, <span class="number">224</span>, <span class="number">224</span>])</span><br><span class="line">out = model1(x)</span><br><span class="line">print(out.shape)</span><br></pre></td></tr></table></figure>
+
+<pre><code>[1, 2]</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">model2 = build_model(mode=<span class="number">2</span>)</span><br><span class="line">x = paddle.rand([<span class="number">1</span>, <span class="number">3</span>, <span class="number">224</span>, <span class="number">224</span>])</span><br><span class="line">out = model2(x)</span><br><span class="line">print(out.shape)</span><br><span class="line"><span class="comment"># paddle.summary(model2, input=x)</span></span><br></pre></td></tr></table></figure>
+
+<pre><code>[1, 2]</code></pre><h3 id="超参数"><a href="#超参数" class="headerlink" title="超参数"></a>超参数</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 参数设置</span></span><br><span class="line">batch_size = <span class="number">64</span>       <span class="comment"># 设置每个batch的样本数</span></span><br><span class="line">epochs = <span class="number">5</span>            <span class="comment"># 设置迭代次数</span></span><br><span class="line">img_size, crop_size = <span class="number">512</span>, <span class="number">448</span></span><br><span class="line"><span class="comment"># img_size, crop_size = 256, 224</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置优化器</span></span><br><span class="line">optim0 = paddle.optimizer.Adam(parameters=model0.parameters())</span><br><span class="line">optim1 = paddle.optimizer.Adam(parameters=model1.parameters())</span><br><span class="line">optim2 = paddle.optimizer.Adam(parameters=model2.parameters())</span><br><span class="line"><span class="comment"># 设置损失函数</span></span><br><span class="line">loss_fn = paddle.nn.CrossEntropyLoss()</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">train_transform = transforms.Compose([</span><br><span class="line">    transforms.Resize(size=(img_size,img_size)),</span><br><span class="line">    transforms.RandomCrop(size=(crop_size,crop_size)),       <span class="comment"># 通过随机裁剪进行数据增强</span></span><br><span class="line">    transforms.RandomRotation(<span class="number">10</span>),</span><br><span class="line">    transforms.RandomHorizontalFlip(),     <span class="comment"># 通过随机水平翻转进行数据增强</span></span><br><span class="line">    transforms.ToTensor(),</span><br><span class="line">    transforms.Normalize(mean=[<span class="number">0.485</span>, <span class="number">0.456</span>, <span class="number">0.406</span>], std=[<span class="number">0.229</span>, <span class="number">0.224</span>, <span class="number">0.225</span>],data_format=<span class="string">'CHW'</span>)</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line">test_transform = transforms.Compose([</span><br><span class="line">    transforms.Resize(size=(crop_size,crop_size)),</span><br><span class="line">    transforms.ToTensor(),</span><br><span class="line">    transforms.Normalize(mean=[<span class="number">0.485</span>, <span class="number">0.456</span>, <span class="number">0.406</span>], std=[<span class="number">0.229</span>, <span class="number">0.224</span>, <span class="number">0.225</span>],data_format=<span class="string">'CHW'</span>)</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">train_dataset = ImageFolder(<span class="string">"/home/aistudio/work/train/"</span>,transform = train_transform,mode=<span class="string">'train'</span>)</span><br><span class="line">valid_dataset = ImageFolder(<span class="string">"/home/aistudio/work/valid/"</span>,transform = test_transform,mode=<span class="string">'train'</span>)</span><br><span class="line">test_dataset = ImageFolder(<span class="string">"/home/aistudio/work/test_folder/"</span>,transform = test_transform,mode=<span class="string">'test'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用 DataLoader 实现数据加载</span></span><br><span class="line">train_loader = paddle.io.DataLoader(train_dataset, batch_size=batch_size, shuffle=<span class="literal">True</span>)</span><br><span class="line">valid_loader = paddle.io.DataLoader(valid_dataset, batch_size=batch_size, shuffle=<span class="literal">True</span>)</span><br><span class="line">test_loader = paddle.io.DataLoader(test_dataset, batch_size=batch_size, shuffle=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'[INFO]样本分布'</span>)</span><br><span class="line">print(<span class="string">'训练样本：'</span>, len(train_dataset))</span><br><span class="line">print(<span class="string">'有缺陷样本：'</span>, len(os.listdir(<span class="string">'/home/aistudio/work/train/defective'</span>)), <span class="string">'无缺陷样本：'</span>, len(os.listdir(<span class="string">'/home/aistudio/work/train/no_defective'</span>)))</span><br><span class="line">print(<span class="string">'验证样本：'</span>, len(valid_dataset))</span><br><span class="line">print(<span class="string">'测试样本：'</span>, len(test_dataset))</span><br></pre></td></tr></table></figure>
+
+<pre><code>[INFO]样本分布
+训练样本： 480
+有缺陷样本： 248 无缺陷样本： 232
+验证样本： 160
+测试样本： 159</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">velidate</span><span class="params">(model, epoch, val_loss, val_acc)</span>:</span></span><br><span class="line">    val_pbar = tqdm(train_loader)</span><br><span class="line">    <span class="comment"># 不加这行会爆内存</span></span><br><span class="line">    <span class="keyword">with</span> paddle.no_grad():</span><br><span class="line">        <span class="keyword">for</span> batch_id, data <span class="keyword">in</span> enumerate(val_pbar):</span><br><span class="line">            x_data = data[<span class="number">0</span>]            <span class="comment"># 训练数据</span></span><br><span class="line">            y_data = data[<span class="number">1</span>]            <span class="comment"># 训练数据标签</span></span><br><span class="line">            predicts = model(x_data)    <span class="comment"># 预测结果  </span></span><br><span class="line">            </span><br><span class="line">            y_data = paddle.unsqueeze(y_data, axis=<span class="number">1</span>)</span><br><span class="line">            predicts = paddle.unsqueeze(predicts, axis=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 计算损失 等价于 prepare 中loss的设置</span></span><br><span class="line">            loss = loss_fn(predicts, y_data)</span><br><span class="line">            val_loss.append(loss)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 计算准确率 等价于 prepare 中metrics的设置</span></span><br><span class="line">            acc = paddle.metric.accuracy(predicts, y_data)</span><br><span class="line">            val_acc.append(acc)</span><br><span class="line">            val_pbar.set_description(<span class="string">f"Validate | Epoch: <span class="subst">&#123;epoch&#125;</span> | Loss: <span class="subst">&#123;loss.item():<span class="number">.4</span>f&#125;</span> | ACC: <span class="subst">&#123;acc.item():<span class="number">.4</span>f&#125;</span>"</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">train</span><span class="params">(model, optim, epoch, train_loss, train_acc)</span>:</span></span><br><span class="line">    pbar = tqdm(train_loader)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> batch_id, data <span class="keyword">in</span> enumerate(pbar):</span><br><span class="line">        </span><br><span class="line">        x_data = data[<span class="number">0</span>]            <span class="comment"># 训练数据</span></span><br><span class="line">        y_data = data[<span class="number">1</span>]            <span class="comment"># 训练数据标签</span></span><br><span class="line">        predicts = model(x_data)    <span class="comment"># 预测结果  </span></span><br><span class="line">        </span><br><span class="line">        y_data = paddle.unsqueeze(y_data, axis=<span class="number">1</span>)</span><br><span class="line">        predicts = paddle.unsqueeze(predicts, axis=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 计算损失 等价于 prepare 中loss的设置</span></span><br><span class="line">        loss = loss_fn(predicts, y_data)</span><br><span class="line">        train_loss.append(loss)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 计算准确率 等价于 prepare 中metrics的设置</span></span><br><span class="line">        acc = paddle.metric.accuracy(predicts, y_data)</span><br><span class="line">        train_acc.append(acc)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 下面的反向传播、打印训练信息、更新参数、梯度清零都被封装到 Model.fit() 中</span></span><br><span class="line">        <span class="comment"># 反向传播 </span></span><br><span class="line">        loss.backward()</span><br><span class="line">        </span><br><span class="line">        pbar.set_description(<span class="string">f"Training | Epoch: <span class="subst">&#123;epoch&#125;</span> | Loss: <span class="subst">&#123;loss.item():<span class="number">.4</span>f&#125;</span> | ACC: <span class="subst">&#123;acc.item():<span class="number">.4</span>f&#125;</span>"</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 更新参数 </span></span><br><span class="line">        optim.step()</span><br><span class="line">        <span class="comment"># 梯度清零</span></span><br><span class="line">        optim.clear_grad()</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># model_dict=paddle.load('best_model.pdparams')</span></span><br><span class="line"><span class="comment"># model.set_state_dict(model_dict)</span></span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plotLossAcc</span><span class="params">(train_loss, val_loss, train_acc, val_acc, title)</span>:</span></span><br><span class="line">    <span class="comment"># plot train loss &amp; val loss</span></span><br><span class="line">    X = np.arange(len(train_loss))</span><br><span class="line">    plt.plot(X, train_loss, label=<span class="string">'train loss'</span>)</span><br><span class="line">    plt.plot(X, val_loss, label = <span class="string">'val loss'</span>)</span><br><span class="line">    plt.xlabel(<span class="string">'epochs'</span>)</span><br><span class="line">    plt.ylabel(<span class="string">'loss'</span>)</span><br><span class="line">    plt.legend()</span><br><span class="line">    plt.savefig(title+<span class="string">'_loss'</span>)</span><br><span class="line">    plt.show()</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># plot train accuracy &amp; val accuracy</span></span><br><span class="line">    X = np.arange(len(train_acc))</span><br><span class="line">    plt.plot(X, train_acc, label=<span class="string">'train acc'</span>)</span><br><span class="line">    plt.plot(X, val_acc, label = <span class="string">'val acc'</span>)</span><br><span class="line">    plt.xlabel(<span class="string">'epochs'</span>)</span><br><span class="line">    plt.ylim(<span class="number">0</span>,<span class="number">1</span>)</span><br><span class="line">    plt.ylabel(<span class="string">'accuracy'</span>)</span><br><span class="line">    plt.legend()</span><br><span class="line">    plt.savefig(title+<span class="string">'_accuracy'</span>)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># mobilenet_v2</span></span><br><span class="line"><span class="comment"># model0_dict = paddle.load('mobilenetv2_best_model.pdparams')</span></span><br><span class="line"><span class="comment"># model0.set_state_dict(model0_dict)</span></span><br><span class="line">epochs = <span class="number">5</span></span><br><span class="line"></span><br><span class="line">train_loss = []</span><br><span class="line">val_loss = []</span><br><span class="line">train_acc = []</span><br><span class="line">val_acc = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(epochs):</span><br><span class="line">    train(model0, optim0, epoch, train_loss, train_acc)</span><br><span class="line">    <span class="comment"># if (epoch+1) % 5 == 0 or epoch==epochs-1:</span></span><br><span class="line">    velidate(model0, epoch, val_loss, val_acc)</span><br><span class="line"></span><br><span class="line">plotLossAcc(train_loss, val_loss, train_acc, val_acc, title=<span class="string">'mobilenet_v2'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># velidate(model0, epochs, val_loss, val_acc)</span></span><br><span class="line">paddle.save(model0.state_dict(), <span class="string">'mobilenetv2_best_model.pdparams'</span>)</span><br></pre></td></tr></table></figure>
+
+<pre><code>  0%|          | 0/8 [00:00&lt;?, ?it/s]/opt/conda/envs/python35-paddle120-env/lib/python3.7/site-packages/paddle/tensor/creation.py:130: DeprecationWarning: `np.object` is a deprecated alias for the builtin `object`. To silence this warning, use `object` by itself. Doing this will not modify any behavior and is safe. 
+Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+  if data.dtype == np.object:
+Training | Epoch: 0 | Loss: 0.2871 | ACC: 0.9375: 100%|██████████| 8/8 [01:19&lt;00:00,  9.89s/it]
+Validate | Epoch: 0 | Loss: 0.2611 | ACC: 0.9062: 100%|██████████| 8/8 [01:17&lt;00:00,  9.67s/it]
+Training | Epoch: 1 | Loss: 0.2584 | ACC: 0.9375: 100%|██████████| 8/8 [01:20&lt;00:00, 10.04s/it]
+Validate | Epoch: 1 | Loss: 0.0350 | ACC: 1.0000: 100%|██████████| 8/8 [01:19&lt;00:00,  9.99s/it]
+Training | Epoch: 2 | Loss: 0.3539 | ACC: 0.9062: 100%|██████████| 8/8 [01:19&lt;00:00,  9.91s/it]
+Validate | Epoch: 2 | Loss: 0.0136 | ACC: 1.0000: 100%|██████████| 8/8 [01:19&lt;00:00,  9.89s/it]
+Training | Epoch: 3 | Loss: 0.1782 | ACC: 0.9688: 100%|██████████| 8/8 [01:20&lt;00:00, 10.05s/it]
+Validate | Epoch: 3 | Loss: 0.0575 | ACC: 1.0000: 100%|██████████| 8/8 [01:20&lt;00:00, 10.11s/it]
+Training | Epoch: 4 | Loss: 0.0120 | ACC: 1.0000: 100%|██████████| 8/8 [01:20&lt;00:00, 10.09s/it]
+Validate | Epoch: 4 | Loss: 0.1596 | ACC: 0.9375: 100%|██████████| 8/8 [01:17&lt;00:00,  9.63s/it]
+/opt/conda/envs/python35-paddle120-env/lib/python3.7/site-packages/matplotlib/cbook/__init__.py:2349: DeprecationWarning: Using or importing the ABCs from &apos;collections&apos; instead of from &apos;collections.abc&apos; is deprecated, and in 3.8 it will stop working
+  if isinstance(obj, collections.Iterator):
+/opt/conda/envs/python35-paddle120-env/lib/python3.7/site-packages/matplotlib/cbook/__init__.py:2366: DeprecationWarning: Using or importing the ABCs from &apos;collections&apos; instead of from &apos;collections.abc&apos; is deprecated, and in 3.8 it will stop working
+  return list(data) if isinstance(data, collections.MappingView) else data</code></pre><p><img src="https://s2.loli.net/2022/06/20/KfRaVQtpZTl9nes.png" alt="output_19_1.png"></p>
+<p><img src="https://s2.loli.net/2022/06/20/RfZqiQVsLT9jFGK.png" alt="output_19_2.png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># resnet18</span></span><br><span class="line"><span class="comment"># model1_dict = paddle.load('resnet18_best_model.pdparams')</span></span><br><span class="line"><span class="comment"># model1.set_state_dict(model1_dict)</span></span><br><span class="line"></span><br><span class="line">epochs = <span class="number">5</span></span><br><span class="line"></span><br><span class="line">train_loss = []</span><br><span class="line">val_loss = []</span><br><span class="line">train_acc = []</span><br><span class="line">val_acc = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(epochs):</span><br><span class="line">    train(model1, optim1, epoch, train_loss, train_acc)</span><br><span class="line">    <span class="comment"># if (epoch+1) % 5 == 0 or epoch==epochs-1:</span></span><br><span class="line">    velidate(model1, epoch, val_loss, val_acc)</span><br><span class="line"></span><br><span class="line">plotLossAcc(train_loss, val_loss, train_acc, val_acc, title=<span class="string">'resnet18'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># velidate(model1, epochs, val_loss, val_acc)</span></span><br><span class="line">paddle.save(model1.state_dict(), <span class="string">'resnet18_best_model.pdparams'</span>)</span><br></pre></td></tr></table></figure>
+
+<pre><code>Training | Epoch: 0 | Loss: 0.1804 | ACC: 0.9375: 100%|██████████| 8/8 [01:19&lt;00:00,  9.90s/it]
+Validate | Epoch: 0 | Loss: 0.6224 | ACC: 0.8438: 100%|██████████| 8/8 [01:18&lt;00:00,  9.80s/it]
+Training | Epoch: 1 | Loss: 0.2298 | ACC: 0.9375: 100%|██████████| 8/8 [01:11&lt;00:00,  8.98s/it]
+Validate | Epoch: 1 | Loss: 0.4990 | ACC: 0.8438: 100%|██████████| 8/8 [01:18&lt;00:00,  9.84s/it]
+Training | Epoch: 2 | Loss: 0.4672 | ACC: 0.8750: 100%|██████████| 8/8 [01:19&lt;00:00,  9.98s/it]
+Validate | Epoch: 2 | Loss: 0.1952 | ACC: 0.9375: 100%|██████████| 8/8 [01:18&lt;00:00,  9.78s/it]
+Training | Epoch: 3 | Loss: 0.1788 | ACC: 0.9375: 100%|██████████| 8/8 [01:21&lt;00:00, 10.14s/it]
+Validate | Epoch: 3 | Loss: 0.5061 | ACC: 0.9375: 100%|██████████| 8/8 [01:20&lt;00:00, 10.00s/it]
+Training | Epoch: 4 | Loss: 0.0508 | ACC: 0.9688: 100%|██████████| 8/8 [01:20&lt;00:00, 10.08s/it]
+Validate | Epoch: 4 | Loss: 0.1306 | ACC: 0.9062: 100%|██████████| 8/8 [01:18&lt;00:00,  9.81s/it]</code></pre><p><img src="https://s2.loli.net/2022/06/20/7Y82oUdNPTRHpyZ.png" alt="output_20_1.png"></p>
+<p><img src="https://s2.loli.net/2022/06/20/Oy6oZ8dAfcStQge.png" alt="output_20_2.png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># # resnet18</span></span><br><span class="line"><span class="comment"># model1_dict = paddle.load('resnet18_best_model.pdparams')</span></span><br><span class="line"><span class="comment"># model1.set_state_dict(model1_dict)</span></span><br><span class="line"><span class="comment"># epochs = 1</span></span><br><span class="line"><span class="comment"># for epoch in range(epochs):</span></span><br><span class="line"><span class="comment">#     train(model1, optim1, epoch)</span></span><br><span class="line"><span class="comment">#     if (epoch+1) % 5 == 0 and epoch!=epochs-1:</span></span><br><span class="line"><span class="comment">#         velidate(model1, epoch)</span></span><br><span class="line"><span class="comment"># velidate(model1, epochs)</span></span><br><span class="line"><span class="comment"># paddle.save(model1.state_dict(), 'resnet18_best_model.pdparams')</span></span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># resnet34</span></span><br><span class="line"><span class="comment"># model2_dict = paddle.load('resnet34_best_model.pdparams')</span></span><br><span class="line"><span class="comment"># model2.set_state_dict(model2_dict)</span></span><br><span class="line"></span><br><span class="line">epochs = <span class="number">10</span></span><br><span class="line"></span><br><span class="line">train_loss = []</span><br><span class="line">val_loss = []</span><br><span class="line">train_acc = []</span><br><span class="line">val_acc = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(epochs):</span><br><span class="line">    train(model2, optim2, epoch, train_loss, train_acc)</span><br><span class="line">    <span class="comment"># if (epoch+1) % 5 == 0 or epoch==epochs-1:</span></span><br><span class="line">    velidate(model2, epoch, val_loss, val_acc)</span><br><span class="line"></span><br><span class="line">plotLossAcc(train_loss, val_loss, train_acc, val_acc, title=<span class="string">'resnet34'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># velidate(model2, epochs, val_loss, val_acc)</span></span><br><span class="line">paddle.save(model0.state_dict(), <span class="string">'resnet34_best_model.pdparams'</span>)</span><br></pre></td></tr></table></figure>
+
+<pre><code>  0%|          | 0/8 [00:00&lt;?, ?it/s]/opt/conda/envs/python35-paddle120-env/lib/python3.7/site-packages/paddle/tensor/creation.py:130: DeprecationWarning: `np.object` is a deprecated alias for the builtin `object`. To silence this warning, use `object` by itself. Doing this will not modify any behavior and is safe. 
+Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+  if data.dtype == np.object:
+/opt/conda/envs/python35-paddle120-env/lib/python3.7/site-packages/paddle/nn/layer/norm.py:653: UserWarning: When training, we now always track global mean and variance.
+  &quot;When training, we now always track global mean and variance.&quot;)
+Training | Epoch: 0 | Loss: 0.4711 | ACC: 0.8438: 100%|██████████| 8/8 [01:19&lt;00:00, 10.00s/it]
+Validate | Epoch: 0 | Loss: 0.6709 | ACC: 0.7500: 100%|██████████| 8/8 [01:12&lt;00:00,  9.04s/it]
+Training | Epoch: 1 | Loss: 0.2191 | ACC: 0.9688: 100%|██████████| 8/8 [01:13&lt;00:00,  9.25s/it]
+Validate | Epoch: 1 | Loss: 0.2335 | ACC: 0.9062: 100%|██████████| 8/8 [01:20&lt;00:00, 10.01s/it]
+Training | Epoch: 2 | Loss: 0.2510 | ACC: 0.8750: 100%|██████████| 8/8 [01:20&lt;00:00, 10.01s/it]
+Validate | Epoch: 2 | Loss: 0.1244 | ACC: 0.9688: 100%|██████████| 8/8 [01:18&lt;00:00,  9.75s/it]
+Training | Epoch: 3 | Loss: 0.1883 | ACC: 0.9688: 100%|██████████| 8/8 [01:13&lt;00:00,  9.22s/it]
+Validate | Epoch: 3 | Loss: 0.3558 | ACC: 0.8750: 100%|██████████| 8/8 [01:11&lt;00:00,  8.98s/it]
+Training | Epoch: 4 | Loss: 0.1757 | ACC: 0.9375: 100%|██████████| 8/8 [01:20&lt;00:00, 10.03s/it]
+Validate | Epoch: 4 | Loss: 0.1122 | ACC: 1.0000: 100%|██████████| 8/8 [01:20&lt;00:00, 10.08s/it]
+Training | Epoch: 5 | Loss: 0.1912 | ACC: 0.9688: 100%|██████████| 8/8 [01:19&lt;00:00,  9.99s/it]
+Validate | Epoch: 5 | Loss: 0.0612 | ACC: 0.9688: 100%|██████████| 8/8 [01:18&lt;00:00,  9.78s/it]
+Training | Epoch: 6 | Loss: 0.2404 | ACC: 0.9062: 100%|██████████| 8/8 [01:14&lt;00:00,  9.30s/it]
+Validate | Epoch: 6 | Loss: 0.0180 | ACC: 1.0000: 100%|██████████| 8/8 [01:11&lt;00:00,  8.89s/it]
+Training | Epoch: 7 | Loss: 0.2110 | ACC: 0.9062: 100%|██████████| 8/8 [01:20&lt;00:00, 10.05s/it]
+Validate | Epoch: 7 | Loss: 0.3300 | ACC: 0.9688: 100%|██████████| 8/8 [01:18&lt;00:00,  9.78s/it]
+Training | Epoch: 8 | Loss: 0.0429 | ACC: 1.0000: 100%|██████████| 8/8 [01:21&lt;00:00, 10.17s/it]
+Validate | Epoch: 8 | Loss: 0.1451 | ACC: 0.9375: 100%|██████████| 8/8 [01:11&lt;00:00,  8.98s/it]
+Training | Epoch: 9 | Loss: 0.1853 | ACC: 0.9375: 100%|██████████| 8/8 [01:20&lt;00:00, 10.09s/it]
+Validate | Epoch: 9 | Loss: 0.0643 | ACC: 0.9688: 100%|██████████| 8/8 [01:18&lt;00:00,  9.79s/it]</code></pre><p><img src="https://s2.loli.net/2022/06/20/eld9AKxt8LizbFs.png" alt="output_22_1.png"></p>
+<p><img src="https://s2.loli.net/2022/06/20/2kcXihu1jsbIO56.png" alt="output_22_2.png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># paddle.save(model.state_dict(), 'best_model.pdparams')</span></span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">global</span> results</span><br><span class="line">    test_pbar = tqdm(test_loader)</span><br><span class="line">    <span class="keyword">for</span> batch_id, data <span class="keyword">in</span> enumerate(test_pbar):</span><br><span class="line">        x_data = data[<span class="number">0</span>]                               <span class="comment"># 训练数据</span></span><br><span class="line">        y_data = data[<span class="number">1</span>]                               <span class="comment"># 文件名</span></span><br><span class="line">        <span class="comment"># 预测结果</span></span><br><span class="line">        pred0 = np.argmax(model0(x_data), axis=<span class="number">1</span>)</span><br><span class="line">        pred1 = np.argmax(model1(x_data), axis=<span class="number">1</span>)</span><br><span class="line">        pred2 = np.argmax(model2(x_data), axis=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># results += [[y_data[i], (pred0[i]+pred1[i]+pred2[i] &gt; 0), (pred0[i]+pred1[i]+pred2[i] &gt; 1), </span></span><br><span class="line">        <span class="comment">#             (pred0[i]+pred1[i]+pred2[i] &gt; 2)] for i in range(len(pred0))]</span></span><br><span class="line">        <span class="comment"># results += [[y_data[i], pred0[i], pred1[i], pred2[i]] for i in range(len(pred0))]</span></span><br><span class="line">        results += [[y_data[i], (pred0[i]+pred1[i]+pred2[i] &gt; <span class="number">2</span>)] <span class="keyword">for</span> i <span class="keyword">in</span> range(len(pred0))]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">with</span> open(<span class="string">'result.csv'</span>, <span class="string">'w'</span>) <span class="keyword">as</span> f:</span><br><span class="line">        <span class="comment"># for i, x in enumerate(results):</span></span><br><span class="line">        <span class="keyword">for</span> x <span class="keyword">in</span> results:</span><br><span class="line">            <span class="comment"># f.write(x[0]+','+str(1-x[1])+','+str(1-x[2])+','+str(1-x[3])+'\n')</span></span><br><span class="line">            f.write(x[<span class="number">0</span>]+<span class="string">','</span>+str(<span class="number">1</span>-x[<span class="number">1</span>])+<span class="string">'\n'</span>)</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">results = []   </span><br><span class="line">test()</span><br></pre></td></tr></table></figure>
+
+<pre><code>  0%|          | 0/3 [00:00&lt;?, ?it/s]/opt/conda/envs/python35-paddle120-env/lib/python3.7/site-packages/paddle/tensor/creation.py:130: DeprecationWarning: `np.object` is a deprecated alias for the builtin `object`. To silence this warning, use `object` by itself. Doing this will not modify any behavior and is safe. 
+Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+  if data.dtype == np.object:
+/opt/conda/envs/python35-paddle120-env/lib/python3.7/site-packages/paddle/nn/layer/norm.py:653: UserWarning: When training, we now always track global mean and variance.
+  &quot;When training, we now always track global mean and variance.&quot;)
+100%|██████████| 3/3 [00:26&lt;00:00,  8.79s/it]</code></pre>
+      
+      <!-- reward -->
+      
+      <div id="reward-btn">
+        打赏
+      </div>
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+        <div class="declare">
+          <ul class="post-copyright">
+            <li>
+              <i class="ri-copyright-line"></i>
+              <strong>版权声明： </strong s>
+              本博客所有文章除特别声明外，均采用 <a href="https://www.apache.org/licenses/LICENSE-2.0.html" rel="external nofollow"
+                target="_blank">Apache License 2.0</a> 许可协议。转载请注明出处！
+            </li>
+          </ul>
+        </div>
+        
+    <footer class="article-footer">
+      
+          
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://glisses.github.io/2022/06/20/Rail-Defect-Detection-Paddle/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/code/" rel="tag">code</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+  
+  <nav class="article-nav">
+    
+    
+      <a href="/2022/03/30/Prepare-for-English-Interview-NUS-311-Project/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">如何准备英语面试——NUS311项目</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+  
+<!-- valine评论 -->
+<div id="vcomments-box">
+    <div id="vcomments">
+    </div>
+</div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js'></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        app_id: 'wopEkNOS3jcH99vLw4Fv3G7p-gzGzoHsz',
+        app_key: 'nmKagbdNc4YoBGAAziafy7YX',
+        path: window.location.pathname,
+        notify: 'false',
+        verify: 'false',
+        avatar: 'mp',
+        placeholder: '给我的文章加点评论吧~',
+        recordIP: true
+    });
+    const infoEle = document.querySelector('#vcomments .info');
+    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0) {
+        infoEle.childNodes.forEach(function (item) {
+            item.parentNode.removeChild(item);
+        });
+    }
+</script>
+<style>
+    #vcomments-box {
+        padding: 5px 30px;
+    }
+
+    @media screen and (max-width: 800px) {
+        #vcomments-box {
+            padding: 5px 0px;
+        }
+    }
+
+    #vcomments-box #vcomments {
+        background-color: #fff;
+    }
+
+    .v .vlist .vcard .vh {
+        padding-right: 20px;
+    }
+
+    .v .vlist .vcard {
+        padding-left: 10px;
+    }
+</style>
+
+  
+
+  
+  
+  
+
+</article>
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>
+        &copy;
+        2022
+        glisses
+      </li>
+      <li>
+        
+      </li>
+    </ul>
+    <ul class="list-inline">
+      <li>
+        
+        
+        <span>
+  <i>PV:<span id="busuanzi_value_page_pv"></span></i>
+  <i>UV:<span id="busuanzi_value_site_uv"></span></i>
+</span>
+        
+      </li>
+      
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="to_top">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+      </div>
+    </main>
+    <aside class="sidebar">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="glisses"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags/%E6%97%85%E8%A1%8C/">旅行</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="http://shenyu-vip.lofter.com" target="_blank" rel="noopener">摄影</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/2019/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/share.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script>
+  try {
+    var typed = new Typed("#subtitle", {
+      strings: ['There is no royal road to learning.', 'Inner peace.', 'It is never too old to learn.'],
+      startDelay: 0,
+      typeSpeed: 200,
+      loop: true,
+      backSpeed: 100,
+      showCursor: true
+    });
+  } catch (err) {
+  }
+
+</script>
+
+
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: 'main',
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto',
+    onClick: (e) => {
+      $('.toc-link').removeClass('is-active-link');
+      $(`a[href=${e.target.hash}]`).addClass('is-active-link');
+      $(e.target.hash).scrollIntoView();
+      return false;
+    }
+  });
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/js/ayer.js"></script>
+
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+
+<script type="text/javascript" src="https://js.users.51.la/20544303.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css">
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+
+    
+    <div id="music">
+    
+    
+    
+    <iframe frameborder="no" border="1" marginwidth="0" marginheight="0" width="200" height="52"
+        src="//music.163.com/outchain/player?type=2&id=1492283139&auto=1&height=32"></iframe>
+</div>
+
+<style>
+    #music {
+        position: fixed;
+        right: 15px;
+        bottom: 0;
+        z-index: 998;
+    }
+</style>
+    
+  </div>
+</body>
+
+</html>
