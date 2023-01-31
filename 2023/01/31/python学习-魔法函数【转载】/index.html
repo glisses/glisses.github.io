@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    python学习-魔法函数【转载】 |  glisses
+  </title>
+  <meta name="generator" content="hexo-theme-yilia-plus">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+  
+  
+
+  
+
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    <main class="content">
+      <section class="outer">
+  <article id="post-python学习-魔法函数【转载】" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  python学习-魔法函数【转载】
+</h1>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2023/01/31/python%E5%AD%A6%E4%B9%A0-%E9%AD%94%E6%B3%95%E5%87%BD%E6%95%B0%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91/" class="article-date">
+  <time datetime="2023-01-31T11:09:56.628Z" itemprop="datePublished">2023-01-31</time>
+</a>
+      
+      
+      
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">1.6k字</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">7分钟</span>
+        </span>
+    </span>
+</div>
+
+      
+    </div>
+    
+
+    
+    
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <p>版权声明：本文为博主原创文章，遵循<a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener"> CC 4.0 BY-SA </a>版权协议，转载请附上原文出处链接和本声明。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">本文链接：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qdPython&#x2F;article&#x2F;details&#x2F;126955376</span><br></pre></td></tr></table></figure>
+
+<h3 id="一、什么是魔法函数-网络用语"><a href="#一、什么是魔法函数-网络用语" class="headerlink" title="一、什么是魔法函数(网络用语)"></a>一、什么是魔法函数(网络用语)</h3><p>以双下划线开始，双下滑线结尾。魔法函数是为了增强一个类的特性。<br>魔法函数可以随意定义某个类的特性，这些方法在进行特定的操作时会自动被调用。</p>
+<h4 id="1-需求：封装一个员工列表，并遍历查看"><a href="#1-需求：封装一个员工列表，并遍历查看" class="headerlink" title="1 需求：封装一个员工列表，并遍历查看"></a>1 需求：封装一个员工列表，并遍历查看</h4><a id="more"></a>
+
+<p>（1）不使用魔法函数方法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Company</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, employee_list)</span>:</span></span><br><span class="line">        self.employee = employee_list</span><br><span class="line"></span><br><span class="line">company = Company([<span class="string">"tom"</span>, <span class="string">"bob"</span>, <span class="string">"jane"</span>])</span><br><span class="line">employee = company.employee</span><br><span class="line"><span class="keyword">for</span> em <span class="keyword">in</span> employee:</span><br><span class="line">    print(em)</span><br></pre></td></tr></table></figure>
+
+<p>（2）使用 <code>__getitem__(self, item)</code>魔法函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Company</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, employee_list)</span>:</span></span><br><span class="line">        self.employee = employee_list</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getitem__</span><span class="params">(self, item)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.employee[item]</span><br><span class="line"></span><br><span class="line">company = Company([<span class="string">"tom"</span>, <span class="string">"bob"</span>, <span class="string">"jane"</span>])</span><br><span class="line"><span class="keyword">for</span> em <span class="keyword">in</span> company:</span><br><span class="line">    print(em)</span><br><span class="line">  </span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">在解释器执行到for语句时，解释器首先寻找对象的迭代器。</span></span><br><span class="line"><span class="string">虽然company对象没有迭代器，</span></span><br><span class="line"><span class="string">但是解释器会尝试去寻找__getitem__()这一魔法函数，</span></span><br><span class="line"><span class="string">有了这个魔法函数的对象就是一个可迭代的类型，即便没有迭代器，</span></span><br><span class="line"><span class="string">解释器会调用该魔法函数，直到其抛出异常结束。</span></span><br><span class="line"><span class="string">若注释__getitem__代码片段，则会抛出不可迭代异常。</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+
+<p>注意：在案例中，魔法函数既不是属于&lt;class ‘Company’&gt;，也不是从&lt;class ‘object’&gt;基继承过来。是一个独立的存在，往类里放入魔法函数之后，会增强类的一些类型。<strong>魔法函数不需要我们显示调用。Python会识别对象或自定义类的魔法函数，并隐式调用。</strong></p>
+<h4 id="2-Python的数据模型以及数据模型对Python的影响"><a href="#2-Python的数据模型以及数据模型对Python的影响" class="headerlink" title="2 Python的数据模型以及数据模型对Python的影响"></a>2 Python的数据模型以及数据模型对Python的影响</h4><p>实际上魔法函数是网络上通常的叫法，其实魔法函数只不过是<a href="https://so.csdn.net/so/search?q=Python%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B&spm=1001.2101.3001.7020" target="_blank" rel="noopener">Python数据类型</a>的一个概念而已。</p>
+<p>当实现了 <code>__getitem__(self, item)</code>魔法函数，就可以使用for循环去遍历。魔法函数实际上会影响<a href="https://so.csdn.net/so/search?q=python%E8%AF%AD%E6%B3%95&spm=1001.2101.3001.7020" target="_blank" rel="noopener">python语法</a>的，或可以理解为Python语法实际上会识别一个对象或者说自定义类里的魔法函数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用__getitem__(self, item)魔法函数</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Company</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, employee_list)</span>:</span></span><br><span class="line">        self.employee = employee_list</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getitem__</span><span class="params">(self, item)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.employee[item]</span><br><span class="line"></span><br><span class="line">company = Company([<span class="string">"tom"</span>, <span class="string">"bob"</span>, <span class="string">"jane"</span>])  <span class="comment"># __getitem__(self, item) 实际上也是序列类型</span></span><br><span class="line">company1 = company[:<span class="number">2</span>]   </span><br><span class="line">print(company1)</span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">['tom', 'bob']</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="number">12345678910111213141516</span></span><br></pre></td></tr></table></figure>
+
+<p>如果不实现 <code>__getitem__(self, item)</code>就会报错</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Company</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, employee_list)</span>:</span></span><br><span class="line">        self.employee = employee_list</span><br><span class="line"></span><br><span class="line">    <span class="comment"># def __getitem__(self, item):</span></span><br><span class="line">    <span class="comment">#     return self.employee[item]</span></span><br><span class="line"></span><br><span class="line">company = Company([<span class="string">"tom"</span>, <span class="string">"bob"</span>, <span class="string">"jane"</span>])</span><br><span class="line">company1 = company[:<span class="number">2</span>]</span><br><span class="line">print(company1)</span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">Traceback (most recent call last):</span></span><br><span class="line"><span class="string">  File "E:/projects/vue-django/myproject/sample/chapter02/company03.py", line 14, in &lt;module&gt;</span></span><br><span class="line"><span class="string">    company1 = company[:2]</span></span><br><span class="line"><span class="string">TypeError: 'Company' object is not subscriptable</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="number">123456789101112131415161718</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Company</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, employee_list)</span>:</span></span><br><span class="line">        self.employee = employee_list</span><br><span class="line"></span><br><span class="line">    <span class="comment"># def __getitem__(self, item):</span></span><br><span class="line">    <span class="comment">#     return self.employee[item]</span></span><br><span class="line"></span><br><span class="line">company = Company([<span class="string">"tom"</span>, <span class="string">"bob"</span>, <span class="string">"jane"</span>])</span><br><span class="line">print(len(company))  <span class="comment"># 没有定义__len__(self)或__getitem__(self, item)魔法函数时，这个语句会报错</span></span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">Traceback (most recent call last):</span></span><br><span class="line"><span class="string">  File "E:/projects/vue-django/myproject/sample/chapter02/company03.py", line 14, in &lt;module&gt;</span></span><br><span class="line"><span class="string">    print(len(company))</span></span><br><span class="line"><span class="string">TypeError: object of type 'Company' has no len()</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="number">12345678910111213141516</span></span><br></pre></td></tr></table></figure>
+
+<p>两种方式实现对象可len()<br>（1）getitem(self, item) + 切片 实现<br>（2）len(self, item) 实现<br>在调用内置函数len()时，解释器首先会调用魔法函数 <code>__len__(self)</code>，若没有，则退一步，去不断调用 <code>__getitem__(self, item)</code>直到抛出异常，len()函数返回执行次数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用__getitem__(self, item)魔法函数 + 切片</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Company</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, employee_list)</span>:</span></span><br><span class="line">        self.employee = employee_list</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getitem__</span><span class="params">(self, item)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.employee[item]</span><br><span class="line"></span><br><span class="line">company = Company([<span class="string">"tom"</span>, <span class="string">"bob"</span>, <span class="string">"jane"</span>])</span><br><span class="line">company1 =company[:]</span><br><span class="line">print(len(company1))</span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">3</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="number">123456789101112131415</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用__len__(self)魔法函数</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Company</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, employee_list)</span>:</span></span><br><span class="line">        self.employee = employee_list</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__len__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> len(self.employee)</span><br><span class="line"></span><br><span class="line">company = Company([<span class="string">"tom"</span>, <span class="string">"bob"</span>, <span class="string">"jane"</span>])</span><br><span class="line">print(len(company))</span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">3</span></span><br><span class="line"><span class="string">"""</span> </span><br><span class="line"><span class="number">1234567891011121314</span></span><br></pre></td></tr></table></figure>
+
+<p>魔法函数会影响Python语法和其内置函数本身的。</p>
+<h3 id="二、魔法函数一览"><a href="#二、魔法函数一览" class="headerlink" title="二、魔法函数一览"></a>二、魔法函数一览</h3><h4 id="1-非数学运算"><a href="#1-非数学运算" class="headerlink" title="1 非数学运算"></a>1 非数学运算</h4><p>字符串表示 魔法函数提供了两个来应对开发模式的不同<br>（1）repr 用于命令行模式，作用：输入对象名即可调用repr方法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">  <span class="comment"># jupyter或ipython 命令行终端运行</span></span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">Company</span><span class="params">(object)</span>:</span></span><br><span class="line">      <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, employee_list)</span>:</span></span><br><span class="line">          self.employee = employee_list</span><br><span class="line">  </span><br><span class="line">      <span class="function"><span class="keyword">def</span> <span class="title">__repr__</span><span class="params">(self)</span>:</span></span><br><span class="line">          <span class="keyword">return</span> <span class="string">','</span>.join(self.employee)</span><br><span class="line">  </span><br><span class="line">  company = Company([<span class="string">'tom'</span>, <span class="string">'bob'</span>, <span class="string">'jane'</span>])</span><br><span class="line">  company</span><br><span class="line">  </span><br><span class="line">  <span class="string">"""</span></span><br><span class="line"><span class="string">  tom,bob,jane</span></span><br><span class="line"><span class="string">  """</span></span><br><span class="line"><span class="number">1234567891011121314</span></span><br></pre></td></tr></table></figure>
+
+<p>（2）<code>__str__</code>用于脚本，作用：print(对象名)即可调用str方法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">学习中遇到问题没人解答？小编创建了一个Python学习交流群：711312441</span></span><br><span class="line"><span class="string">寻找有志同道合的小伙伴，互帮互助,群里还有不错的视频学习教程和PDF电子书！</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">Company</span><span class="params">(object)</span>:</span></span><br><span class="line">      <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, employee_list)</span>:</span></span><br><span class="line">          self.employee = employee_list</span><br><span class="line">  </span><br><span class="line">      <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">          <span class="keyword">return</span> <span class="string">','</span>.join(self.employee)</span><br><span class="line">  </span><br><span class="line">  company = Company([<span class="string">'tom'</span>, <span class="string">'bob'</span>, <span class="string">'jane'</span>])</span><br><span class="line">  print(company)  </span><br><span class="line">  </span><br><span class="line">  <span class="string">"""</span></span><br><span class="line"><span class="string">  tom,bob,jane</span></span><br><span class="line"><span class="string">  """</span></span><br><span class="line"><span class="number">1234567891011121314151617</span></span><br></pre></td></tr></table></figure>
+
+<p>魔法函数只要定义了，就不需要开发者调用，Python解释器自己知道什么时候调用它。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">集合、序列相关</span><br><span class="line">	__len__</span><br><span class="line">	__getitem__</span><br><span class="line">	__setitem__</span><br><span class="line">	__delitem__</span><br><span class="line">	__contains__</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">迭代相关</span><br><span class="line">	__iter__</span><br><span class="line">	__next__</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">可调用</span><br><span class="line">	__call__</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">with</span>上下文管理器</span><br><span class="line">	__enter__</span><br><span class="line">	__exit__</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">数值转换</span><br><span class="line">	__abs__</span><br><span class="line">	__bool__</span><br><span class="line">	__int__</span><br><span class="line">	__float__</span><br><span class="line">	__hash__</span><br><span class="line">	__index__</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">元类相关</span><br><span class="line">	__new__</span><br><span class="line">	__init__</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">属性相关</span><br><span class="line">    __getattr__</span><br><span class="line">    __setattr__</span><br><span class="line">    __getattribute__</span><br><span class="line">    __setattribute__</span><br><span class="line">    __dir__</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">属性描述符</span><br><span class="line">    __get__</span><br><span class="line">    __set__</span><br><span class="line">    __delete__</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">协程</span><br><span class="line">    __await__</span><br><span class="line">    __aiter__</span><br><span class="line">    __anext__</span><br><span class="line">    __aenter__</span><br><span class="line">    __aexit   </span><br><span class="line"><span class="number">1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="2-数学运算"><a href="#2-数学运算" class="headerlink" title="2 数学运算"></a>2 数学运算</h4><p>数学运算在一般开发使用不多，在数据处理是用的比较多，这里简单举几个例子。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ============== __abs__ Demo start ============</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Nums</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, num)</span>:</span></span><br><span class="line">        self.num = num</span><br><span class="line">      </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__abs__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> abs(self.num)</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">num = Nums(<span class="number">-1</span>)</span><br><span class="line">print(abs(num))  <span class="comment"># 结果：1</span></span><br><span class="line"><span class="comment"># ============== __abs__ Demo end ============</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># ============== __add__ Demo start ============</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyVector</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, x, y)</span>:</span></span><br><span class="line">        self.x = x</span><br><span class="line">        self.y = y</span><br><span class="line">      </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__add__</span><span class="params">(self, other_instance)</span>:</span></span><br><span class="line">        re_vector = MyVector(self.x+other_instance.x, self.y+other_instance.y)</span><br><span class="line">        <span class="keyword">return</span> re_vector</span><br><span class="line">  </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">"x:&#123;x&#125;, y:&#123;y&#125;"</span>.format(x=self.x, y=self.y)</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">first_vec = MyVector(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">second_vec = MyVector(<span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">print(first_vec+second_vec)  <span class="comment"># 结果：x:3，y:5</span></span><br><span class="line"><span class="comment"># ============== __add__ Demo end ============</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">一元运算符</span><br><span class="line">    __neg__    -</span><br><span class="line">    __pos__    +</span><br><span class="line">    __abs__   |x|</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">二元运算符</span><br><span class="line">    __lt__    &lt;</span><br><span class="line">    __le__    &lt;=</span><br><span class="line">    __eq__    ==</span><br><span class="line">    __ne__    != </span><br><span class="line">    __gt__    &gt; </span><br><span class="line">    __ge__    &gt;=</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">算术运算符</span><br><span class="line">    __add__         +</span><br><span class="line">    __sub__         -</span><br><span class="line">    __mul__         * </span><br><span class="line">    __truediv__     /</span><br><span class="line">    __floordiv__    // </span><br><span class="line">    __mod__         % </span><br><span class="line">    __divmod__      divmod() </span><br><span class="line">    __pow__         ** 或 pow()</span><br><span class="line">    __round__       round()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">反向算术运算符</span><br><span class="line">    __radd__ </span><br><span class="line">    __rsub__ </span><br><span class="line">    __rmul__ </span><br><span class="line">    __rtruediv__ </span><br><span class="line">    __rfloordiv__ </span><br><span class="line">    __rmod__ </span><br><span class="line">    __rdivmod__ </span><br><span class="line">    __rpow__</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">增量赋值算术运算符</span><br><span class="line">    __iadd__ </span><br><span class="line">    __isub__ </span><br><span class="line">    __imul__ </span><br><span class="line">    __itruediv__ </span><br><span class="line">    __ifloordiv__ </span><br><span class="line">    __imod__ </span><br><span class="line">    __ipow__</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">位运算符</span><br><span class="line">    __invert__    ~ </span><br><span class="line">    __lshift__    &lt;&lt; </span><br><span class="line">    __rshift__    &gt;&gt; </span><br><span class="line">    __and__       &amp; </span><br><span class="line">    __or__        | </span><br><span class="line">    __xor__       ^</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">反向位运算符</span><br><span class="line">    __rlshift__ </span><br><span class="line">    __rrshift__ </span><br><span class="line">    __rand__ </span><br><span class="line">    __rxor__ </span><br><span class="line">    __ror__</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">增量赋值位运算符</span><br><span class="line">    __ilshift__ </span><br><span class="line">    __irshift__ </span><br><span class="line">    __iand__ </span><br><span class="line">    __ixor__ </span><br><span class="line">    __ior__  </span><br><span class="line"><span class="number">123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="四、len函数的特殊性"><a href="#四、len函数的特殊性" class="headerlink" title="四、len函数的特殊性"></a>四、len函数的特殊性</h3><p>len函数不仅仅调用 <code>__len__</code>方法这么简单，len函数对于set dict list等Python原生数据结构做了内部的优化，其性能是非常高的。应为原生数据结构中，会有一个专门的字段来储存数据长度，那么len函数会直接去读取这个字段，而不会去遍历它。</p>
+
+      
+      <!-- reward -->
+      
+      <div id="reward-btn">
+        打赏
+      </div>
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+        <div class="declare">
+          <ul class="post-copyright">
+            <li>
+              <i class="ri-copyright-line"></i>
+              <strong>版权声明： </strong s>
+              本博客所有文章除特别声明外，均采用 <a href="https://www.apache.org/licenses/LICENSE-2.0.html" rel="external nofollow"
+                target="_blank">Apache License 2.0</a> 许可协议。转载请注明出处！
+            </li>
+          </ul>
+        </div>
+        
+    <footer class="article-footer">
+      
+          
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://glisses.github.io/2023/01/31/python%E5%AD%A6%E4%B9%A0-%E9%AD%94%E6%B3%95%E5%87%BD%E6%95%B0%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>
+      
+      
+
+    </footer>
+
+  </div>
+
+  
+  
+  <nav class="article-nav">
+    
+    
+      <a href="/2022/06/20/Rail-Defect-Detection-Paddle/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">基于paddle的铁轨缺陷检测-铁路智能感知技术实验二</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+  
+<!-- valine评论 -->
+<div id="vcomments-box">
+    <div id="vcomments">
+    </div>
+</div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js'></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        app_id: 'wopEkNOS3jcH99vLw4Fv3G7p-gzGzoHsz',
+        app_key: 'nmKagbdNc4YoBGAAziafy7YX',
+        path: window.location.pathname,
+        notify: 'false',
+        verify: 'false',
+        avatar: 'mp',
+        placeholder: '给我的文章加点评论吧~',
+        recordIP: true
+    });
+    const infoEle = document.querySelector('#vcomments .info');
+    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0) {
+        infoEle.childNodes.forEach(function (item) {
+            item.parentNode.removeChild(item);
+        });
+    }
+</script>
+<style>
+    #vcomments-box {
+        padding: 5px 30px;
+    }
+
+    @media screen and (max-width: 800px) {
+        #vcomments-box {
+            padding: 5px 0px;
+        }
+    }
+
+    #vcomments-box #vcomments {
+        background-color: #fff;
+    }
+
+    .v .vlist .vcard .vh {
+        padding-right: 20px;
+    }
+
+    .v .vlist .vcard {
+        padding-left: 10px;
+    }
+</style>
+
+  
+
+  
+  
+  
+
+</article>
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>
+        &copy;
+        2023
+        glisses
+      </li>
+      <li>
+        
+      </li>
+    </ul>
+    <ul class="list-inline">
+      <li>
+        
+        
+        <span>
+  <i>PV:<span id="busuanzi_value_page_pv"></span></i>
+  <i>UV:<span id="busuanzi_value_site_uv"></span></i>
+</span>
+        
+      </li>
+      
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="to_top">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+      </div>
+    </main>
+    <aside class="sidebar">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="glisses"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags/%E6%97%85%E8%A1%8C/">旅行</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="http://shenyu-vip.lofter.com" target="_blank" rel="noopener">摄影</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/2019/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/share.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script>
+  try {
+    var typed = new Typed("#subtitle", {
+      strings: ['There is no royal road to learning.', 'Inner peace.', 'It is never too old to learn.'],
+      startDelay: 0,
+      typeSpeed: 200,
+      loop: true,
+      backSpeed: 100,
+      showCursor: true
+    });
+  } catch (err) {
+  }
+
+</script>
+
+
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: 'main',
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto',
+    onClick: (e) => {
+      $('.toc-link').removeClass('is-active-link');
+      $(`a[href=${e.target.hash}]`).addClass('is-active-link');
+      $(e.target.hash).scrollIntoView();
+      return false;
+    }
+  });
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/js/ayer.js"></script>
+
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+
+<script type="text/javascript" src="https://js.users.51.la/20544303.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css">
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+
+    
+    <div id="music">
+    
+    
+    
+    <iframe frameborder="no" border="1" marginwidth="0" marginheight="0" width="200" height="52"
+        src="//music.163.com/outchain/player?type=2&id=1492283139&auto=1&height=32"></iframe>
+</div>
+
+<style>
+    #music {
+        position: fixed;
+        right: 15px;
+        bottom: 0;
+        z-index: 998;
+    }
+</style>
+    
+  </div>
+</body>
+
+</html>
